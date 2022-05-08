@@ -1,0 +1,1107 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="scheme笔记几个概念 conceptidentifier标识符,可以看作是一个唯一的名字,可以用来引用变量,函数等等 variable变量 atom a string of characters a string of digits    1234(define atom?  (lambda (s)    (and (not (pair? s))         (not (null? s))">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scheme笔记">
+<meta property="og:url" content="http://example.com/2014/02/18/notes/scheme/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="scheme笔记几个概念 conceptidentifier标识符,可以看作是一个唯一的名字,可以用来引用变量,函数等等 variable变量 atom a string of characters a string of digits    1234(define atom?  (lambda (s)    (and (not (pair? s))         (not (null? s))">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2014-02-18T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-08T12:52:13.015Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="lisp">
+<meta property="article:tag" content="lang">
+<meta property="article:tag" content="scheme">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Scheme笔记 - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Scheme笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2014-02-18 11:54" pubdate>
+        2014年2月18日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      20k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      169 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Scheme笔记</h1>
+            
+            <div class="markdown-body">
+              <h1 id="scheme笔记"><a href="#scheme笔记" class="headerlink" title="scheme笔记"></a>scheme笔记</h1><h2 id="几个概念-concept"><a href="#几个概念-concept" class="headerlink" title="几个概念 concept"></a>几个概念 <span class="tag" data-tag-name="concept"><span class="smallcaps">concept</span></span></h2><h3 id="identifier"><a href="#identifier" class="headerlink" title="identifier"></a>identifier</h3><p>标识符,可以看作是一个唯一的名字,可以用来引用变量,函数等等</p>
+<h3 id="variable"><a href="#variable" class="headerlink" title="variable"></a>variable</h3><p>变量</p>
+<h3 id="atom"><a href="#atom" class="headerlink" title="atom"></a>atom</h3><ul>
+<li>a string of characters</li>
+<li>a string of digits</li>
+</ul>
+<!-- end list -->
+
+<figure class="highlight scheme"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> atom?<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (s)<br>    (<span class="hljs-name"><span class="hljs-built_in">and</span></span> (<span class="hljs-name"><span class="hljs-built_in">not</span></span> (<span class="hljs-name"><span class="hljs-built_in">pair?</span></span> s))<br>         (<span class="hljs-name"><span class="hljs-built_in">not</span></span> (<span class="hljs-name"><span class="hljs-built_in">null?</span></span> s)))))<br></code></pre></td></tr></table></figure>
+
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p>a collection of atoms enclosed by parentheses. example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs example">&#x27;()<br>&#x27;(a)<br>&#x27;(a b c)<br>&#x27;((a b) c d)<br></code></pre></td></tr></table></figure>
+
+<p>语法描述:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">list -&gt; &#x27;()<br>      | (sexp . list)<br></code></pre></td></tr></table></figure>
+
+<h3 id="S-expression"><a href="#S-expression" class="headerlink" title="S-expression"></a>S-expression</h3><ul>
+<li>all lists</li>
+<li>all atoms</li>
+</ul>
+<!-- end list -->
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">sexp -&gt; list<br>      | atom<br></code></pre></td></tr></table></figure>
+
+<h2 id="Naming-Conventions"><a href="#Naming-Conventions" class="headerlink" title="Naming Conventions"></a>Naming Conventions</h2><ol>
+<li>谓词后加? , 但是常用的数字比较&#x3D;, &lt;, &gt;, &lt;&#x3D;, &gt;&#x3D;后面不需要?</li>
+<li>类型测试, pair? , atom?</li>
+<li>字符操作(char-xxx), 字符串操作(string-xxx), 向量操作(vector-xxx)</li>
+<li>类型转换(type1-&gt;type2)</li>
+<li>但函数有副作用时,应该以 ! 结尾, 比如 <code>set!</code></li>
+</ol>
+<h2 id="core-syntactic-forms-core-syntactic-form"><a href="#core-syntactic-forms-core-syntactic-form" class="headerlink" title="core syntactic forms core syntactic form"></a>core syntactic forms <span class="tag" data-tag-name="core"><span class="smallcaps">core</span></span> <span class="tag" data-tag-name="syntactic"><span class="smallcaps">syntactic</span></span> <span class="tag" data-tag-name="form"><span class="smallcaps">form</span></span></h2><ol>
+<li><p>top-level <code>define</code> forms 实际就是创建新的绑定,可以绑定 <code>list</code>, <code>lambda procedure</code><br>这是几个示例代 码:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> double-any<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (f x)<br>    (<span class="hljs-name">f</span> x x)))<br><span class="hljs-comment">;;; identical</span><br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">double-any</span> f x)<br>  (<span class="hljs-name">f</span> x x))<br><br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> xyz &#x27;(x y z))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>constants BNF:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs example">&lt;constant&gt; -&gt; &lt;boolean&gt;<br>            | &lt;number&gt;<br>            | &lt;character&gt;<br>            | &lt;string&gt;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>variables</p>
+</li>
+<li><p>procedure applications <code>(procedure arg1 ... argn)</code> 求值规则:</p>
+<ol>
+<li>Find the value of <code>procedure</code>.</li>
+<li>Find the value of <code>arg1</code>.</li>
+<li>Find the value of <code>argn</code>.</li>
+<li>Apply the value of <code>procedure</code> to the values of <code>arg1</code> … <code>argn</code>.</li>
+</ol>
+</li>
+<li><p><code>quote</code> expressions (‘)</p>
+<ol>
+<li>quoting an <code>identifier</code> tells Scheme to treat the identifier as<br>a <code>symbol</code> rather than as a <code>variable</code>. 也就是说scheme解释器不会去当前的<br>环境中寻找与该标识符绑定的值, 而是直接将该标识符当作symbol也就是数据处理.</li>
+<li>quoting a list tells scheme to treat the list as data, rather<br>than as a procedure application</li>
+</ol>
+</li>
+<li><p><code>lambda</code> expressions <code>(lambda (x) (+ x x)) ==&gt; #&lt;procedure&gt;</code></p>
+<p>一般形式有这三种:</p>
+<ul>
+<li><code>(lambda (var1 var2 ...) exp1 exp2 ...)</code>: var1 var2 …会依次赋值</li>
+<li><code>(lambda (var1 var2 . var) exp1 exp2)</code>: var1 var2会依次赋值, 余下的参数<br>会组成一个列表赋给var</li>
+<li><code>(lambda var exp1 exp2)</code>: 将所有的实参作为一个list赋给var, 注意var没有括号</li>
+</ul>
+</li>
+<li><p><code>if</code> expressions: <code>(if test-expr then-expr else-expr)</code> 只有<br><code>test-expr</code> 为 <code>#f</code> 时才会运行 <code>else-expr</code>, 所以你一般要使用 <code>null?</code> <code>eq?</code> 这样的函数<br>来测试</p>
+</li>
+<li><p><code>set!</code> expressions(Assignment): Assignments do not create new<br>bindings, as with <code>let</code> or <code>lambda</code>, but rather change the values of<br>existing bindings.也就是说赋值不会像let, lambda那样产生新的绑定,而是会改变已存在绑<br>定的值,如果你给set!指定的符号不存在,它会报错(set!: cannot set undefined<br>variable)</p>
+</li>
+</ol>
+<p>其它的都是一些扩展,也就是可以通过define-syntax定义出来的,比如let,and,or,not等<br>等,只有以上的部分才需要解释器直接实现的</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> let<br>  (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>    [(<span class="hljs-name">_</span> ((<span class="hljs-name">x</span> v) ...) e1 e2 ...)<br>     ((<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x ...) e1 e2 ...) v ...)]))<br><br>(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> and<br>  (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>    [(<span class="hljs-name">_</span>) <span class="hljs-literal">#t</span>]<br>    [(<span class="hljs-name">_</span> e) e]<br>    [(<span class="hljs-name">_</span> e1 e2 e3 ...)<br>     (<span class="hljs-name"><span class="hljs-built_in">if</span></span> e1 (<span class="hljs-name"><span class="hljs-built_in">and</span></span> e2 e3 ...) <span class="hljs-literal">#f</span>)]))<br></code></pre></td></tr></table></figure>
+
+<p>实际上define-syntax实际就是进行模式匹配,像cond,如果匹配那么就进行替换,比 如(and 1)就匹配((_ e)<br>e)所以就被替换为1, <sub>就是and的占位符</sub>, 而 <code>pat ...</code> 代表 0个或者多个表达式, 比如<br><code>(x v) ...</code> 代表有0个或多个 <code>(x v)</code> 这样的表达式</p>
+<h2 id="let-let"><a href="#let-let" class="headerlink" title="let let"></a>let <span class="tag" data-tag-name="let"><span class="smallcaps">let</span></span></h2><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs scheme"><span class="hljs-comment">;;; form 1</span><br>(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ((<span class="hljs-name">a</span> exp1)<br>      (<span class="hljs-name">b</span> exp2))<br>  (<span class="hljs-name">body1</span>)<br>  (<span class="hljs-name">body2</span>))<br><span class="hljs-comment">;;; form2</span><br>(<span class="hljs-name"><span class="hljs-built_in">let</span></span> f ([<span class="hljs-name">a</span> exp1]<br>        [<span class="hljs-name">b</span> exp2])<br>  (<span class="hljs-name">body1</span>)<br>  (<span class="hljs-name">body2</span>))<br></code></pre></td></tr></table></figure>
+
+<p>由于 <code>scheme</code> 对待中括号与对待小括号是一样的,所以为了可读性, <code>let</code> 一般可以用如下代 码:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ([<span class="hljs-name">a</span> exp1]<br>      [<span class="hljs-name">b</span> exp2])<br>  (<span class="hljs-name">body1</span>)<br>  (<span class="hljs-name">body2</span>))<br></code></pre></td></tr></table></figure>
+
+<p>form2主要是为了递归, 它使得在函数体中可以引用函数名, 比如下面的代码</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let</span></span> fac ([<span class="hljs-name">n</span> <span class="hljs-number">10</span>])<br>  (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">zero?</span></span> n)<br>      <span class="hljs-number">1</span><br>      (<span class="hljs-name"><span class="hljs-built_in">*</span></span> n (<span class="hljs-name">fac</span> (<span class="hljs-name">sub1</span> n)))))<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>let: 如上所见,实际就是一个扩展语法,a,b只在body中可见, 所以你在exp2中不能使 用a</p>
+</li>
+<li><p>let*: exp2中可以引用a, 也就是a可以用来定义b, 可以用嵌套的 <code>let</code> 来定义 <code>let*</code></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> let*<br>  (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>    [(<span class="hljs-name">_</span> () e1 e2 ...)<br>     (<span class="hljs-name"><span class="hljs-built_in">let</span></span> () e1 e2 ...)]<br>    [(<span class="hljs-name">_</span> ((<span class="hljs-name">x1</span> v1) (<span class="hljs-name">x2</span> v2) ...) e1 e2 ...)<br>     (<span class="hljs-name"><span class="hljs-built_in">let</span></span> ((<span class="hljs-name">x1</span> v1))<br>       (<span class="hljs-name"><span class="hljs-built_in">let*</span></span> ((<span class="hljs-name">x2</span> v2) ...) e1 e2 ...))]))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>letrec: 主要用来解决定义递归函数时,函数名在函数体中不可见的问题,比如</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ([<span class="hljs-name">sum</span> (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (lst)<br>                (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">null?</span></span> lst) <span class="hljs-number">0</span><br>                    (<span class="hljs-name"><span class="hljs-built_in">+</span></span> (<span class="hljs-name"><span class="hljs-built_in">car</span></span> lst) (<span class="hljs-name">sum</span> (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> lst)))))])<br>  (<span class="hljs-name">sum</span> &#x27;(<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>)))<br></code></pre></td></tr></table></figure>
+
+<p>如果运行上面的代码,那么你会 <code>sum undefined</code> 的错误, 原因是 <code>sum</code> 在后面的函数 体中不可见, 所以你使用<br><code>(sum (cdr lst))</code> 就会出错,当然你可以使用这种方法</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ([<span class="hljs-name">sum</span> (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (sum lst)<br>                (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">null?</span></span> lst) <span class="hljs-number">0</span><br>                    (<span class="hljs-name"><span class="hljs-built_in">+</span></span> (<span class="hljs-name"><span class="hljs-built_in">car</span></span> lst) (<span class="hljs-name">sum</span> sum (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> lst)))))])<br>  (<span class="hljs-name">sum</span> sum &#x27;(<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>)))<br></code></pre></td></tr></table></figure>
+
+<p>但这种方法不够自然,而且比较丑陋,不符合scheme中定义递归函数的一般模式,所以 就引入了 <code>letrec</code>.</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">letrec</span></span> ([<span class="hljs-name">sum</span> (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (ls)<br>                (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">null?</span></span> ls)<br>                    <span class="hljs-number">0</span><br>                    (<span class="hljs-name"><span class="hljs-built_in">+</span></span> (<span class="hljs-name"><span class="hljs-built_in">car</span></span> ls) (<span class="hljs-name">sum</span> (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> ls)))))])<br>  (<span class="hljs-name">sum</span> &#x27;(<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>)))<br><span class="hljs-comment">;; the result is 15</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>letrec*: 和 <code>letrec</code> 类似, 只是后面的绑定可以引用前面已经绑定的变量</p>
+</li>
+<li><p>let-values: 绑定多个变量 syntax:</p>
+<ul>
+<li>(let-values ((formals expr) …) body1 body2 …)</li>
+<li>(let*-values ((formals expr) …) body1 body2 …)</li>
+</ul>
+<!-- end list -->
+
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let-values</span></span> ([(<span class="hljs-name">a</span> b) (<span class="hljs-name"><span class="hljs-built_in">values</span></span> <span class="hljs-number">1</span> <span class="hljs-number">2</span>)] [<span class="hljs-name">c</span> (<span class="hljs-name"><span class="hljs-built_in">values</span></span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>)])<br>  (<span class="hljs-name"><span class="hljs-built_in">list</span></span> a b c)) <span class="hljs-comment">; the result is (1 2 (1 2 3))</span><br><br>(<span class="hljs-name"><span class="hljs-built_in">let*-values</span></span> ([(<span class="hljs-name">a</span> b) (<span class="hljs-name"><span class="hljs-built_in">values</span></span> <span class="hljs-number">1</span> <span class="hljs-number">2</span>)] [(<span class="hljs-name">a</span> b) (<span class="hljs-name"><span class="hljs-built_in">values</span></span> b a)])<br>  (<span class="hljs-name"><span class="hljs-built_in">list</span></span> a b)) <span class="hljs-comment">; the result is (2 1)</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="control-flow"><a href="#control-flow" class="headerlink" title="control flow"></a>control flow</h2><h3 id="if-if"><a href="#if-if" class="headerlink" title="if if"></a>if <span class="tag" data-tag-name="if"><span class="smallcaps">if</span></span></h3><p>当要写多个表达式时应该加入 <code>begin</code> , 注意 <code>begin</code> 会依次执行它所包含的表达式,并 返回最后一个表达式的值</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name">test-exp</span>)<br>    (<span class="hljs-name"><span class="hljs-built_in">begin</span></span><br>      expression1<br>      expression2)<br>    expression3)<br></code></pre></td></tr></table></figure>
+
+<p>如果 <code>test-exp</code> 为true, 依次执行 <code>expression1</code>, <code>expression2</code> 那么返回<br><code>expression2</code> 的值, 之所以需要 <code>begin</code> 是由 <code>if</code> 的语法决定的, <code>if</code> 的语 法如下:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name">test-exp</span>)<br>    (<span class="hljs-name">true-exp</span>)<br>    (<span class="hljs-name">false-exp</span>))<br></code></pre></td></tr></table></figure>
+
+<p>所以如果你在 <code>true-exp</code> 的位置放入多条表达式,那么这些表达式的第二条会 被当作 <code>false-exp</code> ,而且因为 <code>if</code><br>后的表达式的条数超出 <code>2</code> 条而报错, 所以 你需要把多条表达式括起来,但是你不能直接加一个括号,比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs example">((true-exp1)(true-exp2))<br></code></pre></td></tr></table></figure>
+
+<p>这样之所以不行是因为scheme会将 (true-exp1) 当作procedure求值,这显然不 对,<br>所以scheme使用begin(更准确的说begin是为了引入side effect), 也就变成 了:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs example">(begin<br>  (true-exp1)<br>  (true-exp2))<br></code></pre></td></tr></table></figure>
+
+<p>这就是if使用begin的原因了, 注意在 let, lambda, define,cond的body中都不需<br>要begin,因为它们都没有if这种特殊的状况.</p>
+<h3 id="cond-cond"><a href="#cond-cond" class="headerlink" title="cond cond"></a>cond <span class="tag" data-tag-name="cond"><span class="smallcaps">cond</span></span></h3><p>内部相当于有个隐含的begin,所以可以直接写多个表达式</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">cond</span></span> [(<span class="hljs-name">test-exp</span>) (<span class="hljs-name">exp1</span>) (<span class="hljs-name">exp2</span>)]<br>      [<span class="hljs-name"><span class="hljs-built_in">else</span></span> expression3])<br></code></pre></td></tr></table></figure>
+
+<p>如果test-exp为true, 那么返回expression2的值 注意一个特殊的形式: &#x3D;&gt;</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">cond</span></span> ((<span class="hljs-name"><span class="hljs-built_in">assv</span></span> <span class="hljs-symbol">&#x27;b</span> &#x27;((a <span class="hljs-number">1</span>) (b <span class="hljs-number">2</span>))) =&gt; cadr)<br>      (<span class="hljs-name"><span class="hljs-built_in">else</span></span> <span class="hljs-literal">#f</span>))                       <span class="hljs-comment">;; ==&gt;  2</span><br></code></pre></td></tr></table></figure>
+
+<p>会将 test-exp的值传递给 &#x3D;&gt;后面的函数, &#x3D;&gt;后面必须是一个带一个参数的函数</p>
+<h3 id="when-unless-when-unless"><a href="#when-unless-when-unless" class="headerlink" title="when unless when unless"></a>when unless <span class="tag" data-tag-name="when"><span class="smallcaps">when</span></span> <span class="tag" data-tag-name="unless"><span class="smallcaps">unless</span></span></h3><ul>
+<li><p>(when (test-exp) exp1 exp2) : test-exp为真就执行exp1, exp2</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> when<br>  (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>    [(<span class="hljs-name">_</span> e0 e1 e2 ...) (<span class="hljs-name"><span class="hljs-built_in">if</span></span> e0 (<span class="hljs-name"><span class="hljs-built_in">begin</span></span> e1 e2 ...))]))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>(unless (test-exp) exp1 exp2) : 只有当 <code>test-exp</code> 为#f时才会运行body中的 表达式</p>
+</li>
+</ul>
+<h3 id="case-case"><a href="#case-case" class="headerlink" title="case case"></a>case <span class="tag" data-tag-name="case"><span class="smallcaps">case</span></span></h3><p>类似于C语言的switch</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ((<span class="hljs-name">x</span> <span class="hljs-number">4</span>) (<span class="hljs-name">y</span> <span class="hljs-number">5</span>))<br>  (<span class="hljs-name"><span class="hljs-built_in">case</span></span> (<span class="hljs-name"><span class="hljs-built_in">+</span></span> x y)<br>    ((<span class="hljs-name">1</span> <span class="hljs-number">3</span> <span class="hljs-number">5</span> <span class="hljs-number">7</span> <span class="hljs-number">9</span>) <span class="hljs-symbol">&#x27;odd</span>)<br>    ((<span class="hljs-name">0</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span>) <span class="hljs-symbol">&#x27;even</span>)<br>    (<span class="hljs-name"><span class="hljs-built_in">else</span></span> <span class="hljs-symbol">&#x27;out-of-range</span>))) <span class="hljs-comment">;; ===&gt; odd</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="do-do"><a href="#do-do" class="headerlink" title="do do"></a>do <span class="tag" data-tag-name="do"><span class="smallcaps">do</span></span></h3><p><code>syntax: (do ((var init update) ...) (test result ...) expr ...)</code></p>
+<p>循环(do ((var init update) …) (test res …) exp …) var的初始值是init,接<br>着每一次迭代都绑定到update, (test res..)如果为true,那么就终止循环</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> divisors<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (n)<br>    (<span class="hljs-name"><span class="hljs-built_in">do</span></span> ((<span class="hljs-name">i</span> <span class="hljs-number">2</span> (<span class="hljs-name"><span class="hljs-built_in">+</span></span> i <span class="hljs-number">1</span>))<br>         (<span class="hljs-name">ls</span> &#x27;()<br>             (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">integer?</span></span> (<span class="hljs-name"><span class="hljs-built_in">/</span></span> n i))<br>                 (<span class="hljs-name"><span class="hljs-built_in">cons</span></span> i ls)<br>                 ls)))<br>        ((<span class="hljs-name"><span class="hljs-built_in">&gt;=</span></span> i n) ls))))<br></code></pre></td></tr></table></figure>
+
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>(map procedure list1 list2 …) 会返回一个 <code>list</code></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">map</span></span> (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x y) (<span class="hljs-name"><span class="hljs-built_in">*</span></span> x y))<br>     &#x27;(<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span>)<br>     &#x27;(<span class="hljs-number">8</span> <span class="hljs-number">7</span> <span class="hljs-number">6</span> <span class="hljs-number">5</span>))      <span class="hljs-comment">; return (8 14 18 20)</span><br></code></pre></td></tr></table></figure>
+
+<p><code>map</code> 与 <code>for-each</code> 可以代替许多循环的工作, 而且逻辑上比循环更清晰.</p>
+<h3 id="for-each"><a href="#for-each" class="headerlink" title="for-each"></a>for-each</h3><p>和 <code>map</code> 类似但是不返回一个list作为结果, 也就是说 <code>for-each</code> 是用来产生side effect.</p>
+<h3 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h3><p>(apply procedure obj … list)</p>
+<ul>
+<li><code>(apply + &#39;(4 5)) ===&gt; 9</code></li>
+<li><code>(apply min 5 1 3 &#39;(6 8 3 2 5))</code> 结果是1</li>
+</ul>
+<h3 id="multiple-values"><a href="#multiple-values" class="headerlink" title="multiple values"></a>multiple values</h3><ul>
+<li><p>(values obj …) :返回多个值,注意它的返回值可以用 <code>let-values</code> 来绑定,不能用 <code>define</code></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let-values</span></span> ([(<span class="hljs-name">a</span> b) (<span class="hljs-name"><span class="hljs-built_in">values</span></span> <span class="hljs-number">1</span> <span class="hljs-number">2</span>)])<br>  (<span class="hljs-name"><span class="hljs-built_in">+</span></span> a b))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>(call-with-values producer consumer): producer产生多个值, 然后将这些值传<br>递给consumer.注意producer必须可以不带参数的方式来调用</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">call-with-values</span></span><br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> () (<span class="hljs-name"><span class="hljs-built_in">values</span></span> <span class="hljs-symbol">&#x27;bond</span> <span class="hljs-symbol">&#x27;james</span>))<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x y) (<span class="hljs-name"><span class="hljs-built_in">cons</span></span> y x)))  <span class="hljs-comment">; the result is (james . bond)</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="内置的函数"><a href="#内置的函数" class="headerlink" title="内置的函数"></a>内置的函数</h2><h3 id="predication"><a href="#predication" class="headerlink" title="predication"></a>predication</h3><ol>
+<li>= : 只用来比较整数, 不要用来比较浮点数</li>
+<li>eq? : 可以类似的看作是指针比较, 即便是内容相同,但是如果是两个不同对象,它 就返回 <code>#f</code>, 比如 <code>(eq? (cons &#39;a &#39;b) (cons &#39;a &#39;b))</code> 虽然是同样的list, 可 是它在内存中的位置不同,所以为 #f.<br>有以下几种情况是相等的.<ul>
+<li><p>#t, #f, 两个identifier的值如果都是#t或者#f,那么它们相等</p>
+</li>
+<li><p>相同的符号(symbol), 比如</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> sym1 <span class="hljs-symbol">&#x27;hello</span>)<br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> sym2 <span class="hljs-symbol">&#x27;hello</span>)<br>(<span class="hljs-name"><span class="hljs-built_in">eq?</span></span> sym1 sym2)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>‘()</p>
+</li>
+</ul>
+</li>
+<li>eqv? : 和 <code>eq?</code> 很类似, 只是它在一些 <code>eq?</code> 没有定义的地方也可以使用</li>
+<li>equal? : 只要内容相同,它就会返回 #t,可以认为它的检查比 <code>eq?</code> 宽松</li>
+<li>boolean? : 等价于 <code>(lambda (x) (or (eq? x #t) (eq? x #f)))</code></li>
+<li>null? : 只作用于list, only <code>(null? &#39;())</code> return <code>#t</code>.</li>
+<li>pair? :</li>
+<li>number? :</li>
+<li>complex? :</li>
+<li>rational? :</li>
+<li>real? :</li>
+<li>integer? :</li>
+<li>char? :</li>
+<li>string? :</li>
+<li>vector? :</li>
+<li>symbol? :</li>
+<li>procedure? :</li>
+<li>bytevector? :</li>
+<li>hashtable? :</li>
+</ol>
+<h3 id="list-procedure"><a href="#list-procedure" class="headerlink" title="list procedure"></a>list procedure</h3><p><code>list</code> 的语法定义:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">List ::= &#x27;()<br>     ::= (Sexp . List)<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>cons: (cons ‘a ‘b) &#x3D;&#x3D;&gt; (a . b),只能带两个参数</p>
+</li>
+<li><p>cons* : (cons* ‘a ‘b ‘c) &#x3D;&#x3D;&gt; (a b . c) (cons* ‘a ‘b ‘(c)) &#x3D;&#x3D;&gt;<br>(a b c)</p>
+</li>
+<li><p>car: the firsts element of pair (<strong>only for non-empty list</strong> )</p>
+</li>
+<li><p>cdr: Only for non-empty list, the cdr of any non-empty list is also<br>a list.</p>
+</li>
+<li><p>set-car! :有副作用, 会原地改变pair的值</p>
+</li>
+<li><p>set-cdr! :</p>
+</li>
+<li><p>car, caar, caaar…etc: 连续执行n次(a的次数)car (caar ‘((5)) ) &#x3D;&#x3D;&#x3D;&gt; 5</p>
+</li>
+<li><p>cdr cddr cdddr …etc : 连续执行n次(d的个数)cdr</p>
+</li>
+<li><p>cadar : (car (cdr (car lst))) 记住按照顺序从左到右,最右边的先对list起作用</p>
+</li>
+<li><p>list: 创建一个list eg: (list 1 2 3 4) &#x3D;&#x3D;&#x3D;&gt; ‘(1 2 3 4)</p>
+</li>
+<li><p>length: list的长度</p>
+</li>
+<li><p>append: 将一个list添加另一个list的后边,eg: (append ‘(1 2) ‘(3 4)) &#x3D;&#x3D;&#x3D;&gt; ‘(1 2 3</p>
+<ol start="4">
+<li></li>
+</ol>
+</li>
+<li><p>reverse: 将list倒转</p>
+</li>
+<li><p>(list-ref list n): 第n个元素</p>
+</li>
+<li><p>(list-tail list n) : 倒数第n个元素</p>
+</li>
+<li><p>memq memv member memp 分别用eq? eqv? equal? 指定的procedure 来测试一个元<br>素是否属于list, 如果属于那么就返回包括该元素以及该元素后面的元素组成的 list, <code>(memq &#39;a &#39;(b c a d e)) --&gt; (a d e)</code></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> memq<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x ls)<br>    (<span class="hljs-name"><span class="hljs-built_in">cond</span></span><br>      ((<span class="hljs-name"><span class="hljs-built_in">null?</span></span> ls) <span class="hljs-literal">#f</span>)<br>      ((<span class="hljs-name"><span class="hljs-built_in">eq?</span></span> (<span class="hljs-name"><span class="hljs-built_in">car</span></span> ls) x) ls)<br>      (<span class="hljs-name"><span class="hljs-built_in">else</span></span> (<span class="hljs-name"><span class="hljs-built_in">memq</span></span> x (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> ls))))))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>remq (obj list) remv remove remp 删除list中的所有obj</p>
+</li>
+<li><p>assq assv assoc assp 可以看做是关联数组((key1 . val1) (key2 . val2) …)</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> assq<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x ls)<br>    (<span class="hljs-name"><span class="hljs-built_in">cond</span></span><br>      ((<span class="hljs-name"><span class="hljs-built_in">null?</span></span> ls) <span class="hljs-literal">#f</span>)<br>      ((<span class="hljs-name"><span class="hljs-built_in">eq?</span></span> (<span class="hljs-name"><span class="hljs-built_in">caar</span></span> ls) x) (<span class="hljs-name"><span class="hljs-built_in">car</span></span> ls))<br>      (<span class="hljs-name"><span class="hljs-built_in">else</span></span> (<span class="hljs-name"><span class="hljs-built_in">assq</span></span> x (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> ls))))))<br></code></pre></td></tr></table></figure>
+
+<p>返回第一个匹配的pair</p>
+</li>
+<li><p>(filter procedure list): return a list of the elements of list for<br>which procedure returns true</p>
+</li>
+<li><p>(partition procedure list): 返回两个list,第一个list包含所以使 <code>procedure</code><br>为#f的元素,第二个包含所有使 <code>procedure</code> 为 <code>#f</code> 的元素, <code>partition</code><br>的返回值可以使用 <code>let-values</code> 来绑定或者使用 <code>call-with-values</code><br>来调用其它函数</p>
+</li>
+<li><p>(find procedure list) : 返回第一个使procedure为#t的元素</p>
+</li>
+<li><p>(map f list1 list2 …)</p>
+</li>
+<li><p>(foldl f init list1 list2 …): <strong>racket 的内置版本有bug</strong></p>
+</li>
+<li><p>(foldr f init list1 list2 …):</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> foldl<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (f x ls)<br>    (<span class="hljs-name"><span class="hljs-built_in">cond</span></span><br>     [(<span class="hljs-name"><span class="hljs-built_in">null?</span></span> ls) x]<br>     [<span class="hljs-name"><span class="hljs-built_in">else</span></span><br>      (<span class="hljs-name">foldl</span> f (<span class="hljs-name">f</span> x (<span class="hljs-name"><span class="hljs-built_in">car</span></span> ls)) (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> ls))])))<br><span class="hljs-comment">;; (foldl op init &#x27;(1 2 3 4))</span><br><span class="hljs-comment">;; we can think foldl&#x27;s behavior like this: (init op 1 op 2 op 3 op 4)</span><br><span class="hljs-comment">;; op has left associativity</span><br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> foldr<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (f x ls)<br>    (<span class="hljs-name"><span class="hljs-built_in">cond</span></span><br>     [(<span class="hljs-name"><span class="hljs-built_in">null?</span></span> ls) x]<br>     [<span class="hljs-name"><span class="hljs-built_in">else</span></span><br>      (<span class="hljs-name">f</span> (<span class="hljs-name"><span class="hljs-built_in">car</span></span> ls) (<span class="hljs-name">foldr</span> f x (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> ls)))])))<br><span class="hljs-comment">;; (foldr op init &#x27;(1 2 3 4 5))</span><br><span class="hljs-comment">;; we can think foldl&#x27;s behavior like this: (1 op 2 op 3 op 4 op init)</span><br><span class="hljs-comment">;; op has right associativity</span><br><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="number-procedure"><a href="#number-procedure" class="headerlink" title="number procedure"></a>number procedure</h3><ol>
+<li>zero? :</li>
+<li>positive? :</li>
+<li>negative? :</li>
+<li>even? :</li>
+<li>odd? : 奇数</li>
+<li>数学函数: max, min, floor, ceiling(向+无穷取整),<br>truncate(向0取整),round(最接近的整数),<br>abs,gcd,expt(指数),三角系列函数(san,cos….)</li>
+</ol>
+<h3 id="char"><a href="#char" class="headerlink" title="char"></a>char</h3><p>字符使用 <code>#\x</code> 来表示,比如 <code>a</code> 就是 <code>#\a</code>,</p>
+<ul>
+<li><p>(char&#x3D;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char&lt;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char&gt;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char&lt;&#x3D;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char&gt;&#x3D;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char-ci&#x3D;? char1 char2 char3 …) 大小写敏感</p>
+</li>
+<li><p>(char-ci&lt;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char-ci&gt;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char-ci&lt;&#x3D;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char-ci&gt;&#x3D;? char1 char2 char3 …)</p>
+</li>
+<li><p>(char-upcase char) :大写,相对应的还有个char-downcase</p>
+</li>
+<li><p>(char-&gt;integer char)</p>
+</li>
+<li><p>(integer-&gt;char n)</p>
+</li>
+</ul>
+<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><p>双引号内的是字符串</p>
+<ul>
+<li>(string&#x3D;? char1 char2 char3 …)</li>
+<li>(string&lt;? char1 char2 char3 …)</li>
+<li>(string&gt;? char1 char2 char3 …)</li>
+<li>(string&lt;&#x3D;? char1 char2 char3 …)</li>
+<li>(string&gt;&#x3D;? char1 char2 char3 …)</li>
+<li>(string-ci&#x3D;? char1 char2 char3 …) 大小写敏感</li>
+<li>(string-ci&lt;? char1 char2 char3 …)</li>
+<li>(string-ci&gt;? char1 char2 char3 …)</li>
+<li>(string-ci&lt;&#x3D;? char1 char2 char3 …)</li>
+<li>(string-ci&gt;&#x3D;? char1 char2 char3 …)</li>
+<li>(string char …): 构建个包含指定的字符的字符串</li>
+<li>(make-string n), (make-string n char)</li>
+<li>(string-append string …)</li>
+<li>(substring string start end)</li>
+<li>(string-upcase string)</li>
+<li>(string-&gt;list): 把string转换成包含char的list</li>
+<li>(char-&gt;list lst)</li>
+</ul>
+<h3 id="vector-procedure"><a href="#vector-procedure" class="headerlink" title="vector procedure"></a>vector procedure</h3><p>list访问时需要遍历,不够高效, vector可以像数组一样O(1)时间内访问</p>
+<ol>
+<li>(vector obj …)</li>
+<li>make-vector: (make-vector 5 ‘a) &#x3D;&#x3D;&#x3D;&gt; #(a a a a a)</li>
+<li>vector-length: vector的长度</li>
+<li>(vector-ref vec n)</li>
+<li>(vector-set! vec n obj)</li>
+<li>(vector-fill vec obj): 所有的元素都替换为obj</li>
+<li>list-&gt;vector :</li>
+<li>vector-&gt;list :</li>
+</ol>
+<h3 id="symbol-procedure"><a href="#symbol-procedure" class="headerlink" title="symbol procedure"></a>symbol procedure</h3><p>每一个symbol在解释器内部都是指向同一个对象,所以用eq?来测试相同的symbol会返 回#t, 这也使得比较操作很高效</p>
+<ol>
+<li>symbol&#x3D;? :symbol是否相等,也可以用eq?来比较</li>
+<li>symbol-&gt;string:</li>
+<li>string-&gt;symbol:</li>
+</ol>
+<h3 id="Hash-Table"><a href="#Hash-Table" class="headerlink" title="Hash Table"></a>Hash Table</h3><ul>
+<li><p>(make-eq-hashtable) : 使用eq?来比较两个key, 返回一个hashtable</p>
+</li>
+<li><p>(make-eq-hashtable size)</p>
+</li>
+<li><p>(make-eqv-hashtable) : 使用eqv?来比较两个key</p>
+</li>
+<li><p>(make-eqv-hashtable size)</p>
+</li>
+<li><p>(make-hashtable hash equiv?) : hash指定hash函数, equiv?指定比较两个key的 函数</p>
+</li>
+<li><p>(make-hashtable hash equiv? size)</p>
+</li>
+<li><p>(hashtable-set! hashtable key obj) :</p>
+</li>
+<li><p>(hashtable-ref hashtable key default) :</p>
+</li>
+<li><p>(hashtable-delete! hashtable key) :</p>
+</li>
+<li><p>(hashtable-size hashtable) : hashtable的大小</p>
+</li>
+<li><p>(hashtable-contains? hashtable key) :测试是否包含指定的key</p>
+</li>
+</ul>
+<h2 id="macros"><a href="#macros" class="headerlink" title="macros"></a>macros</h2><p>定义一个宏实际上就是把一个keyword与一个 macro transformer 绑定, 一个macro<br>transformer一般就是一个带有一个参数的函数, 而macro transformer的输入是一个原<br>始代码的syntax object, 输出则是包含转换后代码的 syntax object. <code>syntax-rules</code><br>返回的就是一个macro transform.所以你可以抛开 <code>syntax-rules</code> 而这样写一个宏:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> self-as-string<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (stx)<br>    (<span class="hljs-name">datum-&gt;syntax</span> stx<br>                   (<span class="hljs-name">format</span> <span class="hljs-string">&quot;~s&quot;</span> (<span class="hljs-name">syntax-&gt;datum</span> stx)))))<br></code></pre></td></tr></table></figure>
+
+<h3 id="define-syntax"><a href="#define-syntax" class="headerlink" title="define-syntax"></a>define-syntax</h3><p>和define类似</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> let*<br>  (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>    [(<span class="hljs-name">_</span> () b1 b2 ...) (<span class="hljs-name"><span class="hljs-built_in">let</span></span> () b1 b2 ...)]<br>    [(<span class="hljs-name">_</span> ((<span class="hljs-name">i1</span> e1) (<span class="hljs-name">i2</span> e2) ...) b1 b2 ...)<br>     (<span class="hljs-name"><span class="hljs-built_in">let</span></span> ([<span class="hljs-name">i1</span> e1])<br>       (<span class="hljs-name"><span class="hljs-built_in">let*</span></span> ([<span class="hljs-name">i2</span> e2] ...) b1 b2 ...))]))<br></code></pre></td></tr></table></figure>
+
+<h3 id="let-syntax与letrec-syntax"><a href="#let-syntax与letrec-syntax" class="headerlink" title="let-syntax与letrec-syntax"></a>let-syntax与letrec-syntax</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ([<span class="hljs-name">f</span> (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x) (<span class="hljs-name"><span class="hljs-built_in">+</span></span> x <span class="hljs-number">1</span>))])<br>  (<span class="hljs-name"><span class="hljs-built_in">let-syntax</span></span> ([<span class="hljs-name">f</span> (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>                    [(<span class="hljs-name">_</span> x) x])]<br>               [<span class="hljs-name">g</span> (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>                    [(<span class="hljs-name">_</span> x) (<span class="hljs-name">f</span> x)])])<br>    (<span class="hljs-name"><span class="hljs-built_in">list</span></span> (<span class="hljs-name">f</span> <span class="hljs-number">1</span>) (<span class="hljs-name">g</span> <span class="hljs-number">1</span>)))) <span class="hljs-comment">;; (1 2)</span><br><br>(<span class="hljs-name"><span class="hljs-built_in">let</span></span> ([<span class="hljs-name">f</span> (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x) (<span class="hljs-name"><span class="hljs-built_in">+</span></span> x <span class="hljs-number">1</span>))])<br>  (<span class="hljs-name"><span class="hljs-built_in">letrec-syntax</span></span> ([<span class="hljs-name">f</span> (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>                       [(<span class="hljs-name">_</span> x) x])]<br>                  [<span class="hljs-name">g</span> (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> ()<br>                       [(<span class="hljs-name">_</span> x) (<span class="hljs-name">f</span> x)])])<br>    (<span class="hljs-name"><span class="hljs-built_in">list</span></span> (<span class="hljs-name">f</span> <span class="hljs-number">1</span>) (<span class="hljs-name">g</span> <span class="hljs-number">1</span>)))) <span class="hljs-comment">;; (1 1)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="syntax-rules"><a href="#syntax-rules" class="headerlink" title="syntax-rules"></a>syntax-rules</h3><p>基本语法: <code>(syntax-rules (literal ...) (pattern template) ...)</code></p>
+<p>返回一个transformer, 实际就是一个 <code>procedure</code>, 这个 <code>procedure</code> 接受一个 syntax<br>object,然后返回一个syntax object.</p>
+<ul>
+<li>literal: 一些关键字, 出现在pattern会原样匹配</li>
+<li>pattern: 用于匹配输入的表达式的模式</li>
+<li>template: 输出,记住template是原样输出,这是和syntax-case的最大区别.</li>
+<li>下划线’_‘: 可以匹配任何结构,一般用来代表宏名</li>
+<li>… : 代表前面的部分重复0次或者多次</li>
+</ul>
+<p>一个例子,这个例子实现一个类 <code>if</code> 的条件判断语句,他的形式是 <code>(my-if cond then exp1 else exp2)</code> 这看起来更可读性更好:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> my-if<br>  (<span class="hljs-name"><span class="hljs-built_in">syntax-rules</span></span> (<span class="hljs-name">then</span> else)<br>    [(<span class="hljs-name">_</span> condition then true-exp else false-exp)<br>     (<span class="hljs-name"><span class="hljs-built_in">if</span></span> condition true-exp false-exp)]))<br></code></pre></td></tr></table></figure>
+
+<p><code>then, else</code> 是关键字,所以它会原样的匹配输入</p>
+<h3 id="syntax-object"><a href="#syntax-object" class="headerlink" title="syntax object"></a>syntax object</h3><p><code>(syntax template)</code> 的缩写为 <code>#&#39;template</code>, syntax和quote很类似,只是它会将<br>template中的pattern variable替换掉, 并且会绑定上下文信息</p>
+<ol>
+<li>syntax: 创建一个字面的 syntax object,比如 <code>(syntax &#39;(+ 1 x))</code>, 简写 <code>#&#39;(+ 1 x)</code>.</li>
+<li>syntax-&gt;datum: 将一个syntax object转换为它原来的内容.</li>
+<li>identifier? : 测试一个syntax object 是不是标识符</li>
+<li>syntax-e : 只解包一层.</li>
+</ol>
+<h3 id="syntax-case"><a href="#syntax-case" class="headerlink" title="syntax-case"></a>syntax-case</h3><p>比 <code>syntax-rules</code> 更具一般性,而且更通用, 使用syntax-case的一般形式是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs example">(define-syntax macro-name<br>   (lambda (x)<br>     (syntax-case x (other keywords go here if any)<br>       [<br>         (macro-name macro-arg1 macro-arg2)<br>         ;;Expansion of macro (one or multiple forms)<br>         ;;(syntax is a reserved word)<br>         (syntax (expansion of macro goes here))<br>       ]  ...<br> )))<br></code></pre></td></tr></table></figure>
+
+<p>解释一下上面的代码: 整个lambda定义的就是一个macro transformer, 它的唯一参数 x<br>实际就是一个包含了原始代码的syntax object. 通过syntax-case<br>来匹配x,然后返 回一个包含了转换后代码的syntax object</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> my-if<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x)<br>    (<span class="hljs-name"><span class="hljs-built_in">syntax-case</span></span> x (<span class="hljs-name">then</span> else)<br>      [(<span class="hljs-name">_</span> condition then true-exp else false-exp)<br>       (<span class="hljs-name"><span class="hljs-built_in">syntax</span></span> (<span class="hljs-name"><span class="hljs-built_in">if</span></span> condition true-exp false-exp))])))<br><span class="hljs-comment">;;Define a new macro</span><br>(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> swap!<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x)<br>    <span class="hljs-comment">;;we don&#x27;t have any keywords this time</span><br>    (<span class="hljs-name"><span class="hljs-built_in">syntax-case</span></span> x ()<br>      [(<span class="hljs-name">swap!</span> a b)<br>       (<span class="hljs-name"><span class="hljs-built_in">syntax</span></span><br>        (<span class="hljs-name"><span class="hljs-built_in">let</span></span> ((<span class="hljs-name">c</span> a))<br>          (<span class="hljs-name"><span class="hljs-built_in">set!</span></span> a b)<br>          (<span class="hljs-name"><span class="hljs-built_in">set!</span></span> b c)))]<br>      )))<br><br>(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> syntax-rules<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x)<br>    (<span class="hljs-name"><span class="hljs-built_in">syntax-case</span></span> x ()<br>      [(<span class="hljs-name">_</span> (<span class="hljs-name">i</span> ...) ((<span class="hljs-name">keyword</span> . pattern) template) ...)<br>       #&#x27;(lambda (x)<br>           (syntax-case x (i ...)<br>             [(_ . pattern) #<span class="hljs-symbol">&#x27;template</span>] ...))])))<br></code></pre></td></tr></table></figure>
+
+<h3 id="with-syntax"><a href="#with-syntax" class="headerlink" title="with-syntax"></a>with-syntax</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define-syntax</span></span> with-syntax<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x)<br>    (<span class="hljs-name"><span class="hljs-built_in">syntax-case</span></span> x ()<br>      [(<span class="hljs-name">_</span> ((<span class="hljs-name">p</span> e) ...) b1 b2 ...)<br>       #&#x27;(syntax-case (list e ...) ()<br>           [(p ...) (let () b1 b2 ...)])])))<br></code></pre></td></tr></table></figure>
+
+<h2 id="input-and-output"><a href="#input-and-output" class="headerlink" title="input and output"></a>input and output</h2><h3 id="port"><a href="#port" class="headerlink" title="port"></a>port</h3><p>scheme的输入输出用到一个叫做port的对象,port也是first class object, port有很<br>多种类,比如文件,字符缓冲区, tcp网络连接, 管道等等</p>
+<ol>
+<li>文件:<ul>
+<li><p>(open-output-file fname) : 返回一个port,用于将内容写入到文件</p>
+</li>
+<li><p>(open-input-file fname) : 返回一个port用于读取指定文件的内容</p>
+</li>
+<li><p>(close-output-port port)</p>
+</li>
+<li><p>(close-input-port port)<br>还有一种常用方式(更简单, 会自动关闭port):</p>
+</li>
+<li><p>(call-with-input-file filename proc) : 打开filename并将得到的port传递<br>给proc, 并且调用完成时会关闭port</p>
+</li>
+<li><p>(call-with-output-file filename proc) : 打开filename并将得到的port传递<br>给proc, 并且调用完成时会关闭port</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">call-with-output-file</span></span> <span class="hljs-string">&quot;data&quot;</span><br>  #:exists <span class="hljs-symbol">&#x27;truncate</span><br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (out)<br>    (<span class="hljs-name"><span class="hljs-built_in">display</span></span> <span class="hljs-string">&quot;hello&quot;</span> out)))<br><br>(<span class="hljs-name"><span class="hljs-built_in">call-with-input-file</span></span> <span class="hljs-string">&quot;data&quot;</span><br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (in)<br>    (<span class="hljs-name">read-line</span> in)))<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>字符缓冲区<ul>
+<li>(open-output-string) :</li>
+<li>(open-input-string “xxx”):</li>
+</ul>
+</li>
+</ol>
+<!-- end list -->
+
+<ol>
+<li><p>default port</p>
+<p>默认解释器会打开2个port, 一个输入,一个输出,分别会绑定到shell的输入输出,很 多实现还会打开一个error<br>port,用于IO的scheme procedure都可以带一个可选的参 数port, 如果不指定port,<br>那么就使用默认的port, 默认的port有这两个函数获得</p>
+<ul>
+<li>(current-input-port)</li>
+<li>(current-output-port)</li>
+</ul>
+<p>如果要改变默认的port,可以使用下面的两个函数:</p>
+<ul>
+<li>(with-input-from-file filename thunk) : 将默认的 input port重新绑定到文<br>件,这可以实现重定向</li>
+<li>(with-output-from-file filename thunk) : 将默认的 output port重新绑定到<br>文件,这可以实现重定向</li>
+</ul>
+</li>
+</ol>
+<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><ul>
+<li>输入:<ol>
+<li>read: 它会自动将读入的内容转换为scheme内置的数据结构,实际是一个递归下 降的parser</li>
+<li>(read-char), (read-char input-port): next character</li>
+</ol>
+</li>
+<li>输出:<ol>
+<li>print</li>
+<li>write</li>
+<li>display</li>
+<li>printf: 可以指定一个字符串来格式化,用的较多</li>
+<li>fprintf: 写入文件,多一个port参数</li>
+</ol>
+</li>
+</ul>
+<h3 id="code-example"><a href="#code-example" class="headerlink" title="code example"></a>code example</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">call-with-input-file</span></span> <span class="hljs-string">&quot;myfile.ss&quot;</span><br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (p)<br>    (<span class="hljs-name"><span class="hljs-built_in">let</span></span> f ((<span class="hljs-name">x</span> (<span class="hljs-name"><span class="hljs-built_in">read</span></span> p)))<br>      (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">eof-object?</span></span> x)<br>          &#x27;()<br>          (<span class="hljs-name"><span class="hljs-built_in">cons</span></span> x (<span class="hljs-name">f</span> (<span class="hljs-name"><span class="hljs-built_in">read</span></span> p)))))))<br><br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> read-word<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (p)<br>    (<span class="hljs-name"><span class="hljs-built_in">list-&gt;string</span></span><br>      (<span class="hljs-name"><span class="hljs-built_in">let</span></span> f ()<br>        (<span class="hljs-name"><span class="hljs-built_in">let</span></span> ((<span class="hljs-name">c</span> (<span class="hljs-name"><span class="hljs-built_in">peek-char</span></span> p)))<br>          (<span class="hljs-name"><span class="hljs-built_in">cond</span></span><br>            ((<span class="hljs-name"><span class="hljs-built_in">eof-object?</span></span> c) &#x27;())<br>            ((<span class="hljs-name"><span class="hljs-built_in">char-alphabetic?</span></span> c)<br>             (<span class="hljs-name"><span class="hljs-built_in">read-char</span></span> p)<br>             (<span class="hljs-name"><span class="hljs-built_in">cons</span></span> c (<span class="hljs-name">f</span>)))<br>            (<span class="hljs-name"><span class="hljs-built_in">else</span></span> &#x27;())))))))<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="递归思想"><a href="#递归思想" class="headerlink" title="递归思想"></a>递归思想</h2><p>递归的思想要从逻辑上理解，在设计一个递归函数时，一开始就要明确该函数在逻辑上<br>的作用(不要一开始就陷入编码细节中)，然后分清该函数在逻辑上与子问题的联系，并<br>以此为 依据来进行函数体的设计, 特别需要注意检查结束条件,比如加法(0), 乘法 (1), list(‘())就是一些结束条件.</p>
+<p>递归函数的设计要点：</p>
+<ol>
+<li>要明确检查终止条件（null？ zero？）</li>
+<li>要明确与子问题的关系，弄清分类的情况（cond）</li>
+</ol>
+<h2 id="continuation"><a href="#continuation" class="headerlink" title="continuation"></a>continuation</h2><p>scheme中获得当前continuation的构造是call&#x2F;cc, let&#x2F;cc</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">let/cc</span> k                               <span class="hljs-comment">;k is the continuation</span><br>        body)<br><span class="hljs-comment">;;; identical</span><br>(<span class="hljs-name"><span class="hljs-built_in">call/cc</span></span> (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (k)                    <span class="hljs-comment">;k is the continuation</span><br>           body))<br></code></pre></td></tr></table></figure>
+
+<h2 id="停机问题"><a href="#停机问题" class="headerlink" title="停机问题"></a>停机问题</h2><figure class="highlight scheme"><figcaption><span>numberLines</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> last-try<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> ( x )<br>    (<span class="hljs-name"><span class="hljs-built_in">and</span></span> ( will-stop ? last-try)<br>         ( eternity x ))))<br></code></pre></td></tr></table></figure>
+
+<p>上述代码中:eternity会永远运行,比如:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> eternity<br>  (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (x)<br>    (<span class="hljs-name">eternity</span> x)))<br></code></pre></td></tr></table></figure>
+
+<p>假设存在停机函数 <code>will-stop?</code>, <code>will-stop?</code> 可以测试出一个函数是否会停机.那么:</p>
+<ol>
+<li>假设 <code>last-try</code> 会停机, 那么 <code>(will-stop? last-try)</code> 返回 #t, 因此也就会运行<br><code>(eternity x)</code>, 前面说了, eternity会永远运行, 所以 <code>last-try</code> 不会停机.</li>
+<li>假设 <code>last-try</code> 不停机, 那么 <code>(will-stop? last-try)</code> 返回 #f, 因此也就不会运 行<br><code>(eternity x)</code>, 那么 <code>last-try</code> 很显然就会返回. 所以 <code>last-try</code> 会停机</li>
+</ol>
+<p>因此这就是个悖论.因此停机函数 will-stop?不存在</p>
+<h2 id="some-example-code-the-little-schemer"><a href="#some-example-code-the-little-schemer" class="headerlink" title="some example code(the little schemer)"></a>some example code(the little schemer)</h2><h1 id="racket"><a href="#racket" class="headerlink" title="racket"></a>racket</h1><h2 id="struct-新的数据类型-struct"><a href="#struct-新的数据类型-struct" class="headerlink" title="struct(新的数据类型) struct"></a>struct(新的数据类型) <span class="tag" data-tag-name="struct"><span class="smallcaps">struct</span></span></h2><p>语法形式: <code>(struct struct-id (field-id ...))</code></p>
+<ul>
+<li>struct-id : 是一个constructor, 可以用来构建一个该数据类型的实例</li>
+<li>struct-id? :一个predication,测试是否是该数据类型的实例</li>
+<li>struct-id-field-id: 从实例中获取 <code>field-id</code> 属性的值</li>
+</ul>
+<p>下面来看个例子:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">struct</span> posn (<span class="hljs-name">x</span> y))                     <span class="hljs-comment">;定义一个posn类型</span><br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> pos1 (<span class="hljs-name">posn</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span>))                <span class="hljs-comment">;struct-id: 构建一个posn实例</span><br>(<span class="hljs-name">posn?</span> pos1)                            <span class="hljs-comment">;struct-id?: 是否为一个posn对象实例</span><br>(<span class="hljs-name">posn-x</span> pos1)                           <span class="hljs-comment">;struct-id-field-id: 获得x属性</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="复制更新"><a href="#复制更新" class="headerlink" title="复制更新"></a>复制更新</h3><p>根据已有对象更新其中的特定域然后返回新对象</p>
+<p>语法形式: <code>(struct-copy struct-id struct-expr [field-id expr] ...)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs example">Examples:<br><br>&gt; (define p1 (posn 1 2))<br>&gt; (define p2 (struct-copy posn p1 [x 3]))<br>&gt; (list (posn-x p2) (posn-y p2))<br><br>&#x27;(3 2)<br>&gt; (list (posn-x p1) (posn-x p2))<br><br>&#x27;(1 3)<br></code></pre></td></tr></table></figure>
+
+<h3 id="subtypes-类似于继承-subtypes"><a href="#subtypes-类似于继承-subtypes" class="headerlink" title="subtypes(类似于继承) subtypes"></a>subtypes(类似于继承) <span class="tag" data-tag-name="subtypes"><span class="smallcaps">subtypes</span></span></h3><p>语法形式: <code>(struct struct-id super-id (field-id ...))</code></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">struct</span> posn (<span class="hljs-name">x</span> y))<br>(<span class="hljs-name">struct</span> pos3d posn (<span class="hljs-name">z</span>))<br></code></pre></td></tr></table></figure>
+
+<p>那么pos3d就有 <code>(x y z)</code> 三个属性</p>
+<h2 id="match-模式匹配-match"><a href="#match-模式匹配-match" class="headerlink" title="match(模式匹配) match"></a>match(模式匹配) <span class="tag" data-tag-name="match"><span class="smallcaps">match</span></span></h2><p>正则表达式只能用来匹配字符串,而 <code>match</code> 可以用来匹配任何的 <code>scheme value</code>, 它的语法形式如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">(match target-expr<br>  [pattern expr ...+] ...)<br></code></pre></td></tr></table></figure>
+
+<p>将 <code>target-expr</code> 与 pattern匹配, 如果匹配成功就执行后面的expr, 对pattern的 语法要做以下说明:</p>
+<ul>
+<li><p>… 或 <span class="underline">_</span> : 代表0次或者多次</p>
+</li>
+<li><p>..k 或 _<sub>k</sub> : 代表至少 <code>k</code> 此 下面是一个将let转换为等价的lambda形式的例子</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">match</span> &#x27;(let ([a <span class="hljs-number">1</span>]<br>              [b <span class="hljs-number">2</span>])<br>          (set! a <span class="hljs-number">11</span>)<br>          (- a b))<br>       [`(let ([,var* ,val*] ...) ,body* ...)<br>        `((lambda (,@var*)<br>            ,@body*) ,@val*)])<br></code></pre></td></tr></table></figure>
+
+<p>注意因为…的作用,上面的var*, val*, body*都是列表, 所以在后面需要使用 ,@来 分解.</p>
+</li>
+<li><p>literal: 字面值直接用 <code>equal?</code> 测试是否相等</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">match</span> <span class="hljs-number">2</span><br>       [<span class="hljs-name">1</span> <span class="hljs-symbol">&#x27;one</span>]<br>       [<span class="hljs-name">2</span> <span class="hljs-symbol">&#x27;two</span>]<br>       [<span class="hljs-name">3</span> <span class="hljs-symbol">&#x27;three</span>])<br>(<span class="hljs-name">match</span> <span class="hljs-literal">#f</span><br>       [<span class="hljs-literal">#t</span> <span class="hljs-symbol">&#x27;yes</span>]<br>       [<span class="hljs-literal">#f</span> <span class="hljs-symbol">&#x27;no</span>])<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>(list lvp …): 会绑定对应的标识符,注意几个特殊符号,vector和list类似</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">match</span> &#x27;(<span class="hljs-number">1</span> + <span class="hljs-number">2</span>)<br>[(<span class="hljs-name"><span class="hljs-built_in">list</span></span> a <span class="hljs-symbol">&#x27;+</span> b) (<span class="hljs-name"><span class="hljs-built_in">+</span></span> a b)])         <span class="hljs-comment">;return 3</span><br><br>(<span class="hljs-name">match</span> &#x27;(<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>)<br>[(<span class="hljs-name"><span class="hljs-built_in">list</span></span> <span class="hljs-number">1</span> a ...) a])                 <span class="hljs-comment">;return &#x27;(2 3)</span><br><br>(<span class="hljs-name">match</span> &#x27;(<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span>)<br>[(<span class="hljs-name"><span class="hljs-built_in">list</span></span> <span class="hljs-number">1</span> a ..3) a]<br>[<span class="hljs-name">_</span> <span class="hljs-symbol">&#x27;else</span>])                          <span class="hljs-comment">;return &#x27;(2 3 4)</span><br></code></pre></td></tr></table></figure>
+
+<p>上例中 <code>a b</code> 就被绑定为 1, 2</p>
+</li>
+<li><p>(struct-id pat …)或者(struct struct-id (pat …)):匹配一个实例,并且绑定 一些变量</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">define-struct</span> tree (<span class="hljs-name">val</span> left right))<br>(<span class="hljs-name">match</span> (<span class="hljs-name">make-tree</span> <span class="hljs-number">0</span> (<span class="hljs-name">make-tree</span> <span class="hljs-number">1</span> <span class="hljs-literal">#f</span> <span class="hljs-literal">#f</span>) <span class="hljs-literal">#f</span>)<br>       [(<span class="hljs-name">tree</span> a (<span class="hljs-name">tree</span> b  _ _) _) (<span class="hljs-name"><span class="hljs-built_in">list</span></span> a b)])       <span class="hljs-comment">;&#x27;(0 1)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>(struct struct-id _) :匹配任何 struct-id的实例</p>
+</li>
+<li><p>(? expr pat …): expr是一个predication, 只有它返回true的时候,才会匹配后 面的pat</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">match</span> &#x27;(<span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">5</span>)<br>       [(<span class="hljs-name"><span class="hljs-built_in">list</span></span> (<span class="hljs-name">?</span> odd?) ...) <span class="hljs-symbol">&#x27;yes</span>])<br></code></pre></td></tr></table></figure>
+
+<p>它的工作原理是这样,以下面的例子为例:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">match</span> &#x27;((<span class="hljs-number">1</span> <span class="hljs-number">2</span>) <span class="hljs-number">3</span> <span class="hljs-number">6</span>)<br>       [`(,(? pred? `(,a1 ,a2)) ,b ,c) `(,a1 ,b ,c)])<br></code></pre></td></tr></table></figure>
+
+<p>如果上面的例子匹配, 那么b, c应该分别绑定3, 6, 那么前面的 <code>(? pred? `(,a1 ,a2))</code> 应该匹配(1 2), 所以先将(1 2) 传递给pred?, 如果pred? 返回#t, 那么接 着用(1 2)<br>去匹配后面的`(,a1 ,a2). 也就是说pred? 只会检查(? pred? …) 匹配 的那一部分.</p>
+</li>
+<li><p>(quasiquote qp): unqote或unquote-splicing的部分会绑定为变量,其它部分会原样匹配</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">match</span> &#x27;(<span class="hljs-number">1</span> + <span class="hljs-number">2</span>)<br>[`(,a + ,b) (<span class="hljs-name"><span class="hljs-built_in">+</span></span> a b)])<br></code></pre></td></tr></table></figure>
+
+<p>a b都是unquote指定的部分,所以绑定为变量, 其它部分比如 + 就原样匹配, 可以和 (? expr pat …)结合使用:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">match</span> &#x27;(+ a <span class="hljs-string">&quot;hello&quot;</span>)<br>       [`(+ a ,(? number? x)) x]<br>       [`(+ a ,(? string? x)) x])<br></code></pre></td></tr></table></figure>
+
+<p>关于quasiquote的一些说明:</p>
+<ul>
+<li><p>quasiquote(`): 和quote(‘)类似, 只是表达式中的unquote会求值在返回,如果没<br>有unquote,那么它的行为就和 <code>quote</code> 一样,来看几个例子: <code>(cons a b)</code> 等价于<br><code>`(,a ,b)</code></p>
+</li>
+<li><p>unquote(,): 指定的部分会先求职,在插入list中</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">quasiquote</span></span> (<span class="hljs-name">1</span> <span class="hljs-number">2</span> (<span class="hljs-name">unquote</span> (<span class="hljs-name"><span class="hljs-built_in">+</span></span> <span class="hljs-number">1</span> <span class="hljs-number">2</span>)) (<span class="hljs-name">unquote</span> (<span class="hljs-name"><span class="hljs-built_in">-</span></span> <span class="hljs-number">5</span> <span class="hljs-number">1</span>))))<br><span class="hljs-comment">;;; equivalent</span><br>`(<span class="hljs-number">1</span> <span class="hljs-number">2</span> ,(+ <span class="hljs-number">1</span> <span class="hljs-number">2</span>) ,(+ <span class="hljs-number">5</span> <span class="hljs-number">1</span>))                <span class="hljs-comment">;&#x27;(1 2 3 6)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>unquote-splicing(,@): 和unquote的行为类似, 只是它所指定的表达式求值后必<br>须返回list,这个list中的元素会拆开然后插入原list中</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scheme">`(<span class="hljs-number">1</span> <span class="hljs-number">2</span> ,@(list (+ <span class="hljs-number">1</span> <span class="hljs-number">2</span>) (<span class="hljs-number">2</span> <span class="hljs-number">2</span>)) <span class="hljs-number">5</span>)         <span class="hljs-comment">;&#x27;(1 2 3 4 5)</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><p>module的基本语法是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">(module name-id initial-module-path<br>  decl ...)<br></code></pre></td></tr></table></figure>
+
+<p>例子:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">module</span> cake racket<br>        (<span class="hljs-name"><span class="hljs-built_in">provide</span></span> print-cake)<br><br>        (<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">print-cake</span> n)<br>          (<span class="hljs-name">show</span> <span class="hljs-string">&quot;   ~a   &quot;</span> n <span class="hljs-literal">#\.</span>)<br>          (<span class="hljs-name">show</span> <span class="hljs-string">&quot; .-~a-. &quot;</span> n <span class="hljs-literal">#\|</span>)<br>          (<span class="hljs-name">show</span> <span class="hljs-string">&quot; | ~a | &quot;</span> n <span class="hljs-literal">#\space</span>)<br>          (<span class="hljs-name">show</span> <span class="hljs-string">&quot;---~a---&quot;</span> n <span class="hljs-literal">#\-</span>))<br><br>        (<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">show</span> fmt n ch)<br>          (<span class="hljs-name">printf</span> fmt (<span class="hljs-name"><span class="hljs-built_in">make-string</span></span> n ch))<br>          (<span class="hljs-name"><span class="hljs-built_in">newline</span></span>)))<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>name-id: module的名字,上例是 <code>cake</code></li>
+<li>initial-module-path: 初始化要导入的module, 上例是 <code>racket</code></li>
+<li>provide : 可选的,也就是规定哪些东西是可以导出的,上例中 <code>print-cake</code> 会导 出,但是 <code>show</code> 是模块私有,<br>如果不提供 <code>provide</code> 那么所有的属性都是私有的, 所以一个模块必须指定 <code>provide</code> 才对导入者有意义</li>
+</ul>
+<p>声明一个模块并不会直接对模块的 <code>body</code> 部分求值,只有当使用 <code>require</code> 明确导 入该模块时才会求值</p>
+<h3 id="submodule"><a href="#submodule" class="headerlink" title="submodule"></a>submodule</h3><p>一个文件只能包含一个顶层模块,这个模块可以通过 <code>module</code> 指定,也可以通 过 <code>lang lang-name</code> 来间接的指定,<br>那么在这个顶层模块中又可以定义子模块,比 如如下代码:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scheme">#lang racket<br>(<span class="hljs-name">module</span> zoo racket<br>        (<span class="hljs-name"><span class="hljs-built_in">provide</span></span> tiger)<br>        (<span class="hljs-name"><span class="hljs-built_in">define</span></span> tiger <span class="hljs-string">&quot;Tony&quot;</span>))<br><br>(<span class="hljs-name"><span class="hljs-built_in">require</span></span> <span class="hljs-symbol">&#x27;zoo</span>)<br><br>tiger<br></code></pre></td></tr></table></figure>
+
+<p>上面的代码(假设文件名是park.rtk) <code>#lang racket</code> 指定了顶层模块, 而 <code>zoo</code> 是 一个子模块,<br>在顶层模块中可以直接通过 <code>(require &#39;zoo)</code> 来包含子模块, 如果是 在该文件以外,<br>你需要导入该文件的模块, 使用 <code>(require &quot;park.rtk&quot;)</code> 只会导入 顶层模块, 使用submode语法比如<br><code>(require (submod &quot;park.rtk&quot; zoo))</code> 就可以导 入子模块了</p>
+<ol>
+<li><p>module* :module*:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">(module* name-id initial-module-path-or-#f<br>decl ...)<br></code></pre></td></tr></table></figure>
+
+<p>使用 <code>module</code> 声明的子模块可以可以被父模块导入, 但是子模块不能导入父模块, 而恰恰相反,使用 <code>module*</code><br>声明的模块可以导入父模块, 可是父模块不能导入该子 模块, 如果指定 <code>#f</code> 作为默认导入模块,<br>那么父模块中的所有绑定在子模块中都可 见.</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs scheme">#lang racket<br><br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">print-cake</span> n)<br>  (<span class="hljs-name">show</span> <span class="hljs-string">&quot;   ~a   &quot;</span> n <span class="hljs-literal">#\.</span>)<br>  (<span class="hljs-name">show</span> <span class="hljs-string">&quot; .-~a-. &quot;</span> n <span class="hljs-literal">#\|</span>)<br>  (<span class="hljs-name">show</span> <span class="hljs-string">&quot; | ~a | &quot;</span> n <span class="hljs-literal">#\space</span>)<br>  (<span class="hljs-name">show</span> <span class="hljs-string">&quot;---~a---&quot;</span> n <span class="hljs-literal">#\-</span>))<br><br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">show</span> fmt n ch)<br>  (<span class="hljs-name">printf</span> fmt (<span class="hljs-name"><span class="hljs-built_in">make-string</span></span> n ch))<br>  (<span class="hljs-name"><span class="hljs-built_in">newline</span></span>))<br><br>(<span class="hljs-name">module*</span> main <span class="hljs-literal">#f</span><br>         (<span class="hljs-name">print-cake</span> <span class="hljs-number">10</span>))<br></code></pre></td></tr></table></figure>
+
+<p>在上面的 <code>main</code> 这个submodule中, 顶层模块的所有绑定都可见, 注意当一个<br>submodule的名字为main时,有一个特殊的地方,也就是说当前的文件作为执行文件时<br>(racket file-name.rtk),即便你没有使用 <code>(require &#39;main)</code> 语句, 这个子模块仍<br>然会运行,和python的&#x3D;ifmain&#x3D; 很类似,所以这个main模块可以写一些本模块的测试 代码</p>
+</li>
+<li><p>module+ :module+:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">(module+ name-id<br>decl ...)<br></code></pre></td></tr></table></figure>
+
+<p>等价于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">(module* name-id #f<br>  decl ...)<br></code></pre></td></tr></table></figure>
+
+<p>module+一般用来写 <code>test</code> 模块, 多个test模块会合并为一个test模块, 使用raco test<br>filename.rkt来运行测试代码</p>
+</li>
+</ol>
+<h3 id="lang"><a href="#lang" class="headerlink" title="lang"></a>lang</h3><p>racket的源文件一般需要使用 <code>#lang lang-name</code> 这样的方式来指定语言,这个实际是一 个module的简写方式,比如<br><code>#lang racket</code> 等价于:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">(module name racket<br>  decl ...)<br></code></pre></td></tr></table></figure>
+
+<p>所以 <code>#lang racket</code> 的意思就是定义一个module, 该模块的名字一般继承自文件名, 然后将racket作为初始模块导入.</p>
+<h3 id="require"><a href="#require" class="headerlink" title="require"></a>require</h3><ol>
+<li><p>如果是文件那么应该使用这样的语法:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">require</span></span> <span class="hljs-string">&quot;aa.rkt&quot;</span>)<br>(<span class="hljs-name"><span class="hljs-built_in">require</span></span> <span class="hljs-string">&quot;../aa.rkt&quot;</span>)<br>(<span class="hljs-name"><span class="hljs-built_in">require</span></span> <span class="hljs-string">&quot;../subdirectory/aa.rkt&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>以当前文件的路径为当前路径,使用和shell类似的路径表达方式来确定需要导入的模 块的名字,记住要带扩展名</p>
+</li>
+<li><p>当前文件的子模块: <code>(require &#39;name)</code></p>
+</li>
+<li><p>标准模块: <code>(require racket)</code></p>
+</li>
+<li><p>子模块: <code>(require (submod &quot;aa.rkt&quot; submod-name))</code></p>
+</li>
+</ol>
+<h3 id="provide"><a href="#provide" class="headerlink" title="provide"></a>provide</h3><ul>
+<li>导出所有: <code>(provide (all-defined-out))</code></li>
+<li>只导出通过require引入的绑定: <code>(provide (all-from-out))</code></li>
+<li>导出除指定的外所有的绑定: <code>(provide (except-out name ...))</code></li>
+<li>重命名: <code>(provide (rename-out [orgn-id export-id]))</code></li>
+</ul>
+<p>some example:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">provide</span></span> run run-all)<br>(<span class="hljs-name"><span class="hljs-built_in">provide</span></span> (<span class="hljs-name">all-defined-out</span>))<br></code></pre></td></tr></table></figure>
+
+<h1 id="typed-racket"><a href="#typed-racket" class="headerlink" title="typed racket"></a>typed racket</h1><h2 id="sample-program"><a href="#sample-program" class="headerlink" title="sample program"></a>sample program</h2><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scheme">#lang typed/racket<br>(<span class="hljs-name">struct:</span> pt ([<span class="hljs-name">x</span> : Real] [<span class="hljs-name">y</span> : Real]))<br><br>(<span class="hljs-name">:</span> distance (<span class="hljs-name">pt</span> pt -&gt; Real))<br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">distance</span> p1 p2)<br>  (<span class="hljs-name"><span class="hljs-built_in">sqrt</span></span> (<span class="hljs-name"><span class="hljs-built_in">+</span></span> (<span class="hljs-name">sqr</span> (<span class="hljs-name"><span class="hljs-built_in">-</span></span> (<span class="hljs-name">pt-x</span> p2) (<span class="hljs-name">pt-x</span> p1)))<br>           (<span class="hljs-name">sqr</span> (<span class="hljs-name"><span class="hljs-built_in">-</span></span> (<span class="hljs-name">pt-y</span> p2) (<span class="hljs-name">pt-y</span> p1))))))<br></code></pre></td></tr></table></figure>
+
+<h2 id="Types"><a href="#Types" class="headerlink" title="Types"></a>Types</h2><h3 id="Basic-Types"><a href="#Basic-Types" class="headerlink" title="Basic Types"></a>Basic Types</h3><ol>
+<li>Number</li>
+<li>Char</li>
+<li>String</li>
+<li>Boolean</li>
+</ol>
+<h3 id="Function-Type"><a href="#Function-Type" class="headerlink" title="Function Type"></a>Function Type</h3><p>(Number -&gt; Number) (String String -&gt; Number)</p>
+<h3 id="Union-Type"><a href="#Union-Type" class="headerlink" title="Union Type"></a>Union Type</h3><p>当一个类型有几种变种时, 应该使用Union Type</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs scheme">#lang typed/racket<br>(<span class="hljs-name">define-type</span> Tree (<span class="hljs-name">U</span> leaf node))<br>(<span class="hljs-name">struct:</span> leaf ([<span class="hljs-name">val</span> : Number]))<br>(<span class="hljs-name">struct:</span> node ([<span class="hljs-name">left</span> : Tree] [<span class="hljs-name">right</span> : Tree]))<br><br>(<span class="hljs-name">:</span> tree-height (<span class="hljs-name">Tree</span> -&gt; Integer))<br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">tree-height</span> t)<br>  (<span class="hljs-name"><span class="hljs-built_in">cond</span></span> [(<span class="hljs-name">leaf?</span> t) <span class="hljs-number">1</span>]<br>        [<span class="hljs-name"><span class="hljs-built_in">else</span></span> (<span class="hljs-name"><span class="hljs-built_in">max</span></span> (<span class="hljs-name"><span class="hljs-built_in">+</span></span> <span class="hljs-number">1</span> (<span class="hljs-name">tree-height</span> (<span class="hljs-name">node-left</span> t)))<br>                   (<span class="hljs-name"><span class="hljs-built_in">+</span></span> <span class="hljs-number">1</span> (<span class="hljs-name">tree-height</span> (<span class="hljs-name">node-right</span> t))))]))<br><br></code></pre></td></tr></table></figure>
+
+<p>上面的Tree就包含两种类型, Node与Leaf</p>
+<h3 id="Recursive-Type"><a href="#Recursive-Type" class="headerlink" title="Recursive Type"></a>Recursive Type</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">define-type</span> BinaryTree (<span class="hljs-name">Rec</span> BT (<span class="hljs-name">U</span> Number (<span class="hljs-name">Pair</span> BT BT))))<br></code></pre></td></tr></table></figure>
+
+<h3 id="Subtyping"><a href="#Subtyping" class="headerlink" title="Subtyping"></a>Subtyping</h3><p>任何类型都是Any的子类型.</p>
+<h3 id="Polymorphism"><a href="#Polymorphism" class="headerlink" title="Polymorphism"></a>Polymorphism</h3><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name">:</span> list-length (<span class="hljs-name">All</span> (<span class="hljs-name">A</span>) ((<span class="hljs-name">Listof</span> A) -&gt; Integer)))<br>(<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">list-length</span> l)<br>  (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">null?</span></span> l)<br>      <span class="hljs-number">0</span><br>      (<span class="hljs-name">add1</span> (<span class="hljs-name">list-length</span> (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> l)))))<br></code></pre></td></tr></table></figure>
+
+<p>注意上面的 <code>All</code>.</p>
+<h1 id="Footnotes"><a href="#Footnotes" class="headerlink" title="Footnotes"></a>Footnotes</h1>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/lisp/">lisp</a>
+                    
+                      <a class="hover-with-bg" href="/tags/lang/">lang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/scheme/">scheme</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2014/02/18/notes/javascript/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">js笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2014/02/18/notes/clojure/">
+                        <span class="hidden-mobile">Clojure笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2014/02/18/notes/scheme/';
+          this.page.identifier = '/2014/02/18/notes/scheme/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="go代码规范 使用驼峰命名法, 私有名字以小写字母开头，公有名字以大写字母开头, 也就是说 小写字母开头，那么只在本包内可见，大写字母开头才能在包外可见 大括号不要换行 包名最好文件夹名相同, 并且为小写  变量变量的声明主要有两种方法  var x type x :&#x3D; val  使用var声明引用变量是不会分配内存的，因此到底需不需要调用make来初始化则视情况而 定,map需要调用m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang笔记">
+<meta property="og:url" content="http://example.com/2014/02/11/notes/golang/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="go代码规范 使用驼峰命名法, 私有名字以小写字母开头，公有名字以大写字母开头, 也就是说 小写字母开头，那么只在本包内可见，大写字母开头才能在包外可见 大括号不要换行 包名最好文件夹名相同, 并且为小写  变量变量的声明主要有两种方法  var x type x :&#x3D; val  使用var声明引用变量是不会分配内存的，因此到底需不需要调用make来初始化则视情况而 定,map需要调用m">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2014-02-11T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-08T12:52:13.015Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="lang">
+<meta property="article:tag" content="golang">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>golang笔记 - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="golang笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2014-02-11 11:54" pubdate>
+        2014年2月11日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      10k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      86 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">golang笔记</h1>
+            
+            <div class="markdown-body">
+              <h1 id="go代码规范"><a href="#go代码规范" class="headerlink" title="go代码规范"></a>go代码规范</h1><ol>
+<li>使用驼峰命名法, 私有名字以小写字母开头，公有名字以大写字母开头, 也就是说 <strong>小写<br>字母开头，那么只在本包内可见，大写字母开头才能在包外可见</strong></li>
+<li>大括号不要换行</li>
+<li>包名最好文件夹名相同, 并且为小写</li>
+</ol>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>变量的声明主要有两种方法</p>
+<ol>
+<li>var x type</li>
+<li>x :&#x3D; val</li>
+</ol>
+<p>使用var声明引用变量是不会分配内存的，因此到底需不需要调用make来初始化则视情况而 定,<br><strong>map需要调用make来初始化，slice不需要</strong>.<br>这是因为即使是一个空的map，也需要一 些额外的内存来存储信息,<br>slice则不需要。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> s []<span class="hljs-type">int</span><br>s = <span class="hljs-built_in">append</span>(s, <span class="hljs-number">1</span>)      <span class="hljs-comment">// ok</span><br><br><span class="hljs-keyword">var</span> m <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>] <span class="hljs-type">int</span><br>m[<span class="hljs-string">&quot;aa&quot;</span>] = <span class="hljs-number">1</span>           <span class="hljs-comment">// error</span><br><br><span class="hljs-keyword">var</span> m <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>] <span class="hljs-type">int</span><br>m = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>)<br>m[<span class="hljs-string">&quot;aa&quot;</span>] = <span class="hljs-number">1</span>           <span class="hljs-comment">// ok</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><p>go引用提供了很多基本类型，这些基本类型分为两类：值类型和引用类型。 <strong>map，channel， slice,interface,<br>function，method是引用类型，其它的包括array，struct都是值类型</strong>. 这两种类型的不同在函数调用时会表现出不同。</p>
+<h2 id="nil"><a href="#nil" class="headerlink" title="nil"></a>nil</h2><p>只能赋值给 <strong>指针</strong> 和 <strong>引用</strong> 类型的变量. 实践中主要用来指示slice，map，interface<br>是未初始化的值。虽然nil和空的slice和map有很多相似之处，比如调用len会返回0，但是<br>他们并不是一回事。看下面的例子。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> slice []<span class="hljs-type">int</span>            <span class="hljs-comment">// slice == nil 返回true</span><br>slice = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>)     <span class="hljs-comment">// slice == nil 返回false</span><br><br><span class="hljs-keyword">var</span> mm <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>      <span class="hljs-comment">// mm == nil 返回true</span><br>mm = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>)  <span class="hljs-comment">// mm == nil返回false</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>slice, map, interface只能与nil进行比较</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> ss []<span class="hljs-type">int</span><br>ss == <span class="hljs-literal">nil</span>          <span class="hljs-comment">// ok</span><br>ss == []<span class="hljs-type">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;  <span class="hljs-comment">// error</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="bool"><a href="#bool" class="headerlink" title="bool"></a>bool</h2><p>只能取值true，false。不能通过其它类型转换为bool，所以 <code>aa:=bool(1)</code> 这样的语句是 错误的。</p>
+<h2 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h2><p>可以取值int, uint, int8,int16,int32, int64, uint8(byte), uint16, uint32,<br>uint64. int, uint是平台相关的，可能为32或者64位。</p>
+<h2 id="浮点"><a href="#浮点" class="headerlink" title="浮点"></a>浮点</h2><p>可以为float32或者float64，浮点不能使用&#x3D;&#x3D;来直接比较相等，可以使用math包的 <code>Fdim</code> 来处理</p>
+<h2 id="复数"><a href="#复数" class="headerlink" title="复数"></a>复数</h2><h2 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h2><p>可以为byte或者rune(rune和int32是等价的)，前者是字节或者是unicode</p>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p><strong>go中字符串不可变</strong>, go中的字符串实际就是utf8编码的字节流，所以如果存储的全部是英<br>文字符那么他和字节流(<code>[]byte</code>)没什么两样，但是如果有汉字，那么需要注意，因为一个<br>汉字在utf8中需要3到4个字节，所以你可能需要使用 <code>[]rune(s)</code> 转换成unicode字符串</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> str <span class="hljs-type">string</span> <span class="hljs-comment">// 声明一个字符串变量</span><br>str = <span class="hljs-string">&quot;Hello world&quot;</span> <span class="hljs-comment">// 字符串赋值</span><br>ch := str[<span class="hljs-number">0</span>] <span class="hljs-comment">// 取字符串的第一个字符</span><br>fmt.Printf(<span class="hljs-string">&quot;The length of \&quot;%s\&quot; is %d \n&quot;</span>, str, <span class="hljs-built_in">len</span>(str))<br>fmt.Printf(<span class="hljs-string">&quot;The first character of \&quot;%s\&quot; is %c.\n&quot;</span>, str, ch)<br><br><span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(str); i++ &#123;    <span class="hljs-comment">//遍历字节</span><br>  fmt.Println(i, str[i])<br>&#125;<br><span class="hljs-keyword">for</span> i, ch := <span class="hljs-keyword">range</span> str &#123;           <span class="hljs-comment">//遍历unicode</span><br>  fmt.Println(i, ch)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="fmt"><a href="#fmt" class="headerlink" title="fmt"></a>fmt</h3><p>这个包包括了很多字符串格式化的命令。这个包的函数命名有一些规律</p>
+<ol>
+<li>开头<ul>
+<li>E： 会返回一个error值</li>
+<li>F: 会将得到的字符串写入一个io.Writer中</li>
+<li>S：会将得到的字符串返回</li>
+<li>无：将得到的字符写入标准输出</li>
+</ul>
+</li>
+<li>结尾<ul>
+<li>f: 意味着需要一个格式字符串</li>
+<li>ln: 会在末尾追加一个换行符</li>
+</ul>
+</li>
+</ol>
+<p>如果没有格式字符串那么就以默认的形式显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs example">fmt.Errorf(format, args...)           // 返回一个错误值<br>fmt,Fprintf(writer, format, args...)  //向writer写入字符串<br>fmt.Printf(format, args...)           //向os.Stdout写入字符串<br>fmt.Sprintf(format, args...)       //返回一个字符串<br></code></pre></td></tr></table></figure>
+
+<h3 id="strings"><a href="#strings" class="headerlink" title="strings"></a>strings</h3><p>标准库中的strings包含了许多常见的字符串处理函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go">strings.Split(ss, sep)<br>strings.SplitAfter(ss, sep)    <span class="hljs-comment">//保留分隔符</span><br>strings.Join(xs, sep)          <span class="hljs-comment">//使用sep将xs的元素连接成字符串</span><br>strings.ToLower(s)<br>strings.ToUpper(s)<br>strings.ToTitle(s)<br><br>strings.Trim(s, t)<br>strings.TrimLeft(s, t)<br>strings.TrimRight(s, t)<br><br>strings.HasPrefix(s, p)<br>strings.HasSuffix(s, t)<br><br>strings.Index(s, t)<br></code></pre></td></tr></table></figure>
+
+<h3 id="strconv"><a href="#strconv" class="headerlink" title="strconv"></a>strconv</h3><p>这个包可以将字符串和其它类型进行转换</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是一个定长的序列，创建了长度就不能更改了。在go中切片远比数组通用</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go">[length]Type<br>[length]Type&#123;val1, val2, ..., valN&#125;<br>[...]Type&#123;val1, val2, ... , valN&#125;<br><br><span class="hljs-keyword">var</span> [<span class="hljs-number">32</span>]<span class="hljs-type">byte</span> <span class="hljs-comment">// 长度为32的数组，每个元素为一个字节</span><br><span class="hljs-keyword">var</span> [<span class="hljs-number">2</span>*N] <span class="hljs-keyword">struct</span> &#123; x, y <span class="hljs-type">int32</span> &#125; <span class="hljs-comment">// 复杂类型数组</span><br><span class="hljs-keyword">var</span> [<span class="hljs-number">1000</span>]*<span class="hljs-type">float64</span> <span class="hljs-comment">// 指针数组</span><br><span class="hljs-keyword">var</span> [<span class="hljs-number">3</span>][<span class="hljs-number">5</span>]<span class="hljs-type">int</span> <span class="hljs-comment">// 二维数组(3行5列)</span><br><span class="hljs-keyword">var</span> [<span class="hljs-number">2</span>][<span class="hljs-number">2</span>][<span class="hljs-number">2</span>]<span class="hljs-type">float64</span> <span class="hljs-comment">// 等同于[2]([2]([2]float64))</span><br><br>aa := [<span class="hljs-number">5</span>]<span class="hljs-type">int</span> &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;  <span class="hljs-comment">// 1, 2, 3, 4, 5</span><br>aa := [<span class="hljs-number">5</span>]<span class="hljs-type">int</span> &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>&#125;           <span class="hljs-comment">// 1, 2, 0, 0, 0</span><br>aa := [...]<span class="hljs-type">int</span> &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125; <span class="hljs-comment">//1, 2, 3, 4, 5</span><br>aa := [<span class="hljs-number">5</span>]<span class="hljs-type">int</span>&#123;<span class="hljs-number">2</span>:<span class="hljs-number">1</span>, <span class="hljs-number">3</span>:<span class="hljs-number">2</span>, <span class="hljs-number">4</span>:<span class="hljs-number">3</span>&#125;    <span class="hljs-comment">//0, 0, 1, 2, 3</span><br>aa := [...]<span class="hljs-type">int</span>&#123;<span class="hljs-number">2</span>:<span class="hljs-number">1</span>, <span class="hljs-number">3</span>:<span class="hljs-number">2</span>, <span class="hljs-number">4</span>:<span class="hljs-number">3</span>&#125;    <span class="hljs-comment">//0, 0, 1, 2, 3</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="切片-slice"><a href="#切片-slice" class="headerlink" title="切片(slice)"></a>切片(slice)</h2><p>切片是引用类型，在标准库中，所有的api都使用切片，创建切片和创建数组最大的区别是， 数组必须在[]中指定长度，切片则一直是空的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-built_in">make</span>([]Type, length, capacity)<br><span class="hljs-built_in">make</span>([]Type, length)<br>[]Type&#123;&#125;<br>[]Type&#123;val1, val2, ..., valN&#125;   <span class="hljs-comment">// 四种创建切片的方法，都没有在[]中指定大小</span><br><br><span class="hljs-keyword">var</span> slice1 []<span class="hljs-type">int</span>       <span class="hljs-comment">// 若你不知道切片的长度，这样声明最合适，不要用make</span><br>slice1 := []<span class="hljs-type">int</span> &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;<br>slice2 := arr[:]                <span class="hljs-comment">//从数组创建，语法和python类似</span><br>slice3 := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">5</span>)        <span class="hljs-comment">// 5个元素的切片，都初始化为0</span><br>slice3 := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>)    <span class="hljs-comment">// 5个元素的切片，都初始化为0,同时预留10个元素的空间</span><br>newSlice := <span class="hljs-built_in">append</span>(slice1, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>)<br>newSlice := <span class="hljs-built_in">append</span>(slice1, slice2...)<br><br><span class="hljs-keyword">for</span> idx, val := <span class="hljs-keyword">range</span> slice &#123;     <span class="hljs-comment">// 遍历</span><br>  <span class="hljs-comment">// do something</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以通过切片语法从字符串，数组，切片来创建切片，语法是python切片语法的子集，记住 是左闭右开就是了。<br><strong>特别要注意make函数的第二个参数，该参数指定了slice的初始长度，<br>也就是调用len返回的值,所以你创建新的空slice时，这个值应为0</strong>.</p>
+<h2 id="字典-map"><a href="#字典-map" class="headerlink" title="字典(map)"></a>字典(map)</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> aa <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>] <span class="hljs-type">int</span>           <span class="hljs-comment">//声明</span><br>bb := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>] <span class="hljs-type">int</span>)       <span class="hljs-comment">//声明并赋值</span><br>cc := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>] <span class="hljs-type">int</span>, <span class="hljs-number">100</span>)  <span class="hljs-comment">//指定初始容量</span><br>cc[<span class="hljs-string">&quot;key1&quot;</span>] = <span class="hljs-number">10</span>                   <span class="hljs-comment">//添加key1</span><br><span class="hljs-built_in">delete</span>(cc, <span class="hljs-string">&quot;key1&quot;</span>)                 <span class="hljs-comment">//删除key1</span><br>value, ok := myMap[<span class="hljs-string">&quot;1234&quot;</span>]        <span class="hljs-comment">//查找key1</span><br><span class="hljs-keyword">if</span> ok &#123; <span class="hljs-comment">// 找到了</span><br>  <span class="hljs-comment">// 处理找到的value</span><br>&#125;<br><span class="hljs-built_in">len</span>(cc)                           <span class="hljs-comment">// cc包含的键值对的个数</span><br><span class="hljs-keyword">for</span> k, v := <span class="hljs-keyword">range</span> cc &#123;            <span class="hljs-comment">// 遍历map</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h2><p>channel是goroutine之间的通信方式, 它是线程安全的,但是要注意,如果你传递的指针,那 么它仍然有可能出现竞争条件</p>
+<ol>
+<li><p>channel应该由发送端来关闭</p>
+</li>
+<li><p>使用如下的代码来测试channel是不是已经关闭</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">e, ok := &lt;- channel<br><span class="hljs-keyword">if</span> ok &#123;<br>  <span class="hljs-comment">// get a item</span><br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  <span class="hljs-comment">// channel is closed.</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果channel没有关闭，而且也没有元素可读，那么上面的代码会 <strong>阻塞</strong>.要不阻塞的测<br>试，只能使用带default的select。</p>
+</li>
+<li><p>使用range遍历一个channel的时候, 如果channel已经关闭,那么range会终止.</p>
+</li>
+<li><p>channel的超时</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">select</span> &#123;<br><span class="hljs-keyword">case</span> err := &lt;-c:<br>  <span class="hljs-comment">// use err and reply</span><br><span class="hljs-keyword">case</span> &lt;-time.After(timeoutNanoseconds):<br>  <span class="hljs-comment">// call timed out</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>quit channel是通知goroutine退出的最佳方式，在需要退出的时候close掉channel，这<br>样任何goroutine只要使用这样的代码测试就可以了</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">select</span> &#123;<br><span class="hljs-keyword">case</span> &lt;- quitChan:<br>  <span class="hljs-comment">// quit</span><br><span class="hljs-keyword">default</span>:<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>关闭的channel上调用任意多次 <code>&lt;-</code> 都不会阻塞，所以不要使用带buffer的channel。</p>
+</li>
+</ol>
+<h2 id="struct"><a href="#struct" class="headerlink" title="struct"></a>struct</h2><h2 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h2><h3 id="interface-1"><a href="#interface-1" class="headerlink" title="interface{}"></a>interface{}</h3><p>type assertion(类型断言)</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> anything <span class="hljs-keyword">interface</span>&#123;&#125; = <span class="hljs-string">&quot;hello&quot;</span><br>aString := anything.(<span class="hljs-type">string</span>)              <span class="hljs-comment">// unsafe, may panic</span><br><span class="hljs-keyword">if</span> aString, ok := anything.(<span class="hljs-type">string</span>); ok &#123; <span class="hljs-comment">// safe, check ok</span><br>  doSomething<br>&#125;<br><span class="hljs-comment">// if you are not sure, use type switch</span><br><span class="hljs-keyword">switch</span> v := anything.(<span class="hljs-keyword">type</span>) &#123;<br><span class="hljs-keyword">case</span> <span class="hljs-type">string</span>:<br>  fmt.Println(v)<br><span class="hljs-keyword">case</span> <span class="hljs-type">int32</span>, <span class="hljs-type">int64</span>:<br>  fmt.Println(v)<br><span class="hljs-keyword">case</span> SomeCustomType:<br>  fmt.Println(v)<br><span class="hljs-keyword">default</span>:<br>  fmt.Println(<span class="hljs-string">&quot;unknown&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h1><ol>
+<li>append： 添加元素到切片, 使用 <code>aa=append(aa, ele)</code> 的语法。将一个切片追加到另 一个切片 <code>s1 = append(s1, s2...)</code> 也就是要放省略号。</li>
+<li>close： 关闭通道</li>
+<li>make：用来创建slice，map，channel。可以指定长度和容量</li>
+<li>delete：从map中删除项</li>
+<li>len：获得数组，slice，map的长度以及channel缓冲区中元素的个数.</li>
+</ol>
+<h1 id="go工程管理"><a href="#go工程管理" class="headerlink" title="go工程管理"></a>go工程管理</h1><ol>
+<li>自己编写的package的名字一般要和文件夹一样(go允许二者不一样，但是为了避免混淆， 建议一样)，但是main<br>package的文件夹一般不取main</li>
+<li>import指令是用来导入包的，导入的时候使用的是包所在文件夹的名字，而在代码中使<br>用该包的时候使用的package的名字，所以为了避免混乱，应该让文件夹的名字和包名一<br>致，可以使用相对导入，如果使用绝对导入，那么go就会去 <code>$GOPATH/src</code> 的目录下面 找</li>
+<li>go build 也要指定一个main package，main package可以使用绝对路径和相对路径，含 义和第一条一样,<br>记住这里的main package是文件夹名。一般使用这样的命令来编译： <code>go build -o ./main main_package_dirname</code></li>
+<li>也可以直接使用go run来运行代码。后面应该接main函数所在的那个文件的文件名。</li>
+<li>go get 可以用来从github或者bitbucket上下载代码，你只需要指定代码仓库的地址就 可以了，举个例子 <code>go get github.com/yuyang0/gt-go-sdk</code> 就会将代码下载到<br><code>$GOPATH/src/github.com/yuyang0/gt-go-sdk</code> 中, 所以你就可以导入这个包了</li>
+</ol>
+<h1 id="reflect"><a href="#reflect" class="headerlink" title="reflect"></a>reflect</h1><p>这个是go语言的发射机制,它主要是用来获取interface下面值的type与value的, reflect包 有两个类型Type和Value.</p>
+<ol>
+<li>Type: 这个是用来代表值的类型的</li>
+<li>Value: 这个是用来代表值的.</li>
+</ol>
+<h1 id="Cgo"><a href="#Cgo" class="headerlink" title="Cgo"></a>Cgo</h1><h2 id="注意事项-高能预警"><a href="#注意事项-高能预警" class="headerlink" title="注意事项(高能预警)"></a>注意事项(高能预警)</h2><ol>
+<li><p>import “C” 的上面不能有空行, 也就说这一行要和注释紧挨着.</p>
+</li>
+<li><p>cgo不支持调用C语言中可变参数的函数, 所以你不能调用 <code>C.printf</code> 这类的函数</p>
+</li>
+<li><p>cgo创建结构体时一般会有对齐,所以在初始化结构体时要注意, 必须显式的指定值对应的name.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">   #include &lt;stdlib.h&gt;</span><br><span class="hljs-comment">   struct  &#123;</span><br><span class="hljs-comment">       char *name;</span><br><span class="hljs-comment">       int age;</span><br><span class="hljs-comment">       int height;</span><br><span class="hljs-comment">   &#125;person_t;</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;C&quot;</span><br><br><span class="hljs-keyword">type</span> Person C.person_t<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-comment">// error: too few values in struct initializer</span><br>  p1 := Person&#123;C.CString(<span class="hljs-string">&quot;Giorgis&quot;</span>), <span class="hljs-number">30</span>, <span class="hljs-number">6</span>&#125;<br>  <span class="hljs-comment">// correct</span><br>  p2 := Person&#123;name:C.CString(<span class="hljs-string">&quot;Giorgis&quot;</span>), age:<span class="hljs-number">30</span>, height:<span class="hljs-number">6</span>&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>p1因为对齐的存在会编译报错.</p>
+</li>
+</ol>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><p>go可以很方便的和C语言交互，为了相互调用必须对数据类型进行转换，也就是在C的类型和<br>go的类型之间相互转换。整数字面值不需要使用C.int转换，所以在需要使用C.int的地方可<br>以直接使用1,2,3等，nil和NULL也不需要转换, 也就是说需要NULL的c函数可以直接给它传 递nil, 一个C函数如果返回NULL,<br>也可以让它与nil直接比较, 但是字符串字面值需要转换。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs example">bool --&gt; C.bool<br>char --&gt;  C.char --&gt;  byte<br>signed char --&gt;  C.schar --&gt;  int8<br>unsigned char --&gt;  C.uchar --&gt;  uint8<br>short int --&gt;  C.short --&gt;  int16<br>short unsigned int --&gt;  C.ushort --&gt;  uint16<br>int --&gt;  C.int --&gt;  int<br>unsigned int --&gt;  C.uint --&gt;  uint32<br>long int --&gt;  C.long --&gt;  int32 or int64<br>long unsigned int --&gt;  C.ulong --&gt;  uint32 or uint64<br>long long int --&gt;  C.longlong --&gt;  int64<br>long long unsigned int --&gt;  C.ulonglong --&gt;  uint64<br>float --&gt;  C.float --&gt;  float32<br>double --&gt;  C.double --&gt;  float64<br>void * -&gt; unsafe.Pointer<br></code></pre></td></tr></table></figure>
+
+<p><strong>特别注意指针</strong>, 因为golang类型系统的关系,指针转换基本都必须先转换成 <code>unsafe.Pointer</code>,<br>然后在将该指针转换成你想要的指针,要将go指针转换为c指针(*int –&gt;<br>*C.int) 需要这样的代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> ig <span class="hljs-type">int</span> = <span class="hljs-number">1</span><br>(*C.<span class="hljs-type">int</span>)(unsafe.Pointer(&amp;ig))<br></code></pre></td></tr></table></figure>
+
+<p>对于C中需要void*的场景,只需要将指针转换成 <code>unsafe.Pointer</code> 就好, 所以对于 <code>free</code> 应该这样调用</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">gs := <span class="hljs-string">&quot;hello world&quot;</span><br>cs := C.CString(gs)<br>C.free(unsafe.Pointer(cs))<br></code></pre></td></tr></table></figure>
+
+<h2 id="go中引用C"><a href="#go中引用C" class="headerlink" title="go中引用C"></a>go中引用C</h2><p>C中的名称都可以使用“C”这个“包”访问到</p>
+<ol>
+<li><p>类型：C.int, C.float, *C.int 代表C中的int，foat以及int*，</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">#include &lt;stdio.h&gt;</span><br><span class="hljs-comment">#include &lt;stdint.h&gt;</span><br><span class="hljs-comment">int ic = 5;</span><br><span class="hljs-comment">unsigned int uic = 7;</span><br><span class="hljs-comment">int16_t is = 12345;</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;C&quot;</span><br><span class="hljs-keyword">import</span> (<br>  <span class="hljs-string">&quot;fmt&quot;</span><br>  <span class="hljs-string">&quot;reflect&quot;</span><br>  <span class="hljs-string">&quot;unsafe&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-keyword">var</span> ig <span class="hljs-type">int</span> = <span class="hljs-number">10</span><br><br>  igc := <span class="hljs-type">int</span>(C.ic)   <span class="hljs-comment">// C int ==&gt; Go int</span><br><br>  icg := C.<span class="hljs-type">int</span>(ig)   <span class="hljs-comment">// Go int ==&gt; C int</span><br><br>  icp := (*C.<span class="hljs-type">int</span>)(unsafe.Pointer(&amp;ig)) <span class="hljs-comment">// Go int pointer ==&gt; C int pointer</span><br><br>  uigc := <span class="hljs-type">uint</span>(C.uic)  <span class="hljs-comment">// C uint ==&gt; Go uint</span><br><br>  i64t := <span class="hljs-type">int16</span>(C.is)  <span class="hljs-comment">// C short ==&gt; Go short</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>string对于string因为C的原因需要特殊处理, C string是不会被GC回收的，所以你要调 用 <code>defer C.free(unsafe.Pointer(x))</code> 来回收内存</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">    #include &lt;stdlib.h&gt;</span><br><span class="hljs-comment">    char* cstring = &quot;C string example&quot;;</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;C&quot;</span><br><span class="hljs-keyword">import</span> (<br>  <span class="hljs-string">&quot;fmt&quot;</span><br>  <span class="hljs-string">&quot;unsafe&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>  <span class="hljs-keyword">var</span> gstring <span class="hljs-type">string</span> = <span class="hljs-string">&quot;Go string example&quot;</span><br><br>  <span class="hljs-comment">//Go to C String, Output: *C.char</span><br>  cs := C.CString(gstring)<br>  <span class="hljs-keyword">defer</span> C.free(unsafe.Pointer(cs))<br>  fmt.Println(cs)<br><br>  <span class="hljs-comment">//C to Go String, Output: string</span><br>  gs := C.GoString(C.cstring)<br>  fmt.Println(gs)<br><br>  <span class="hljs-comment">//C string, length to Go string</span><br>  gs2 := C.GoStringN(C.cstring, (C.<span class="hljs-type">int</span>)(<span class="hljs-built_in">len</span>(gs)))<br>  fmt.Println(gs2)<br><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>函数：可以直接引用，C.printf, C.sqrt 等等, 只是你需要将参数转换成C的形式, 当<br>调用C函数,你可以返回多个值,一个是C函数的返回值,一个根据errno封装的error对象,<br>这在调用一些系统调用时非常有用.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs go">n, err := C.sqrt(<span class="hljs-number">-1</span>)<br>_, err := C.voidFunc()<br></code></pre></td></tr></table></figure>
+
+<p>即便是C中的void函数也可以返回两个值, 当然这种情况下第一个值是没有意义的.</p>
+</li>
+<li><p>struct 看代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">    #include &lt;stdlib.h&gt;</span><br><span class="hljs-comment">    struct Person &#123;</span><br><span class="hljs-comment">        char *name;</span><br><span class="hljs-comment">        int age;</span><br><span class="hljs-comment">        int height;</span><br><span class="hljs-comment">        int weight;</span><br><span class="hljs-comment">    &#125;;</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;C&quot;</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-keyword">type</span> p C.struct_Person<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>  person := p&#123;C.CString(<span class="hljs-string">&quot;Giorgis&quot;</span>), <span class="hljs-number">30</span>, <span class="hljs-number">6</span>, <span class="hljs-number">175</span>&#125;<br>  fmt.Println(person)<br>  fmt.Println(C.GoString(person.name))<br>  fmt.Println(person.age)<br>  fmt.Println(person.height)<br>  fmt.Println(person.weight)<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="Tips-best-practice"><a href="#Tips-best-practice" class="headerlink" title="Tips(best practice)"></a>Tips(best practice)</h1><ol>
+<li><p>处理错误时避免多重嵌套，先处理错误的情况</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>  <span class="hljs-comment">// handle error</span><br>&#125;<br><span class="hljs-comment">// do soamething</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>尽量避免重复，可以定义一些一次性的类型来更好的组织代码</p>
+</li>
+<li><p>使用type switch来处理type cast</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">switch</span> x := v.(<span class="hljs-keyword">type</span>) &#123;<br><span class="hljs-keyword">case</span> <span class="hljs-type">string</span>:<br>  fmt.Printf(<span class="hljs-string">&quot;%s&quot;</span>, x)<br><span class="hljs-keyword">case</span> <span class="hljs-type">int64</span>:<br>  fmt.Print(x)<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>命名应该尽可能的短小，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span>  db<br><span class="hljs-keyword">type</span> DB <span class="hljs-keyword">struct</span> &#123;<br><span class="hljs-comment">// some fields</span><br>&#125;<br><br><span class="hljs-comment">// good</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">New</span><span class="hljs-params">()</span></span> *DB &#123;<br><br>&#125;<br><span class="hljs-comment">//bad</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewDB</span><span class="hljs-params">()</span></span> *DB &#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因为有包名，所以就不需要在New后面加个DB的后缀了。</p>
+</li>
+<li><p>大型的包最好组织成多个文件，这样可以使文档以及测试更模块化。</p>
+</li>
+<li><p>在库以及API中间尽量不要使用并发，应该让调用者来决定是否需要在单独的goroutine中运行</p>
+</li>
+<li><p>尽量使用channel或者一个带有channel的类型来在goroutine之间来通信。</p>
+</li>
+<li><p>避免goroutine泄露，也就说goroutine永久的block，一直不退出，这实际上也是一种资 源泄露，通过buffered<br>channel或者quit channel可以避免。quit channel是更通用的 做法</p>
+</li>
+</ol>
+<h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><h2 id="closure"><a href="#closure" class="headerlink" title="closure"></a>closure</h2><p>先看一段错误代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-keyword">var</span> wg sync.WaitGroup<br><br>  s := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">5</span>)<br>  <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(s); i++ &#123;<br>    wg.Add(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>      <span class="hljs-keyword">defer</span> wg.Done()<br>      fmt.Print(s[i])<br>    &#125;()<br>  &#125;<br>  wg.Wait()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这段代码有很大可能出现index out of range的错误，对于for loop需要记住一点：</p>
+<ol>
+<li><code>for exp &#123;body&#125;</code> 这样的表达式中, <code>exp</code> 中创建的变量在所有迭代中是共享的，也就<br>是说是同一个变量，但是body中创建的变量是不共享的。你可以认为exp中创建的变量的<br>作用域是for表达式所在的作用域，而不是body所在的作用域</li>
+</ol>
+<p>所以上面的例子中i是共享的，所以对i的修改会传递到所有的goroutine中，因为goroutine<br>的启动会有一点延迟，所以等goroutine启动开始运行时i很可能已被修改成了5，自然就会<br>出现index out of range的错误，正确的做法:</p>
+<ol>
+<li><p>将i作为参数传递给goroutine的那个匿名函数。</p>
+</li>
+<li><p>在body创建一个新的变量,eg</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  <span class="hljs-keyword">var</span> wg sync.WaitGroup<br><br>  s := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">5</span>)<br>  <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(s); i++ &#123;<br>    i := i<br>    wg.Add(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>      <span class="hljs-keyword">defer</span> wg.Done()<br>      fmt.Print(s[i])<br>    &#125;()<br>  &#125;<br>  wg.Wait()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>匿名函数中使用上层作用域的变量要谨慎</strong>.</p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/lang/">lang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/golang/">golang</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2014/02/12/notes/python-note/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">python笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2013/02/12/notes/set-theory/">
+                        <span class="hidden-mobile">集合论</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2014/02/11/notes/golang/';
+          this.page.identifier = '/2014/02/11/notes/golang/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

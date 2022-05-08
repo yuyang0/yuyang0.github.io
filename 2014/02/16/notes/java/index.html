@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="toolsrun program in Terminal 12javac Welcome.javajava welcome  OOPOOP编程范式最核心的三大概念：继承，封装，多态。 package建议使用域名的逆序来命名包, 比如有一个域名: example.com, 那么你就可以使用 1package com.example.testcode  来申明一个文件属于 com.example.te">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java笔记">
+<meta property="og:url" content="http://example.com/2014/02/16/notes/java/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="toolsrun program in Terminal 12javac Welcome.javajava welcome  OOPOOP编程范式最核心的三大概念：继承，封装，多态。 package建议使用域名的逆序来命名包, 比如有一个域名: example.com, 那么你就可以使用 1package com.example.testcode  来申明一个文件属于 com.example.te">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/static/img/exceptions.png">
+<meta property="article:published_time" content="2014-02-16T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-08T12:52:13.015Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="lang">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/static/img/exceptions.png">
+  
+  
+  <title>java笔记 - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="java笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2014-02-16 11:54" pubdate>
+        2014年2月16日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      59 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java笔记</h1>
+            
+            <div class="markdown-body">
+              <h1 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h1><h2 id="run-program"><a href="#run-program" class="headerlink" title="run program"></a>run program</h2><ol>
+<li><p>in Terminal</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs example">javac Welcome.java<br>java welcome<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h1><p>OOP编程范式最核心的三大概念：继承，封装，多态。</p>
+<h2 id="package"><a href="#package" class="headerlink" title="package"></a>package</h2><p>建议使用域名的逆序来命名包, 比如有一个域名: example.com, 那么你就可以使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.example.testcode<br></code></pre></td></tr></table></figure>
+
+<p>来申明一个文件属于 com.example.testcode包, 同时该文件要放入<br>com&#x2F;example&#x2F;testcode&#x2F;目录中.使用IDE可以很轻松的做到这一点.</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>java的所有继承都是公有继承,使用 <code>extends</code> 关键字.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-title function_">Employee</span><span class="hljs-params">(String name, <span class="hljs-type">double</span> salary)</span>&#123;<br>                <span class="hljs-built_in">this</span>.name = name;<br>                <span class="hljs-built_in">this</span>.salary = salary;<br>        &#125;<br>        <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span>&#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name;<br>        &#125;<br>        <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getSalary</span><span class="hljs-params">()</span>&#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.salary;<br>        &#125;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">raiseSalary</span><span class="hljs-params">(<span class="hljs-type">double</span> byPercent)</span>&#123;<br>                <span class="hljs-type">double</span> <span class="hljs-variable">raise</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.salary * byPercent /<span class="hljs-number">100</span>;<br>                <span class="hljs-built_in">this</span>.salary += raise;<br>        &#125;<br><br>        <span class="hljs-keyword">private</span> String name;<br>        <span class="hljs-keyword">private</span> <span class="hljs-type">double</span> salary;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Manager</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Employee</span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-title function_">Manager</span><span class="hljs-params">(String name, <span class="hljs-type">double</span> salary)</span>&#123;<br>                <span class="hljs-built_in">super</span>(name, salary); <span class="hljs-comment">// super调用父类的构造方法</span><br>                <span class="hljs-built_in">this</span>.bonus = <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">getSalary</span><span class="hljs-params">()</span>&#123;<br>                <span class="hljs-type">double</span> <span class="hljs-variable">baseSalary</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">super</span>.getSalary(); <span class="hljs-comment">// super调用父类的普通方法</span><br>                <span class="hljs-keyword">return</span> baseSalary + <span class="hljs-built_in">this</span>.bonus;<br>        &#125;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setBonus</span><span class="hljs-params">(<span class="hljs-type">double</span> bonus)</span>&#123;<br>                <span class="hljs-built_in">this</span>.bonus = bonus;<br>        &#125;<br>        <span class="hljs-keyword">private</span> <span class="hljs-type">double</span> bonus;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>在类的方法中可以直接访问该类的所有实例的私有属性,所以在Employee的equals方法 中可以直接使用<br><code>other.name</code>,但是在子类的方法中不能直接访问父类的私有成员,所 以上例中 Manager 类中的<br><code>etSalary</code> 方法不能直接 <code>this.salary</code> 而必须用父类 的公有方法即 <code>super.getSalary()</code>,<br>Manager 中的构造函数也是同样的道理.super 有两个作用:一个是调用父类的方法,一个是调用父类的构造方法</p>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><ol>
+<li><p>子类变量可以直接赋给父类变量,这样父类变量调用方法时会使用动态绑定,比如 如下代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Employee</span> <span class="hljs-variable">e</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Manager</span>(...);<br>e.getSalary();<br></code></pre></td></tr></table></figure>
+
+<p>上面的getSalary调用的是 Manager的方法,而不是Employee的方法.这实际就是所 谓的 <strong>多态</strong>,<br>也就是说相同的编译时类型调用相同的方法可能呈现出不同的行为.这<br>里需要注意的是e只能调用Employee类拥有的方法，虽然这里的e是一个Manager实<br>例，但是它不能调用 <code>setBonus</code> 方法，如果你调用那么编译器会报错，这好理解， 因为编译时，e是一个Employee类型的变量.<br>而Employee类型很显然没有 <code>setBonus</code> 方法。</p>
+</li>
+<li><p>父类变量要赋给子类变量,则必须使用强制转化, 比如类 Manager 是 Employee 的子类, 那么:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Employee</span> <span class="hljs-variable">e</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Manager</span>(...);<br><span class="hljs-keyword">if</span>(e <span class="hljs-keyword">instanceof</span> Manager)&#123;<br>    <span class="hljs-type">Manager</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> (Manager) e;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一般情况下使用 instanceof 来检查下会更保险.</p>
+</li>
+</ol>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><p>Object是所有类的超类,该类有有一些方法建议每一个类都重载:</p>
+<ol>
+<li><p>equals方法: 用来检测一个对象是否等于另一个对象,下面是一个推荐的实现方 式:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span>&#123;<br>    ....<br>    <span class="hljs-keyword">public</span> bool <span class="hljs-title function_">equals</span><span class="hljs-params">(Object otherObject)</span>&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">this</span> == otherObject) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span>(otherObject == <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">if</span>(getClass() != otherObject.getClass()) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-type">Employee</span> <span class="hljs-variable">other</span> <span class="hljs-operator">=</span> (Employee) otherObject;<br>        <span class="hljs-keyword">return</span> name.equals(other.name)<br>            &amp;&amp; salary == other.salary;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Manager</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Employee</span>&#123;<br>    ...<br>    <span class="hljs-keyword">public</span> bool <span class="hljs-title function_">equals</span><span class="hljs-params">(Object otherObject)</span>&#123;<br>        <span class="hljs-keyword">if</span> (! <span class="hljs-built_in">super</span>.equals(otherObject)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-type">Manager</span> <span class="hljs-variable">other</span> <span class="hljs-operator">=</span> (Manager) otherObject;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.bonus == other.bonus;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>基本上所有的 <code>equals</code> 都可以用这种模式来定义, 但是对于子类, 比如manager<br>类就只需要调用父类的equals方法,然后在加入一些特定于Manager类的检测就好</p>
+</li>
+<li><p>toString方法: 用来返回类实例的字符串表示.该方法调试时非常方便</p>
+</li>
+<li><p>hashCode方法: 获取一个类实例的散列值</p>
+</li>
+</ol>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>抽象类不能实例化,它主要是用来被其它类继承的,实际上起的是一个占位的角色,大多<br>数时候,抽象类只会包含一系列的抽象方法,但是抽象类是可以包含实例域与普通的类<br>方法的,下面的代码展示了抽象类的用法.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(String name)</span>&#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> String <span class="hljs-title function_">getDescription</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name;<br>    &#125;<br>    <span class="hljs-keyword">private</span> String name;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>实际上一般抽象类主要用来作为创建其它类的模板。</p>
+<h2 id="反射-Reflection"><a href="#反射-Reflection" class="headerlink" title="反射(Reflection)"></a>反射(Reflection)</h2><p>虚拟机为每一个类型都维护了一个Class对象, 要获得Class对象有以下几种方法:</p>
+<ol>
+<li><p>如果T是任意的java类型(必须是类型不能是类实例),那么 T.class 就是Class对象. 比如<br>Employee.class就是上例中 Employee的Class对象, int.class就是int的 Class对象.</p>
+</li>
+<li><p>使用 getClass实例方法, 如果e 是一个Employee实例, 那么 e.getClass()就会返<br>回Employee类型的Class对象.</p>
+</li>
+<li><p>如果知道类的字符串表示, 那么可以使用 forName来获得Class 对象, 比如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Class</span> <span class="hljs-variable">cl</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;java.util.Date&quot;</span>);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>获得Class对象后, 就可以来获取类型的信息了.</p>
+<ol>
+<li><p>newInstance 获取一个新的实例,注意返回的是Object类型, 所以你需要进行类型 转换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Class</span> <span class="hljs-variable">cl</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;java.util.Date&quot;</span>);<br><span class="hljs-type">Object</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> cl.newInstance();<br><span class="hljs-type">Date</span> <span class="hljs-variable">d</span> <span class="hljs-operator">=</span> (Date) m;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="接口-interface"><a href="#接口-interface" class="headerlink" title="接口(interface)"></a>接口(interface)</h2><ol>
+<li><p>定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Comparable</span>&lt;T&gt;&#123;<br>    <span class="hljs-type">int</span> <span class="hljs-title function_">CompareTo</span><span class="hljs-params">(T otherObject)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>interface中的方法自动为public.</p>
+</li>
+<li><p>实现接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Employee</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Comparable</span>&lt;Employee&gt;&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compareTo</span><span class="hljs-params">(Employee other)</span>&#123;<br>        ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果想使用Arrays中的sort方法,那么应该实现 <code>Comparable</code> 接口.</p>
+</li>
+<li><p>接口的特性:接口不可以被实例化,但是可以申明变量,而且可以将实现了该接口的 类的实例赋给该变量, 而且可以使用 <code>instanceof</code><br>来测试一个实例所属的类是否 实现了该接口.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">x = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Comparable</span>();            <span class="hljs-comment">// 错误语法</span><br><br>Comparable x;<br><span class="hljs-type">Comparable</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Employee</span>(...)           <span class="hljs-comment">// Employee类实现了Comparable接口</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>接口类型的变量只能调用接口中定义的方法，这和多态的情况是一样的，因为只有 这样才能通过编译时检查.</p>
+</li>
+</ol>
+<h1 id="杂七杂八"><a href="#杂七杂八" class="headerlink" title="杂七杂八"></a>杂七杂八</h1><ol>
+<li>java提供了八种基本类型(byte,short,int,long,char,boolean,float,double)这些类型<br>不是对象，但是java提供了包装对象，并且在适当的地方会自动的装箱和拆箱<br>(boxing,unboxing).java中所有的对象类型都是引用类型</li>
+<li>=&#x3D;与equals： 前者在基本类型为数值并且值相等时有效，对引用类型只有两个引用指向 同一个对象时才相等。</li>
+</ol>
+<h1 id="exception-异常"><a href="#exception-异常" class="headerlink" title="exception(异常)"></a>exception(异常)</h1><p><img src="/static/img/exceptions.png" srcset="/img/loading.gif" lazyload></p>
+<p>所有的异常都是从 Throwable继承而来的,而且在下一层就立即分为2类: Error与 Exception,<br>Error是java运行时系统的内部错误, 这类错误程序员无能为力,只能让程<br>序尽可能安全的终止.Exception又分为两类: RuntimeException 与<br>IOException, RuntimeException主要有以下几种情况:</p>
+<ol>
+<li>错误的类型转换 (可以通过转换前使用instanceof检测类型来避免)</li>
+<li>数组访问越界</li>
+<li>访问空指针</li>
+</ol>
+<p>这些异常都是程序应该避免的,是程序设计者的失误导致的, 发生了这类异常那就意味<br>着程序不正确,应该花时间来修复而不是寄希望于catch来处理这些异常.</p>
+<p>IOException是所有不属于RuntimeException的异常,这类异常应该通过try catch 这类 设施进行处理.<br>一个类方法如果要抛出异常,那么必须在定义的行显式的声明,比如下面 的例子:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAnimation</span>&#123;<br>    ...<br>    <span class="hljs-keyword">public</span> Image <span class="hljs-title function_">loadImage</span><span class="hljs-params">(String s)</span> <span class="hljs-keyword">throws</span> EOFException, MalformatURLException&#123;<br>        ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>loadImage有可能抛出两个异常,如果一个方法没有声明 throws语句,那么就不能抛出异<br>常.如果是重载父类的方法,那么该方法的throws申明必须和父类的方法一模一样,异常<br>处理的基本代码是这样的:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span>&#123;<br>    ...<br>&#125;<br><span class="hljs-keyword">catch</span>(MakformatURLException e)&#123;<br>    ...<br>&#125;<br><span class="hljs-keyword">catch</span>(IOException e)&#123;<br>    ...<br>&#125;<br><span class="hljs-keyword">finally</span>&#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>多个catch可以捕获多种类型的异常, finally块的语句是无论如何都会执行的,所以可 以用来清理资源</p>
+<h2 id="异常使用的建议"><a href="#异常使用的建议" class="headerlink" title="异常使用的建议"></a>异常使用的建议</h2><ol>
+<li>如果一个方法中调用了一个能够抛出异常的方法,那么这时候有两个选择,一是如果 目前能够处理该异常, 那么就使用try<br>catch来捕获该异常.二是将该异常传递给该 方法的调用者, 那么你就应该在方法头上添加对应的<br>throws语句.如果是在重载父 类的方法,而父类的方法上没有该异常的 throws语句,那么你就必须在本方法中使 用 try<br>catch来捕获这个异常.</li>
+<li>异常处理不能代替简单的测试,测试更高效</li>
+<li>不要过分细分异常,比如不要一条语句一个 try catch,只要将逻辑上的多个语句包 进一个try catch就好</li>
+<li>尽量使用异常来代替一些特殊的返回值,所以stack.pop()不要返回一个null,而应<br>该生成一个EmptyStackException异常.</li>
+</ol>
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><ol>
+<li>获得logger, 主要是使用 Logger类的 getLogger工厂方法, 该方法只有在logger 不存在时才创建</li>
+<li>设置logger的level, 使用logger的setLevel方法,level有以下几种(优先级由高到 低):<ul>
+<li>SEVERE</li>
+<li>WARNING</li>
+<li>INFO (默认)</li>
+<li>CONFIG</li>
+<li>FINE</li>
+<li>FINER<br>上面的都是Level类的静态常量,logging只会记录优先级高于等于当前设置的level 的日志,比如默认的日志级别是 INFO,<br>那么就只会记录 SEVERE, WARNING, INFO三 个级别的日志,还有两个特殊的常量:Level.ON,<br>Level.OFF,前者会记录所有级别的 日志,后者不记录任何级别的日志</li>
+</ul>
+</li>
+<li>Handler:确定日志都存储到什么地方,一个logger实例可以有多个handler,每个<br>handler也有自己的level,只有日志级别高于等于handler的level时,handler才会处<br>理<ul>
+<li>ConsoleHandler: 直接控制台打印</li>
+<li>FileHandler: 文件存储</li>
+<li>SocketHandler: 写入socket, 比如日志服务器</li>
+</ul>
+</li>
+<li>Filter:</li>
+<li>Format: 默认logging可以将日志记录为文本与 xml, 如果你想记录为其它格式,可 以自定义 Format类, 同时<br>使用handler的 setFormator来安装.</li>
+<li>记录日志,每一个level都有一个对应的方法来记录相应级别的日志,比如 <code>logger.severe</code>,<br><code>logger.warning</code> 等等, 同时还有一个 <code>logger.log</code> 方法,这 个方法需要你显式的指定日志级别.</li>
+</ol>
+<!-- end list -->
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> Logger.getLogger(<span class="hljs-string">&quot;com.mycompany.myapp&quot;</span>);<br>logger.setLevel(Level.FINE);<br>logger.setUseParentHandler(<span class="hljs-literal">false</span>); <span class="hljs-comment">// 防止日志送入 父logger,因为这样会重复</span><br><span class="hljs-type">Handler</span> <span class="hljs-variable">hd</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConsoleHandler</span>();<br>hd.setLevel(Level.Fine);<br>logger.addHandler(hd);<br></code></pre></td></tr></table></figure>
+
+<h2 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h2><ol>
+<li><p>将logger 命名为与主应用程序包一样的名字.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> Logger.getLogger(<span class="hljs-string">&quot;com.mycompany.myproj&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>同时为了方便可以将logger添加进类的静态域中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClass</span>&#123;<br>    ...<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">final</span> <span class="hljs-variable">Logger</span> <span class="hljs-operator">=</span> Logger.getLogger(<span class="hljs-string">&quot;com.mycompany.myproj&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><h1 id="java标准库"><a href="#java标准库" class="headerlink" title="java标准库"></a>java标准库</h1></li>
+</ol>
+<h2 id="java-lang-默认导入"><a href="#java-lang-默认导入" class="headerlink" title="java.lang(默认导入)"></a>java.lang(默认导入)</h2><h3 id="java-lang-String-字符串"><a href="#java-lang-String-字符串" class="headerlink" title="java.lang.String(字符串)"></a>java.lang.String(字符串)</h3><p>字符串是不可变的.所以修改会返回一个新的字符串</p>
+<ul>
+<li><ul>
+<li>可以拼接字符串</li>
+</ul>
+</li>
+<li><p>equals: 检测两个字符串是否相等, <strong>不能用&#x3D;&#x3D;</strong>.</p>
+</li>
+<li><p>String toLowerCase()</p>
+</li>
+<li><p>String toUpperCase()</p>
+</li>
+<li><p>String trim()</p>
+</li>
+<li><p>int length()</p>
+</li>
+<li><p>boolean startsWith(String prefix)</p>
+</li>
+<li><p>String substring(int start [, int end]) 不包含end指向的字符</p>
+</li>
+<li><p>String replace</p>
+</li>
+<li><p>format: 静态方法</p>
+</li>
+</ul>
+<!-- end list -->
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;aaaa&quot;</span>;<br><span class="hljs-type">String</span> <span class="hljs-variable">s2</span> <span class="hljs-operator">=</span> s1 + <span class="hljs-string">&quot;bbbb&quot;</span>;        <span class="hljs-comment">// s2 = &quot;aaaabbbb&quot;</span><br><span class="hljs-type">int</span> <span class="hljs-variable">len</span> <span class="hljs-operator">=</span> s2.length();    <span class="hljs-comment">// len = 8</span><br><span class="hljs-type">String</span> <span class="hljs-variable">newStr</span> <span class="hljs-operator">=</span> s2.substring(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">// newStr = &quot;aaa&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="java-lang-StringBuilder"><a href="#java-lang-StringBuilder" class="headerlink" title="java.lang.StringBuilder"></a>java.lang.StringBuilder</h3><p>该类表示的字符串可变,主要是为了效率考虑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">StringBuider</span> <span class="hljs-variable">builder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuider</span>();<br>builder.append(<span class="hljs-string">&quot;hello&quot;</span>);<br>builder.append(<span class="hljs-string">&#x27; &#x27;</span>);<br><span class="hljs-type">String</span> <span class="hljs-variable">completeString</span> <span class="hljs-operator">=</span> builder.toString();<br></code></pre></td></tr></table></figure>
+
+<h3 id="java-lang-Math"><a href="#java-lang-Math" class="headerlink" title="java.lang.Math"></a>java.lang.Math</h3><p>各种数学函数以及变量, 都是静态函数以及变量</p>
+<ul>
+<li>Math.PI: 圆周率</li>
+<li>Math.E: 自然对数</li>
+<li>Math.sin, Math.cos, Math.floor etc</li>
+</ul>
+<h3 id="java-lang-System"><a href="#java-lang-System" class="headerlink" title="java.lang.System"></a>java.lang.System</h3><h2 id="java-util"><a href="#java-util" class="headerlink" title="java.util"></a>java.util</h2><h3 id="java-util-Date-Time"><a href="#java-util-Date-Time" class="headerlink" title="java.util.Date(Time)"></a>java.util.Date(Time)</h3><h3 id="java-util-GregorianCalendar-日历"><a href="#java-util-GregorianCalendar-日历" class="headerlink" title="java.util.GregorianCalendar(日历)"></a>java.util.GregorianCalendar(日历)</h3><h3 id="java-util-ArrayList"><a href="#java-util-ArrayList" class="headerlink" title="java.util.ArrayList"></a>java.util.ArrayList</h3><h2 id="java集合"><a href="#java集合" class="headerlink" title="java集合"></a>java集合</h2><p>java的集合大体上分为Set，List，Map三类。集合类型的元素必须是引用类型，而不能是基 本类型，但是一般java会自动装箱</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/lang/">lang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2014/02/17/notes/lua/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">lua笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2014/02/15/notes/rust/">
+                        <span class="hidden-mobile">rust笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2014/02/16/notes/java/';
+          this.page.identifier = '/2014/02/16/notes/java/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

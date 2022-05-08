@@ -1,0 +1,683 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="IPPcket Structure12345678910111213141516 0                   1                   2                   3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="http://example.com/2012/02/15/notes/computer-network/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="IPPcket Structure12345678910111213141516 0                   1                   2                   3 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2012/02/15/notes/computer-network/static/img/tcp-three-way-handshake.png">
+<meta property="og:image" content="http://example.com/2012/02/15/notes/computer-network/static/img/tcp-terminate.png">
+<meta property="og:image" content="http://example.com/2012/02/15/notes/computer-network/static/img/tcp-state-change.png">
+<meta property="article:published_time" content="2012-02-15T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-08T12:52:12.995Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="network">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2012/02/15/notes/computer-network/static/img/tcp-three-way-handshake.png">
+  
+  
+  <title>计算机网络 - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="计算机网络">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2012-02-15 11:54" pubdate>
+        2012年2月15日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      60 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机网络</h1>
+            
+            <div class="markdown-body">
+              <h1 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h1><h2 id="Pcket-Structure"><a href="#Pcket-Structure" class="headerlink" title="Pcket Structure"></a>Pcket Structure</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><pre><code class="hljs example"> 0                   1                   2                   3<br> 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|Version|  IHL  |Type of Service|          Total Length         |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|         Identification        |Flags|      Fragment Offset    |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|  Time to Live |    Protocol   |         Header Checksum       |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|                       Source Address                          |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|                    Destination Address                        |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|                    Options                    |    Padding    |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>Version:</li>
+</ol>
+<h2 id="IP地址的分级和组成"><a href="#IP地址的分级和组成" class="headerlink" title="IP地址的分级和组成"></a>IP地址的分级和组成</h2><ol>
+<li>A类(0开头) 0.xx.xx.xx ~ 127.xx.xx.xx</li>
+<li>B类(10开头) 128.xx.xx.xx ~ 191.xx.xx.xx</li>
+<li>C类(110开头) 192.xx.xx.xx ~ 223.xx.xx.xx</li>
+<li>D类(1110开头) 224.xx.xx.xx ~ 239.xx.xx.xx</li>
+<li>E类(1111开头) 240.xx.xx.xx ~ 255.xx.xx.xx</li>
+</ol>
+<p>为了局域网组网方便,有一部分IP是私有,也就是说带有这些ip的ip包是不会出现在公网上的,这 些ip只应该出现私有网络内部.</p>
+<ul>
+<li>A类：10.0.0.0 - 10.255.255.255 (10.0.0.0&#x2F;8)</li>
+<li>B类：172.16.0.0 - 172.31.255.255 (172.16.0.0&#x2F;12)</li>
+<li>C类：192.168.0.0 - 192.168.255.255 (192.168.0.0&#x2F;16)</li>
+</ul>
+<p>loopback网段: 127.0.0.0&#x2F;8</p>
+<h2 id="子网"><a href="#子网" class="headerlink" title="子网"></a>子网</h2><p>ip地址被分为NET ID和HOST ID, 如果ip地址的NET ID相同那么就处于同一子网, 也就可以 使用链路层设备直接通信.</p>
+<ul>
+<li>子网掩码: 用来指定ip的哪些位是NET ID, 比如说 <code>255.255.255.0</code> 就是说IP的前24位 是NET ID,<br><code>255.240.0.0</code> 就是说前12位是NET ID. 所以 <code>192.168.0.0/255.255.255.0</code><br>实际上就是指定了一个网段, 也可以用CIDR <code>192.168.0.0/24</code>,<br>后面的数字代表前24位是NET ID.</li>
+</ul>
+<h2 id="NAT"><a href="#NAT" class="headerlink" title="NAT"></a>NAT</h2><p>Network Address Translation, 主要是用来自动转换IP地址, 这样一个私有网络的所有计 算机就可以共用一个public<br>ip来上网. 它是使用ip和port来识别包的.</p>
+<h2 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a>DHCP</h2><h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><p>tcp提供的是可靠的数据传输，这意味着要满足以下几点:</p>
+<ol>
+<li>数据报不能损坏</li>
+<li>数据报不能丢失</li>
+<li>数据报要按照发送顺序提供给上层的调用者</li>
+</ol>
+<p>为了应对这几点，引入很多机制</p>
+<ol>
+<li>为了应对数据报丢失和损坏，引入了 <strong>确认</strong> 机制，也就是ack报文。</li>
+<li>为了检测数据报损坏，所以引入了checksum</li>
+<li>为了从数据报损坏,丢失中恢复，引入 <strong>重传</strong> 的机制</li>
+<li>为了消除重传造成的数据报冗余，必须保证 幂等，这样就引入了 <strong>序号</strong> 机制, 序 号机制也可以保证数据流的顺序。</li>
+</ol>
+<h2 id="协议详解"><a href="#协议详解" class="headerlink" title="协议详解"></a>协议详解</h2><p>tcp的头部格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs example"> 0                   1                   2                   3<br> 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|          Source Port          |       Destination Port        |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|                        Sequence Number                        |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|                    Acknowledgment Number                      |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|  Data |           |U|A|P|R|S|F|                               |<br>| Offset| Reserved  |R|C|S|S|Y|I|      Receive Window Size      |<br>|       |           |G|K|H|T|N|N|                               |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|           Checksum            |         Urgent Pointer        |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|                    Options                    |    Padding    |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br>|                             data                              |<br>+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+<br></code></pre></td></tr></table></figure>
+
+<p><strong>几点解释:</strong></p>
+<ol>
+<li>Source Port, Destination Port是端口号</li>
+<li>Sequence Number: tcp对内部传送的每一个字节都会编号, 该字段代表的就是该数 据报第一个字节的编号.</li>
+<li>Acknowledgment Number: 当接受端收到一个tcp数据报后,会发送一个确认报文,发<br>送端就是根据确认报文来判断该数据报是否发送成功,如果长时间没有收到确认报<br>文,那么发送端就会重发tcp数据报, 确认报文的ACK必须为1,同时Acknowledgment<br>Number代表该端期望接受数据的序号,比如接受端收到一个tcp报文,该报文的<br>Sequence Number是a, 同时报文长度是b, 那么对该报文的确认报文的 Acknowledgment<br>Number字段就是a+b. <strong>只有ACK标志为1时该字段才有效</strong></li>
+<li>Data Offset: 实际数据在报文中的偏移,也可以看作是tcp头部的大小,因为tcp头部<br>包含options所以他的大小是可变的,这就是该字段存在的原因.</li>
+<li>标志:<ul>
+<li>URG: 紧急指针</li>
+<li>ACK: Acknowledgement number有效</li>
+<li>PSH:</li>
+<li>RST: 重置连接, 万恶的GFW经常这么干.</li>
+<li>SYN: Synchronize sequence numbers, 三步握手时需要.</li>
+<li>FIN: finish, 关闭连接时会用到该标志</li>
+</ul>
+</li>
+<li>Window size: 用来标示发送该数据报的一端希望接收的数据大小, 主要用来进行 流控制(flow control).</li>
+</ol>
+<p><strong>其他说明:</strong></p>
+<ol>
+<li>TCP可以看做是一个全双工管道,可读可写, 也就是说一个tcp socket的读写是分离, 互不干扰的.</li>
+<li>TCP提供了流控制,也就是说内部有缓冲区,如果缓冲区满了那么相应的操作就会阻塞,举 个例子,<br>如果接受者的读缓冲区满了,那么你在发送者一端调用write就会阻塞.</li>
+</ol>
+<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><ol>
+<li>tcp是使用累积确认，也就是说接收端发送了一个ack&#x3D;N的确认报文，那么就意味着 所有序号小于N的数据都已经成功接受。</li>
+<li>接收端只确认顺序到达的最大序号的报文，比如a,b,c,d四个报文，假设它们顺序到<br>达但是b丢失，那么实际上对c,d的确认报文和对a的确认报文是一样的。一旦发送端<br>收到的重复ACK报文达到一个阈值，那么就会重发b， 对b的ACK报文的ack实际上等 于d的序号加上d的长度。</li>
+</ol>
+<h2 id="连接管理"><a href="#连接管理" class="headerlink" title="连接管理"></a>连接管理</h2><h3 id="三步握手"><a href="#三步握手" class="headerlink" title="三步握手"></a>三步握手</h3><p>如下图所示: <img src="/2012/02/15/notes/computer-network/static/img/tcp-three-way-handshake.png" srcset="/img/loading.gif" lazyload> 三个报文:</p>
+<ol>
+<li>SYN标志为1, 同时为Sequence Number指定一个初始值J</li>
+<li>SYN以及ACK标志为1,同时为Sequence Number指定一个初始值K, 同时将 Acknowledgement<br>Number设为J+1.</li>
+<li>ACK标志为1, 同时将Acknowledgement Number设为K+1, FIN报文会消耗一个编号</li>
+</ol>
+<h3 id="连接关闭"><a href="#连接关闭" class="headerlink" title="连接关闭"></a>连接关闭</h3><p>如下图所示 <img src="/2012/02/15/notes/computer-network/static/img/tcp-terminate.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="状态变化"><a href="#状态变化" class="headerlink" title="状态变化"></a>状态变化</h3><p>如下图所示 <img src="/2012/02/15/notes/computer-network/static/img/tcp-state-change.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>TIME_WAIT</strong>: 关闭连接时, 执行主动关闭的一方的socket在发送了最后一个ACK后进入<br>TIME_WAIT状态,并保持该状态2SML(1-4分钟), 该状态存在的原因是:</p>
+<ol>
+<li>如果最后一个ACK丢失,那么对方就会重发FIN报文,这时socket有机会发送ACK报文, 而不是由内核发送RST报文.</li>
+<li>可以让网络中当前连接的tcp报文全部失效,因为TCP会超时重传,所以网络可能存在<br>一些没有被当前客户端接受的报文,等待2SML后这些报文就都失效了.<br>如果不等待 2SML, 同时你又在相同的interface上创建了socket,那么这些上一次连接的报文就 可能被本次连接认为有效.</li>
+</ol>
+<p><strong>处于TIME_WAIT时,(ip, port)不可用, 所以有时重启服务器需要等一段时间.</strong>, 当然<br>只有在服务器有客户端连接的情况下才会出现这种情况,因为如果这时重启服务器,那么<br>服务器端会执行主动关闭,所以就会进入TIME_WAIT状态. 如果没有客户端连接,那么服 务器一般就只有一个listen<br>socket,关闭它不会进入TIME_WAIT.</p>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><p>tcp必须匹配发送方以及接收方的速率,因为接收方处理数据的速度可能没有发送方发送<br>数据的速度快，这时候需要降低发送方的发送速度，因为发送的再快，可是接收方处理<br>不了的话，那也没有任何意义。</p>
+<p><strong>Notice</strong>: 流量控制和拥塞控制不是一回事，流量控制只是为了匹配发送方，接收方的<br>速率和网络没关系。拥塞控制主要是根据网络的负载情况来动态的调整发送速率，来避<br>免网络拥塞.</p>
+<p>tcp数据报的Receive window size就是用来告知对方自己的接收缓冲区最多还能接收多 少数据，它是通过下面的方式计算的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">lastByteRcvd - lastByteRead &lt;= RcvBuffer<br>rwnd = RcvBuffer - (lastByteRcvd - lastByteRead)<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>lastByteRcvd: 接收到的最大序号</li>
+<li>lastByteRead: 已经被上层处理了的最大序号</li>
+<li>rwnd: 流量窗口的大小</li>
+<li>RcvBuffer: 接收缓冲区的大小</li>
+</ol>
+<p><strong>zero window</strong>: 当rwnd&#x3D;0的时候，发送方仍然会继续发送只包含1字节数据的数据报，<br>这样可以迅速的探测出对方的接收缓冲区什么时候有空间了。</p>
+<h2 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h2><h1 id="TSL-x2F-SSL"><a href="#TSL-x2F-SSL" class="headerlink" title="TSL&#x2F;SSL"></a>TSL&#x2F;SSL</h1><h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>目的:</p>
+<ol>
+<li>确定正文内容确实来源于发送者</li>
+<li>确定正文内容没有被篡改</li>
+</ol>
+<p>实现:</p>
+<ul>
+<li>发送者: 对正文内容hash从而生成摘要(Digest),接着用私钥加密摘要,将密文附在正文的后面</li>
+<li>接收者: 用发送者的公钥解密得到摘要,接着hash正文,比较摘要是否一致</li>
+</ul>
+<p>原理: 私钥加密可以防止摘要被篡改,摘要要可以用来检查正文内容是否被篡改.</p>
+<p><strong>数字签名对正文是不加密的</strong></p>
+<h2 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h2><p>目的: 分发公钥, 防止公钥被篡改,这也是为什么叫public key certification 的原因</p>
+<p>实现:</p>
+<ol>
+<li>CA机构会将你的公钥连同你的一些个人信息放入数字证书中,同时使用CA的私钥来进 行数字签名, 数字签名也会放入数字证书中.<br>数字证书一般包含这些内容:<ul>
+<li>Version</li>
+<li>Serial Number: 用来唯一的标示一个证书的</li>
+<li>Certification Signature Algorithm: 签名算法(hash和加密)</li>
+<li>Certification Signature Value: 数字签名的值</li>
+<li>Issuer: 该证书的颁发机构(CA)</li>
+<li>Subject: 该证书的所有者</li>
+<li>Public Key: 证书所有者的公钥</li>
+<li>Fingerprint: 该证书的指纹,可以看做是数字证书一个身份标示</li>
+</ul>
+</li>
+<li>很多软件比如浏览器会有受信任的CA机构的数字证书,这些证书包含了CA的公钥,当收<br>到一个数字证书时,它会读取证书的颁发者,然后用颁发者的公钥来检查数字证书的签<br>名是否正常.</li>
+</ol>
+<h2 id="https"><a href="#https" class="headerlink" title="https"></a>https</h2><p>要保证安全实际上要做的就是两件事:</p>
+<ol>
+<li><strong>确认服务器的身份</strong>,也就是说服务器不能被冒充,杜绝中间人攻击,实现方法:<ul>
+<li>通过数字证书安全的获得服务器的公钥</li>
+<li>验证服务器的私钥</li>
+</ul>
+</li>
+<li><strong>所有的通信数据要加密</strong>,这样即便数据被截获也可以保证安全，实现方法是每一个 会话都协商一个对称秘钥,<br>用它来加密和解密传输的信息,之所以不直接使用RSA是因<br>为开销太大，同时秘钥加密的数据可以被解密，达不到加密的要求。</li>
+</ol>
+<p><strong>CA机构必须保证不做恶</strong>, 因为一旦CA机构干坏事那就基本没有安全可言，CNNIC就是一 个例子，比如它可以配合gfw这样进行中间人攻击：</p>
+<ol>
+<li>它签发一个证书给某台服务器</li>
+<li>用GFW的dns劫持将访问google等网站的请求导向1中的服务器</li>
+<li>因为CNNIC的证书被浏览器信任，所以浏览器会高高兴兴的和1中的服务器进行https 通信，这样gfw也就可以解密你的https请求了</li>
+</ol>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><ol>
+<li>NS记录用来将一个subdomain授权给其它的dns server管理</li>
+<li>CNAME记录不能与其它记录共存</li>
+<li>SOA和CNAME记录对同一个name只能有一条。</li>
+<li>TXT可以指定多条记录，每一条记录内部又可以指定多条字符串。在dns包中每一个字符<br>串都是1byte存放字符串的长度，接着跟着字符串的长度，字符串不需要以0结尾。</li>
+<li>DNS包中的authority section只能放NS记录</li>
+</ol>
+<h1 id="网络设备"><a href="#网络设备" class="headerlink" title="网络设备"></a>网络设备</h1><ol>
+<li>集线器(HUB): 工作于第二层,基本已被淘汰, 目前基本用交换机, HUB最大的问题是当它<br>接收到一个数据包后,它会向所有连接到该hub的主机广播,<br>这样会造成一大堆无用流量. 这主要是因为HUB内部没有交换机内部的那种MAC地址表.</li>
+<li>网桥: 也基本被淘汰. 它有两个端口，作用是可以把一个大的局域网分成两个小的局域<br>网,这样可以显著的减少广播包的数量。但是每一个小的局域网内部还是需要广播，还是<br>没有交换机那样点对点传播高效。</li>
+<li>交换机<ul>
+<li>二层交换机: 用来将链路层数据包发给相应的主机或者网络设备, 内部有个MAC地址表,交<br>换机会根据各个端口接受数据包的源MAC地址来自动的更新该表.因为这个表的存在,交<br>换机不用像HUB一样广播,它可以点对点的发送,所以效率要高得多.</li>
+<li>三层交换机</li>
+<li>四层交换机</li>
+</ul>
+</li>
+<li>路由器</li>
+<li>家用路由器：名字有误导性，实际上相当于一个交换机加上路由器以及防火墙。插在Lan<br>口上的电脑以及无线连接的设备就像连在交换机上组网，同时它又是一个路由器，一边<br>是局域网一边是公网,同时要用到 <strong>NAT</strong> ，因为需要将局域网ip转换成公网ip。</li>
+</ol>
+<h1 id="抓包工具"><a href="#抓包工具" class="headerlink" title="抓包工具"></a>抓包工具</h1><p>主要有tcpdump和wireshark</p>
+<h2 id="Capture-Filter"><a href="#Capture-Filter" class="headerlink" title="Capture Filter"></a>Capture Filter</h2><p>这是启动抓包之前需要设置的过滤器,设置后在本次抓包过程中不可更改, 格式是 wireshark, tcpdump通用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs example">Exp       ::= AtomicExp LogicOp Exp | AtomicExp<br>AtomicExp ::= Protocol  Direction  Key  Value<br><br>LogicOp   ::= and | or | not | &amp;&amp; | ! | ||<br><br>Protocol  ::= ether| fddi| tr| wlan| ip| ip6| arp| rarp| decnet| tcp | udp<br>Direction ::= src | dst | src or dst<br>Key       ::= host | net | port | portrange<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>Protocol: 协议,可能的值为:ether, fddi, ip, arp, rarp, decnet, lat, sca,<br>moprc, mopdl, tcp and udp, 默认是所有协议</p>
+</li>
+<li><p>Direction: src, dst, src and dst, src or dst 默认是src or dst</p>
+</li>
+<li><p>Key: 可以看做是某种属性名,支持的值为:host,port, net, portrange, 默认是host</p>
+</li>
+<li><p>Value: 对应于Key的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs example">portrange 10000-10020<br>port 27011<br>host 127.0.0.1<br>net 192.168.1.0/24<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>LogicalOperation: not, and, or, 可以用来组合多个表达式</p>
+</li>
+</ol>
+<h2 id="Didsplay-Filter"><a href="#Didsplay-Filter" class="headerlink" title="Didsplay Filter"></a>Didsplay Filter</h2><p>通过Capture filter过滤后得到的包如果还是太多,那么可以通过display filter来过滤,只 让过滤后的包显示出来,<br><strong>wireshark专用</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs example">Exp ::= AtomicExp LogicOp Exp | AtomicExp<br>AtomicExp ::= Protocol.Key1.Key2 CompOp Value<br><br>LogicOp ::= and | or | not | &amp;&amp; | ! | ||<br>CompOp  ::= eq | ne | gt | lt | ge | le | == | != | &lt; | &gt; | &lt;= | &gt;=<br><br>Protocol ::= ether| fddi| tr| wlan| ip| ip6| arp| rarp| decnet| tcp | udp<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>Key1, Key2 是可选的,不同的协议是不同的,常用的:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">ip.addr, ip.src, ip.dst<br>tcp.port, tcp.srcport, tcp.dstport<br></code></pre></td></tr></table></figure>
+
+<p>更详细就查文档</p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/network/">network</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2013/02/11/notes/linear-algebra/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">线性代数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2012/02/13/notes/css/">
+                        <span class="hidden-mobile">css笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2012/02/15/notes/computer-network/';
+          this.page.identifier = '/2012/02/15/notes/computer-network/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

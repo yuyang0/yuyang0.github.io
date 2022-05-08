@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="table实际上是一个hash表, 把python中dict与list杂揉到了一起,设计的并不好. 初始化1234local tbl &#x3D; &amp;#123;aa&#x3D;1, bb&#x3D;2, &quot;l1&quot;, &quot;l2&quot;, &quot;l3&quot;&amp;#125;print(#tbl)    -- return 3local tbl &#x3D; &amp;#123;aa&#x3D;1, bb&#x3D;2&amp;#125;p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lua笔记">
+<meta property="og:url" content="http://example.com/2014/02/17/notes/lua/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="table实际上是一个hash表, 把python中dict与list杂揉到了一起,设计的并不好. 初始化1234local tbl &#x3D; &amp;#123;aa&#x3D;1, bb&#x3D;2, &quot;l1&quot;, &quot;l2&quot;, &quot;l3&quot;&amp;#125;print(#tbl)    -- return 3local tbl &#x3D; &amp;#123;aa&#x3D;1, bb&#x3D;2&amp;#125;p">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2014-02-17T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-08T12:52:13.015Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="lang">
+<meta property="article:tag" content="lua">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>lua笔记 - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="lua笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2014-02-17 11:54" pubdate>
+        2014年2月17日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">lua笔记</h1>
+            
+            <div class="markdown-body">
+              <h1 id="table"><a href="#table" class="headerlink" title="table"></a>table</h1><p>实际上是一个hash表, 把python中dict与list杂揉到了一起,设计的并不好.</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight lua"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">local</span> tbl = &#123;aa=<span class="hljs-number">1</span>, bb=<span class="hljs-number">2</span>, <span class="hljs-string">&quot;l1&quot;</span>, <span class="hljs-string">&quot;l2&quot;</span>, <span class="hljs-string">&quot;l3&quot;</span>&#125;<br><span class="hljs-built_in">print</span>(#tbl)    <span class="hljs-comment">-- return 3</span><br><span class="hljs-keyword">local</span> tbl = &#123;aa=<span class="hljs-number">1</span>, bb=<span class="hljs-number">2</span>&#125;<br><span class="hljs-built_in">print</span>(#tbl)    <span class="hljs-comment">-- return 0</span><br></code></pre></td></tr></table></figure>
+
+<p>表初始化时如果你没有指定key, 那么默认使用数字为key, 所以”l1”, “l2”,”l3”的key 分别是1,2,3.<br>也就是说被当成了list, 我建议将dict, list明确的区分开来, 有一个长 度操作符#<br>来获得list的长度,它实际上是获得最大的数字key. 举个例子，如果一个<br>table的数字key有这些：1,2,3,4,6,7, 那么#操作符会返回4, 因为中间有一个空洞的关<br>系，#检查到5的时候发现为nil就停止了 #u操作符大致等价于下面的函数.</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_len</span><span class="hljs-params">(tbl)</span></span><br>   <span class="hljs-keyword">local</span> i = <span class="hljs-number">1</span><br>   <span class="hljs-keyword">while</span> <span class="hljs-literal">true</span> <span class="hljs-keyword">do</span><br>      <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> tbl[i] <span class="hljs-keyword">then</span><br>         <span class="hljs-keyword">return</span> i<span class="hljs-number">-1</span><br>      <span class="hljs-keyword">end</span><br>      i = i+<span class="hljs-number">1</span><br>   <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="遍历table"><a href="#遍历table" class="headerlink" title="遍历table"></a>遍历table</h2><p>pairs，ipairs都会返回一个迭代器，只是pairs会迭代所有的key，ipairs只会迭代数字key。<br>所以为了方便起见，最好使用pairs</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> <span class="hljs-built_in">pairs</span>(tbl) <span class="hljs-keyword">do</span><br>  dosomething()<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="metatable"><a href="#metatable" class="headerlink" title="metatable"></a>metatable</h1><p>lua的每一个表或者userdata都可以有单独的元表, 其他类型的值则共享该类型的元表, 比如说所有的整数都拥有一个相同的整数类型的元表,<br>我们一般对表的元表比较感兴趣.</p>
+<h2 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h2><ol>
+<li>__index: <strong>元表的__index属性可以为函数或者表</strong>, 给定表tbl以及键key,获得 value的流程如下:<ul>
+<li>tbl[key]: 如果为nil, 也就是说key不在tbl中, 那么看下面</li>
+<li>检查tbl的元表, 如果有元表且元表有__index属性, 并且__index属性的值是函数 或者表,那么看下面,<br>否则返回nil</li>
+<li>如果__index属性是一个函数, 那么这样调用 __index(tbl, key)</li>
+<li>如果__index属性是一个表, 那么返回__index[key]</li>
+</ul>
+</li>
+<li>__newindex: <strong>元表的__newindex属性可以为函数或者表</strong>,只有对表中不存在的<br>index赋值时才会调用元表的__newindex方法.</li>
+</ol>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><h2 id="ENV-lua5-2"><a href="#ENV-lua5-2" class="headerlink" title="_ENV(lua5.2)"></a>_ENV(lua5.2)</h2><p>lua将每一个chunk转换为一个匿名函数, 匿名函数中的自由变量(也就是全局变量)会转 变为对表_ENV的引用,比如:</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua">var1 = var2 + <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>很显然var1, var2是全局变量, 那么这个chunk实际会转换为这个样子</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-built_in">_ENV</span> = <span class="hljs-built_in">_G</span><br><span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span></span><br>   <span class="hljs-built_in">_ENV</span>.var1 = <span class="hljs-built_in">_ENV</span>.var2 + <span class="hljs-number">1</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>从上面的代码你可以看到, 全局变量的访问与赋值实际就是对_ENV表的相应key的访问与 修改,<br>这个_ENV实际就是为了实现静态作用域而必须和函数绑定到一起的环境,<br>如果没有 这个环境那么自由变量就只能在动态执行过程中决定,这就成了动态作用域, 默认情 况_ENV是被赋值为_G,<br>但是你可以修改_ENV, 同时匿名函数中的自由变量还有一个名字 叫 <strong>上值(upvalues)</strong>,<br>很显然var1, var2就是上值</p>
+<h2 id="setfenv-x2F-getfenv"><a href="#setfenv-x2F-getfenv" class="headerlink" title="setfenv&#x2F;getfenv"></a>setfenv&#x2F;getfenv</h2><p>__ENV机制是lua5.2引入的, 在luajit中也没有实现, setfenv实际上也可以设置函数的 环境,<br>第一个参数是一个函数,也可以是数字,它代表当前栈上的函数,比如说1就代表目<br>前正在执行的函数.</p>
+<h1 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h1><p>可以使用表来模拟OOP的行为.</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs lua">Account = &#123;<br>   balance=<span class="hljs-number">0</span>,<br>   withdraw = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(self, v)</span></span><br>      <span class="hljs-built_in">self</span>.balance = <span class="hljs-built_in">self</span>.balance - v<br>   <span class="hljs-keyword">end</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Account:new</span> <span class="hljs-params">(o)</span></span><br>   o = o <span class="hljs-keyword">or</span> &#123;&#125;<br>   <span class="hljs-comment">-- create object if user does not provide one</span><br>   <span class="hljs-built_in">setmetatable</span>(o, <span class="hljs-built_in">self</span>)<br>   <span class="hljs-built_in">self</span>.<span class="hljs-built_in">__index</span> = <span class="hljs-built_in">self</span><br>   <span class="hljs-keyword">return</span> o<br><span class="hljs-keyword">end</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Account:deposit</span> <span class="hljs-params">(v)</span></span><br>   <span class="hljs-built_in">self</span>.balance = <span class="hljs-built_in">self</span>.balance + v<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- 等价,冒号是语法糖，可以看做是自动添加self</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Account.deposit</span> <span class="hljs-params">(self, v)</span></span><br>   <span class="hljs-built_in">self</span>.balance = <span class="hljs-built_in">self</span>.balance + v<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>在new中创建一个表o, 同时将o的metatable设为self(也就是Account), 同时设置 self的__index属性,<br>这样o中不存在的属性都会去Account表中找. 若是新对象没有指定<br>balance值,那么Account中的balance会新对象的默认值.<br>同时注意冒号是一个语法糖, 也 就是说 <code>o:deposite(100)=等价于 =o.deposite(o, 100)</code>,</p>
+<h1 id="package"><a href="#package" class="headerlink" title="package"></a>package</h1><p>lua中比较好的package设施应该满足以下几点:</p>
+<ol>
+<li>不要因为漏写local而污染全局环境</li>
+<li>不要在每一个api前添加包名前缀</li>
+</ol>
+<p>推荐的做法如下:</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- 将模块用到的全局变量赋值给local变量</span><br><span class="hljs-keyword">local</span> <span class="hljs-built_in">print</span> = <span class="hljs-built_in">print</span><br><span class="hljs-keyword">local</span> <span class="hljs-built_in">error</span> = <span class="hljs-built_in">error</span><br><span class="hljs-keyword">local</span> ngx = ngx<br><span class="hljs-keyword">local</span> <span class="hljs-built_in">setmetatable</span> = <span class="hljs-built_in">setmetatable</span><br><br><span class="hljs-keyword">local</span> _M = &#123;&#125;<br><span class="hljs-comment">-- 修改当前chunk的匿名函数的环境为_M, 这样该chunk的所有全局变量都会变成_M的元素</span><br><span class="hljs-comment">-- 这样可以避免漏掉local导致的函数变成全局函数的问题.</span><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">setfenv</span> <span class="hljs-keyword">then</span>                 <span class="hljs-comment">-- for lua5.1 and luajit</span><br>   <span class="hljs-built_in">setfenv</span>(<span class="hljs-number">1</span>, _M)<br><span class="hljs-keyword">elseif</span> <span class="hljs-built_in">_ENV</span> <span class="hljs-keyword">then</span>                <span class="hljs-comment">-- for lua5.2 or newer</span><br>   <span class="hljs-built_in">_ENV</span> = _M<br><span class="hljs-keyword">else</span><br>   <span class="hljs-built_in">error</span>(<span class="hljs-string">&quot;both setfenv and _ENV are nil...&quot;</span>)<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- private function</span><br><span class="hljs-keyword">local</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">afunc</span><span class="hljs-params">()</span></span><br>   dosomething<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- public method</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">new</span><span class="hljs-params">()</span></span><br>   do_something<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- safety set, 禁止添加新属性</span><br><span class="hljs-keyword">local</span> module_mt = &#123;<br>   <span class="hljs-built_in">__newindex</span> = (<br>      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(table, key, val)</span></span><br>         <span class="hljs-built_in">error</span>(<span class="hljs-string">&#x27;Attempt to write to undeclared variable &quot;&#x27;</span> .. key .. <span class="hljs-string">&#x27;&quot;&#x27;</span>)<br>                <span class="hljs-keyword">end</span>),<br>&#125;<br><br><span class="hljs-built_in">setmetatable</span>(_M, module_mt)<br><br><span class="hljs-keyword">return</span> _M<br></code></pre></td></tr></table></figure>
+
+<h1 id="一些注意事项"><a href="#一些注意事项" class="headerlink" title="一些注意事项"></a>一些注意事项</h1><ol>
+<li>chunk: chunk是lua执行代码的最小单位,一个chunk必定是一个block, 你可以认为<br>chunk是最上层的block,一般来说一个文件中的所有lua代码是一个chunk, 在交互环<br>境下每一行(前提是这一行是一个完整的语句)都是一个chunk</li>
+<li>list的下标从1开始</li>
+<li>lua的不等于是 ~&#x3D;, 不是 !&#x3D;</li>
+<li>lua没有++,–以及+&#x3D;, -&#x3D; 这样的操作符,所以老老实实的写i&#x3D;i+1</li>
+<li>lua的字符串拼接是 .. ,不是+, 它会自动将数字转换为字符串</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/lang/">lang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/lua/">lua</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2014/02/18/notes/clojure/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Clojure笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2014/02/16/notes/java/">
+                        <span class="hidden-mobile">java笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2014/02/17/notes/lua/';
+          this.page.identifier = '/2014/02/17/notes/lua/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
