@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="事务事务有四个特性(ACID): 一致性也就是说不能破坏数据库的某种约定，比如经典的银行转账问题中，从账户A转100元到账户B，那么一致性要求两个账户的金额的和要是相同的，数据库不应该让用户看到事务执行的中间状态, 也就是说不能让用户看到A账户减了100元，但是B账户还没有增加100元这样的中间状态，一致性有些需要数据库保证，有些则需要应用保证。 原子性只是用来保证事务中的操作完全成功或者全部失败">
+<meta property="og:type" content="article">
+<meta property="og:title" content="database">
+<meta property="og:url" content="http://example.com/2022/05/08/notes/database/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="事务事务有四个特性(ACID): 一致性也就是说不能破坏数据库的某种约定，比如经典的银行转账问题中，从账户A转100元到账户B，那么一致性要求两个账户的金额的和要是相同的，数据库不应该让用户看到事务执行的中间状态, 也就是说不能让用户看到A账户减了100元，但是B账户还没有增加100元这样的中间状态，一致性有些需要数据库保证，有些则需要应用保证。 原子性只是用来保证事务中的操作完全成功或者全部失败">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-08T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-08T09:21:12.764Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="database">
+<meta property="article:tag" content="raft">
+<meta property="article:tag" content="paxos">
+<meta property="article:tag" content="leveldb">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>database - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="database">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-08 11:54" pubdate>
+        2022年5月8日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">database</h1>
+            
+            <div class="markdown-body">
+              <h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>事务有四个特性(ACID):</p>
+<h2 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h2><p>也就是说不能破坏数据库的某种约定，比如经典的银行转账问题中，从账户A转100元到账户<br>B，那么一致性要求两个账户的金额的和要是相同的，数据库不应该让用户看到事务执行的<br>中间状态, 也就是说不能让用户看到A账户减了100元，但是B账户还没有增加100元这样的中<br>间状态，一致性有些需要数据库保证，有些则需要应用保证。</p>
+<h2 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h2><p>只是用来保证事务中的操作完全成功或者全部失败，不可能一部分成功一部分失败</p>
+<h2 id="持久性"><a href="#持久性" class="headerlink" title="持久性"></a>持久性</h2><p>一个事务如果已经提交成功，那么不管数据库出现什么问题，事务所做的修改都不应该丢失</p>
+<h2 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h2><p>实际上ACD就已经可以保证一个事务的正常执行，但是ACD可能使数据库非常的低效，所以就<br>引入了隔离级别，隔离性和一致性是一对矛盾的指标，在最低的隔离等级下，用户是有可能<br>读到脏数据的，也就是说读到事务的中间状态，这实际就是说在最低的隔离等级下，数据库 是不满足一致性的。数据库的隔离级别如下：</p>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Read uncommitted</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Read committed</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Repeatable read</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Snapshot</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Serializable</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<ul>
+<li>未提交读(Read Uncommitted)：允许脏读，也就是可能读取到其他会话中未提交事务修改的数据</li>
+<li>提交读(Read Committed)：只能读取到已经提交的数据。Oracle等多数数据库默认都是该级别 (不重复读)</li>
+<li>可重复读(Repeated<br>Read)：可重复读。在同一个事务内的查询都是事务开始时刻一致的，InnoDB默认级别。在SQL标准中，该隔离级别消除了不可重复读，但是还存在幻象读</li>
+<li>快照隔离(Snapshot):<br>在事务开始时获得一个快照，事务中的所有read都是读该快照，通常通过MVCC实现，所以它没有脏读，不可重复读以及幻读的问题，它能够处理写写冲突，它主要的问题是写偏斜（write<br>skew），<br>也就是说两个事务读取相同的数据项，但是更新不同的数据项，比如某人有两个账户，每个账户100元，银行要求两个账户的余额之和大于等于0，那么就会有这种情况出现：<br>T1，T2两个事务同时读取两个账户余额，接着都取出200元，T1更新第一个账户，T2更新第二个账户，这样就会出问题。</li>
+<li>串行读(Serializable)：完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞</li>
+</ul>
+<h3 id="快照隔离"><a href="#快照隔离" class="headerlink" title="快照隔离"></a>快照隔离</h3><p>快照隔离基本都是通过MVCC实现。</p>
+<ol>
+<li><p>正确性保证：</p>
+<ol>
+<li>Consistent Snapshot：所谓Consistent，即快照包含且仅包含Commit先于SnapshotTS的所有事务</li>
+<li>Commit Total Order：所有事务提交构成一个全序关系，每次提交都会生成一个快照，由<code>CommitTS</code>标识</li>
+<li>Write-Write Conflict: 事务Ti和Tj有冲突，即它们WriteSet有交集，且<code>[SnapshotTS, CommitTS]</code>有交集</li>
+</ol>
+</li>
+<li><p>单机实现</p>
+<p>一个简单的KV单机存储上实现快照隔离的方法：</p>
+<ol>
+<li>事务开始时生成一个唯一的事务号，数据的版本号就是事务号</li>
+<li>数据Key都带上版本号，一般直接把版本号放到key的末尾，encode的时候要保证顺序一致</li>
+<li>事务开始时要记录当前活跃的事务号</li>
+<li>快照读取就是在key(包括当前的版本号）上从后往前scan，忽略掉第三步记录的活跃的事务号（这样可以避免脏读）</li>
+<li>写入时要检测有没有写写冲突，可以从活跃的最小事务号开始，从前往后scan，看有没有事务对相同的key有写入，有的话就返回错误</li>
+<li>每个update都需要记录，用于回滚。</li>
+</ol>
+</li>
+</ol>
+<h1 id="分布式系统"><a href="#分布式系统" class="headerlink" title="分布式系统"></a>分布式系统</h1><h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p>percolator和Omid比较常见，它们都实现了SI(快照隔离)，上述事务的实现会有两个版本号：startTS和commitTS，有如下规则</p>
+<ol>
+<li>startTS一般就是事务开始时分配的事务号</li>
+<li>有了startTS之后，客户端就可以获得snapshot(Snapshot必须要能读到所有commitTS&lt;startTS的数据)，这样客户端可以从snapshot读数据，<br>并且可以计算出哪些数据需要写入(writeSet)，也就是说主要的计算在客户端完成</li>
+<li>客户端完成计算后接着获得commitTS, 然后进入提交流程，此时要检测写写冲突</li>
+</ol>
+<p>写写冲突检测，符合下面两个条件意味着冲突：</p>
+<ol>
+<li>T1和T2的[startTS, commitTS]有重叠</li>
+<li>T1和T2的writeSet有重叠</li>
+</ol>
+<h3 id="percolator"><a href="#percolator" class="headerlink" title="percolator"></a>percolator</h3><p>tikv中的实现，将rocksdb分成3个column family：</p>
+<ol>
+<li>CF_DEFAULT: (key, start_ts) -&gt; value</li>
+<li>CF_LOCK: key -&gt; lock_info</li>
+<li>CF_WRITE: (key, commit_ts) -&gt;<br>write_info</li>
+</ol>
+<p>详细流程如下</p>
+<ol>
+<li>客户端从TSO获得startTS，然后进行本地计算得到要写入的rows，快照读取的流程如下:<ul>
+<li>读取key的lock_info,<br>如果存在并且lock_info中startts小于当前的startts,<br>这时候需要重试，因为可能存在write too late的情况，<br>也就是说一个事务已经获得了commit_ts,<br>并且<code>commit_ts&lt; start_ts</code>,<br>但是因为种种原因它目前还没有提交，所以目前读不到该事务的数据，但是<br>快照读要求读到所有commit_ts&lt;start_ts的事务的数据，所以这种情况只能等待该事务commit后，也就是重试。</li>
+<li>从CF_WRITE中读取committs&lt;start_ts的writeinfo</li>
+<li>从 write_info 中拿到 start_ts</li>
+<li>从CF_DEFAULT中读取上一步的startts为版本的数据。</li>
+</ul>
+</li>
+<li>Prewrite阶段：从要写入的rows中选一个primaryRow，剩下的都是secondary row<ol>
+<li>primaryRow加锁：在CF_LOCK中为primaryRow的key写入lockinfo(内容为startTS)，并且要做冲突检测，一方面是是否有其它事务已加锁该row，<br>同时要检测<code>[startTS, +inf]</code>范围有没有数据,<br>如果没有冲突就在CF_DEFAULT中把数据写入（数据的版本是startTS）</li>
+<li>secondary<br>row加锁，lock_info的内容是startTS以及primaryRow的信息。冲突检测是一样的，加锁成功就把数据写入</li>
+</ol>
+</li>
+<li>Commit阶段<ol>
+<li>从TSO获得commit_ts</li>
+<li>删掉primaryRow的锁，同时在CF_WRITE中为primaryRow的key写入writeinfo(版本号为commit_ts,<br>内容为start_ts).</li>
+<li>为secondary rows重复第2步</li>
+</ol>
+</li>
+</ol>
+<p>crash 恢复 如果某个事务T1读一行数据发现有锁，那么意味着存在事务T0，T0的状态如下：</p>
+<ol>
+<li>根据lock_info的内容查找primaryRow，如果primaryRow的对应版本无锁，并且write_info内容正常，那么T0事务已提交，所以去掉锁，更新write_info</li>
+<li>如果primaryRow的锁消失，并且没有write_info,或者primaryRow干脆不存在，那么T0事务回滚了，那么直接删掉这一行就好</li>
+<li>如果primaryRow的锁的过去很久了，那么该事务在commit或者rollback之前就crash了，那么直接回滚事务T0</li>
+<li>其它情况都认为T0事务正在执行，所以等待T0 commit或者rollback， 然后重启T1</li>
+</ol>
+<h3 id="Omid"><a href="#Omid" class="headerlink" title="Omid"></a>Omid</h3><h2 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h2><p>2PC协议主要是用于分布式事务，用于保证作用于多节点的的操作的原子性</p>
+<h1 id="分布式一致性算法"><a href="#分布式一致性算法" class="headerlink" title="分布式一致性算法"></a>分布式一致性算法</h1><p>分布式一致性算法是用于保证多副本的一致性。主要用于多节点复制数据</p>
+<h2 id="raft"><a href="#raft" class="headerlink" title="raft"></a>raft</h2><p>主要拆解成4个问题：</p>
+<h3 id="选主"><a href="#选主" class="headerlink" title="选主"></a>选主</h3><p>3个角色：leader, follower, canidate follower一段时间没收到心跳就会进入选主：</p>
+<ol>
+<li>Term+1变为candidate， 并且给自己投一票，接着给集群其它节点发送RequestVote RPC.</li>
+<li>其它节点收到RequestVote，如果Term高于自身的Term，那么修改自身的Term，并且投一票，记住一个Node的一个Term只允许投一票</li>
+<li>如果收到半数节点同意RequestVote，那么成为leader</li>
+</ol>
+<p>边界问题：</p>
+<ol>
+<li>网络分裂，如果follower处在leader的不同的一边，为了避免一定无法成功的选主，可以在follower的心跳超时时先试着联系集群半数的节点，只有连接成功才进入选主流程</li>
+<li>为了避免选主票数分裂，这里需要对选主超时做一下随机化。</li>
+</ol>
+<!-- end list -->
+
+<h3 id="日志复制"><a href="#日志复制" class="headerlink" title="日志复制"></a>日志复制</h3><p>要保证日志一致性，需要满足下面两点：</p>
+<ol>
+<li>日志只能从leader流向follower</li>
+<li>选主时必须保证新leader有最新的日志</li>
+</ol>
+<!-- end list -->
+
+<h3 id="日志安全性"><a href="#日志安全性" class="headerlink" title="日志安全性"></a>日志安全性</h3><h3 id="配置变更"><a href="#配置变更" class="headerlink" title="配置变更"></a>配置变更</h3><p>一定要用两阶段变更，因为如果直接变更可能选出两个leader，比如从3个节点变成5个节点，某个时间点1 2是旧配置(认为集群只有三个节点)，3<br>4 5时新配置(认为集群有5个节点)， 那么1 2可以选出一个leader，3 4 5也可以选出一个leader。</p>
+<h2 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h2><h1 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h1><ol>
+<li>读放大：每一次读需要多少磁盘IO（disk read)</li>
+<li>写放大：当只需要写入1byte时，存储系统实际写入了n byte,那么写入放大就是n</li>
+<li>空间放大：实际占用的磁盘空间与实际数据空间的比值，主要时一些过期数据的影响</li>
+</ol>
+<h2 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B+ Tree"></a>B+ Tree</h2><h2 id="Append-only-BTree"><a href="#Append-only-BTree" class="headerlink" title="Append-only BTree"></a>Append-only BTree</h2><h2 id="LSM"><a href="#LSM" class="headerlink" title="LSM"></a>LSM</h2><h3 id="LevelDB"><a href="#LevelDB" class="headerlink" title="LevelDB"></a>LevelDB</h3><ol>
+<li><p>log file</p>
+<p>Log file format</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><pre><code class="hljs example">      +-----+-------------+--+----+----------+------+-- ... ----+<br>File  | r0  |        r1   |P | r2 |    r3    |  r4  |           |<br>      +-----+-------------+--+----+----------+------+-- ... ----+<br>      &lt;--- kBlockSize ------&gt;|&lt;-- kBlockSize ------&gt;|<br><br> rn = variable size records<br> P = Padding<br> kBlolckSize = 32kb<br></code></pre></td></tr></table></figure>
+
+<p>Record format</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs example">+---------+-----------+-----------+----------------+--- ... ---+<br>|CRC (4B) | Size (2B) | Type (1B) | Log number (4B)| Payload   |<br>+---------+-----------+-----------+----------------+--- ... ---+<br>Same as above, with the addition of<br>Log number = 32bit log file number, so that we can distinguish between<br>records written by the most recent log writer vs a previous one.<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>table file</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs example">&lt;beginning_of_file&gt;<br>[data block 1]<br>[data block 2]<br>...<br>[data block N]<br>[meta block 1]<br>...<br>[meta block K]<br>[metaindex block]<br>[index block]<br>[Footer]        (fixed size; starts at file_size - sizeof(Footer))<br>&lt;end_of_file&gt;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>data block: 存储key，value数据，以key排序存储</li>
+<li>meta block：一些元数据，比如filter，stat等等</li>
+<li>metaindex block: 存储meta block的(offset, size), 每一个meta<br>block都有一条记录</li>
+<li>index block： 存储data block的（offset，size），每一个data block都有一条记录</li>
+</ol>
+</li>
+</ol>
+<h2 id="Merge-Tree"><a href="#Merge-Tree" class="headerlink" title="Merge Tree"></a>Merge Tree</h2><p>这是clickhouse中所使用的列存储引擎</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/note/">note</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/database/">database</a>
+                    
+                      <a class="hover-with-bg" href="/tags/raft/">raft</a>
+                    
+                      <a class="hover-with-bg" href="/tags/paxos/">paxos</a>
+                    
+                      <a class="hover-with-bg" href="/tags/leveldb/">leveldb</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/03/11/articles/mxnet-engine/">
+                        <span class="hidden-mobile">MXNET Dependency Engine</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2022/05/08/notes/database/';
+          this.page.identifier = '/2022/05/08/notes/database/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

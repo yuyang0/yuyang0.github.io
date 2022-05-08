@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="类型系统python是一个动态类型的语言，它只能进行动态类型检查，所谓动态类型检查，实际就是说，python只有在运行时会进行类型检查,比如说这样的代码： 12345def add1(x):    return x + 1a &#x3D; &quot;hello&quot;add1(a)  运行时python会报错，因为integer类型与string类型是不能相加的，但是这种类型错误只能在运行到这条代码时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python的“缺点”">
+<meta property="og:url" content="http://example.com/2017/02/10/articles/defects-of-python/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="类型系统python是一个动态类型的语言，它只能进行动态类型检查，所谓动态类型检查，实际就是说，python只有在运行时会进行类型检查,比如说这样的代码： 12345def add1(x):    return x + 1a &#x3D; &quot;hello&quot;add1(a)  运行时python会报错，因为integer类型与string类型是不能相加的，但是这种类型错误只能在运行到这条代码时">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-02-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-08T09:21:12.760Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>python的“缺点” - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="python的“缺点”">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-02-11 00:00" pubdate>
+        2017年2月11日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      42 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python的“缺点”</h1>
+            
+            <div class="markdown-body">
+              <h1 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h1><p>python是一个动态类型的语言，它只能进行动态类型检查，所谓动态类型检查，实际就<br>是说，python只有在运行时会进行类型检查,比如说这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add1</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> x + <span class="hljs-number">1</span><br><br>a = <span class="hljs-string">&quot;hello&quot;</span><br>add1(a)<br></code></pre></td></tr></table></figure>
+
+<p>运行时python会报错，因为integer类型与string类型是不能相加的，但是这种类型错误<br>只能在运行到这条代码时才能检查出来，事实上还有一种静态类型检查，它可以不运行<br>程序就检查出程序的类型错误，这种语言大概可以分为两类：</p>
+<ol>
+<li>C&#x2F;C++，java等，它们的静态检查是在编译源码时完成的，在这种语言中你要对每一<br>个变量的类型进行标识，非常的繁琐，这也是为什么很多人觉得python比C&#x2F;C++这类<br>语言用起来更舒服的原因之一。</li>
+<li>haskell，ML等，在这种语言中，每一次你运行一个程序时，它会先将程序送入一个<br>typechecker中，只有程序通过了typechecker的检查，才能让它运行。这类语言一般<br>内部会有一个推导系统，比如说著名的HM类型系统，所以在这种语言中你不需要做特<br>别多的类型标识，类型系统本身可以推导出绝大多数类型，所以你可以直接用<br><code>x=1</code>, 而不是 <code>int x=1</code>,因为类型系统可以根据1来推导出x的类型。</li>
+</ol>
+<p>静态类型系统的优点主要有以下几点：</p>
+<ol>
+<li>更好的发现错误：静态类型系统可以帮程序员检测出绝大多数低级错误，所以一些<br>Haskell程序员说，只要我的代码通过了类型检查，那么它90%的可能是正确的。</li>
+<li>类型本身可以作为文档的一部分，比如说一个函数如果你知道了它的参数类型以及返 回值类型，那么你很可能就可以猜出它的功能。</li>
+<li>IDE更好用，一般来说能够进行静态类型检查的语言，它的IDE都更好用，代码跳转，<br>重构等功能都非常准确，而python做不到这一点，即便是pyhon所谓最好的IDE<br>pycharm我也可以很轻松的让它出错。</li>
+</ol>
+<p>静态类型系统配合类型推是个好东西，既能享受静态类型检查带来的好处，又不用做过<br>多的类型标注，很可惜python中是无法实现这样的类型系统，也就是说无法进行完备的<br>静态类型检查，因为它太“灵活”， 实际上它的很多灵活性是多余的，因为好的编程风格，<br>是不推荐你使用这部分特性的。这部分灵活性也使得python的很多语义都与类型系统是<br>矛盾的。比如说列表，类型系统要求列表必须同质，也就说列表的元素必须是同一类型，<br>这是符合逻辑的，可是“灵活”的python却允许不同类型的元素放在同一个列表。在比如<br>说python允许一个变量绑定到不同类型的值，比如下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">aa = <span class="hljs-number">1</span><br>aa = <span class="hljs-string">&#x27;hello&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>但是这种做法静态类型系统是不允许的（当然这是所有动态语言的问题 ）。还有很多这<br>样的例子。静态类型系统实际上是限制了程序语言的灵活性以及表达力，但这是值得的，<br>因为它去掉的基本都是一些不必要的灵活性，而且去掉这些灵活性之后可以让程序更严<br>谨，实际上现在已经有人在着手向python中添加静态类型，各位可以看看这篇<a target="_blank" rel="noopener" href="https://quip.com/r69HA9GhGa7J">文章</a><br>。 有意了解更多类型知识的童鞋可以看看types and programming languages这本书。</p>
+<h1 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h1><p>python强制缩进是一个明智的选择，它使得代码的可读性有了质的飞跃，但是它使用空<br>格这样的不可见字符来标示一个块的结束，我认为不是什么很好的选择。ruby社区有一<br>种说法：ruby使用end终结一个块是比python使用空格缩进更高级的做法。过去有一段时 间我对这种说法也是嗤之以鼻。但是我现在改变了看法,<br>使用空格这样的不可见字符来 标示一个块的结束有以下几个问题:</p>
+<ol>
+<li><p><strong>更容易出错</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params">ls</span>):<br>    ret = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ls:<br>        ret += i<br>    <span class="hljs-keyword">return</span> ret<br><br><span class="hljs-comment"># incorrect</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params">ls</span>):<br>    ret = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ls:<br>        ret += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> ret<br></code></pre></td></tr></table></figure>
+
+<p>第二个函数仅仅因为多按了一个tab就产生了一个致命的bug，这种简单的例子可能还<br>好检查，可是对于复杂的函数这种bug很不好排查。如果有明确的块界定符，比如说<br>end，}，那么就根本不会有这种低级的问题.</p>
+</li>
+<li><p><strong>无法使用编辑器来自动格式化代码</strong>, 这是一个很大的问题,当你从网上拷贝一段别人 的代码后,你必须小心翼翼的来确保代码的缩进正确,<br>编辑器是无法自动格式化像 python这类语言的代码的, 这不是因为编辑器不够强大，而是本质上不可能实现，所<br>以python的代码我们必须手动来格式化，这是很机械的工作，可是因为python的设计<br>失误，我们无法把它交给机器来做，曾经我因为写其他语言代码的习惯, 所以在emacs<br>中写python代码时总是喜欢运行代码自动格式化的命令，可是每一次都弄得一团糟，<br>最后不得不在配置中把python的格式化命令去掉了,<br>所以对于python的这种语法虽然 看上去很简洁，但是我不认为是一个好的设计。</p>
+</li>
+<li><p><strong>无法实现一个完备的匿名函数</strong>,python的缩进方式除了导致第三方工具无法自动格<br>式化代码这个问题外，还有一个很大的问题，那就是python无法实现一个功能完备的<br>匿名函数。如果你有函数式编程经验，应该能体会匿名函数的重要性，举一个很简单 的例子，比如python的列表解析：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">[i+<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)]<br><span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> i: i+<span class="hljs-number">1</span>, <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>))<br></code></pre></td></tr></table></figure>
+
+<p>二者实际是等价的，很多人对列表解析推崇有加，可是实际上它不过是个可有可无的<br>语法糖，而且还是一个表达能力并不强大的语法糖（我个人并不排斥语法糖，但是你<br>要明白语法糖背后隐藏的东西），这应该也是从haskell学来的，缩进语法应该也是，<br>我的印象中，python似乎从haskell学了很多蹩脚的东西。如果python能把匿名函数<br>做对，和map搭配会比列表解析强大的多。很可惜python的匿名函数就是一个“残废”<br>的东西，它内部只能有一个表达式，而不能像正常的函数那样包含多个语句，事实上<br>造成这一困境的原因就是python的缩进语法，因为匿名函数一般是作为参数传递给一<br>个函数，这样匿名函数的内部就不能换行，一旦换行缩进就乱了，所以python无法实<br>现一个完全正确的匿名函数。</p>
+</li>
+</ol>
+<h1 id="变量的定义与赋值"><a href="#变量的定义与赋值" class="headerlink" title="变量的定义与赋值"></a>变量的定义与赋值</h1><p>python中不区分变量的定义与赋值，这也是一个设计失误</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="环境（environment）"><a href="#环境（environment）" class="headerlink" title="环境（environment）"></a>环境（environment）</h3><p>如果你写过解释器，那么你一定遇到过这个东西，简单的说环境就是用来跟踪在程序 的执行过程中，每一个标识符都绑定到什么值，所以从逻辑上它就是一个<br>map(identifier &lt;–&gt; value)，和python的dict类似。环境要和作用域规则结合起来, 下面来看一个简单的实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Scope</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, parent=<span class="hljs-literal">None</span></span>):<br>        self.table = &#123;&#125;<br>        self.parent = parent<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bind</span>(<span class="hljs-params">self, var, val</span>):<br>        <span class="hljs-keyword">if</span> var <span class="hljs-keyword">in</span> self.table:<br>            error(<span class="hljs-string">&quot;var(%s) have been binded in this environment&quot;</span> % var)<br>        <span class="hljs-keyword">else</span>:<br>            self.table[var] = val<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get</span>(<span class="hljs-params">self, var</span>):<br>        val = self.table.get(var, <span class="hljs-literal">None</span>)<br>        <span class="hljs-keyword">if</span> val <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">if</span> self.parent <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">return</span> self.parent.get(var)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> val<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">set</span>(<span class="hljs-params">self, var, val</span>):<br>        <span class="hljs-keyword">if</span> var <span class="hljs-keyword">in</span> self.table:<br>            self.table[var] = val<br>        <span class="hljs-keyword">elif</span> self.parent <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            self.parent.<span class="hljs-built_in">set</span>(var, val)<br>        <span class="hljs-keyword">else</span>:<br>            error(<span class="hljs-string">&quot;var(%s) is not binded in this environment&quot;</span> % var)<br></code></pre></td></tr></table></figure>
+
+<p>上面的实现可以看出作用域实际上可以看做是一个dict,只是它有一个parent, 这样 就构成了一个链式的dict,可以从下往上搜索.</p>
+<h3 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h3><p>实际就是在当前变量所在作用域创建一个key&#x2F;value对, 注意实际上是调用 <code>bind</code> 方 法. 前提是该变量没有在当前作用域中绑定.</p>
+<h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><p>改变作用域中变量的值,如果当前作用域中没有该变量,那么就父作用域中找, 如果该变量不存在那么出错. 实际上该动作就是 <code>set</code> 方法.</p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>每当进入一个新的作用域，那么解释器就会创建一个scope对象，该对象的 parent指针会指向当前的scope对象，从而构成一个链式的作用域。</p>
+<h3 id="python的作用域规则"><a href="#python的作用域规则" class="headerlink" title="python的作用域规则"></a>python的作用域规则</h3><p>python有一个内置作用域，这个作用域的所有绑定是在任何地方都可见的。python的内 置函数以及内置异常都是在内置作用域中.<br>可以使用如下代码来查看内置作用域有哪些 绑定</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> __builtin__<br><span class="hljs-built_in">print</span> <span class="hljs-built_in">dir</span>(__builtin__)<br></code></pre></td></tr></table></figure>
+
+<p>除了内置作用域，python在两个地方会创建新的作用域，一个是模块，另一个是函数 （包括方法）</p>
+<h2 id="python的设计失误"><a href="#python的设计失误" class="headerlink" title="python的设计失误"></a>python的设计失误</h2><p>python有一个巨大的设计失误就是没有明确的区分变量的 <strong>声明</strong> 与 <strong>赋值</strong>,也就是说<br>python的”&#x3D;”有两种语义：当前作用域不存在该变量时，它会在作用域中创建该绑定，如果<br>已存在，那么它就会修改该绑定的值，这种混淆的行为严重的损伤了语言的表达能力，同时 也让程序更容易出错，因为变量会自动创建,<br>一个打字错误可能就会造成bug，而在需要明<br>确声明变量的语言中，这种错误是可以被编译器或者解释器检测出来的。同时python的这种<br>设计也让程序不可能自然的修改父作用域，父父作用域..的变量，因为你一旦使用“&#x3D;”那<br>么就会在当前作用域创建新变量，所以python不得不引入global这样丑陋的关键词，然而这<br>只能访问到最外层的全局作用域，处于中间的作用域它仍然无能为力。下面举个例子,比如<br>我们要实现这样一个函数，该函数第一次调用返回1,第二次调用返回2,第n次调用返回n。如<br>果用C语言实现我们可以使用静态变量，如果我们使用javascript实现呢？可能需要像下面 这样的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> succ = (<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">var</span> inner = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        i++;<br>        <span class="hljs-keyword">return</span> i;<br>    &#125;<br>    <span class="hljs-keyword">return</span> inner;<br>&#125;)()<br></code></pre></td></tr></table></figure>
+
+<p>那我们如何用python来实现呢？你可能会很自然的写出这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">temp</span>():<br>    i = <span class="hljs-number">0</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">inner</span>():<br>        i = i + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> i<br>    <span class="hljs-keyword">return</span> inner<br><br>succ = temp()<br></code></pre></td></tr></table></figure>
+
+<p>这个代码和上面的代码逻辑是一样的，但是却达不到我们预期的效果，如果你运行的话 就会发现，它会出错(UnboundLocalError:<br>local variable ‘i’ referenced before assignment). 这其中有一些很细微的区别.<br>在inner中i&#x3D;i+1会在当前作用域创建一个 绑定，这个绑定在该语句之前也是可见的， 所以在求值 <code>i+1</code><br>这个表达式时，python 不会去外层作用域中查找， 它引用local作用域中的i，而你又是在赋值之前引用，所<br>以会报错。</p>
+<h1 id="GIL"><a href="#GIL" class="headerlink" title="GIL"></a>GIL</h1><p>这是python被广为诟病的一个东西，与其说它是语言本身的问题，还不如说它是官方的C<br>语言实现的问题，JPython以及pypy都没有这个问题。简单的说GIL是一个全局锁，GIL的<br>存在简化了解释器的实现，但是代价是python的多线程变成了“伪多线程”，也就是说<br>python的多线程程序任一时刻只能运行一个单一的线程，它无法有效的运用多核CPU的优<br>势。因此对于使用python编写的CPU密集型的程序，你不要指望通过多线程来提高性能，<br>多线程只会让这类程序的性能变得更糟。IO密集型的程序影响应该是不大的，这也是为什<br>么tornado这样的库能够工作的很好的原因。所以很多时候为了利用多核，你必须使用多<br>进程，而多进程之间共享数据的代价是比多线程高的多的，也麻烦的多。而且对于分布式<br>系统GIL已经变成了一个比较大的问题,只是因为python语言的特点，所以大多数时候都不<br>会将其作为分布式系统的实现语言，所以在分布式系统领域还不是什么大问题。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/articles/">articles</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/02/11/articles/gevent/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">gevent笔记与源码分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2015/03/15/articles/concurrency/">
+                        <span class="hidden-mobile">Concurrency</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2017/02/10/articles/defects-of-python/';
+          this.page.identifier = '/2017/02/10/articles/defects-of-python/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
