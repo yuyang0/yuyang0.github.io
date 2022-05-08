@@ -9,9 +9,7 @@ categories:
 ---
 # javascript文档
 
-几份不错的文档：[JavaScript
-Garden](http://bonsaiden.github.io/JavaScript-Garden/) ,火狐开发者社区的js
-[tutorial](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide?redirectlocale%3Den-US&redirectslug%3DJavaScript%252FGuide)
+几份不错的文档：[JavaScript Garden](http://bonsaiden.github.io/JavaScript-Garden/) ,火狐开发者社区的js [tutorial](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide?redirectlocale%3Den-US&redirectslug%3DJavaScript%252FGuide)
 
 # 基本类型
 
