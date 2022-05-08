@@ -1,0 +1,752 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="nginx的安装安装可以直接使用ubuntu仓库中的nginx,不过版本有点陈旧,下面说一说编译安装, 编译安 装是非常典型的configure, make,make install模式, 我只说一说configure的常用选 项.  –prefix: nginx的安装目录 –with-XXX_XXX: 需要开启的模块  添加第三方模块,使用如下命令: 1.&#x2F;configure --add-mod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx">
+<meta property="og:url" content="https://yuyang0.github.io/notes/nginx/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="nginx的安装安装可以直接使用ubuntu仓库中的nginx,不过版本有点陈旧,下面说一说编译安装, 编译安 装是非常典型的configure, make,make install模式, 我只说一说configure的常用选 项.  –prefix: nginx的安装目录 –with-XXX_XXX: 需要开启的模块  添加第三方模块,使用如下命令: 1.&#x2F;configure --add-mod">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-02-12T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-08T15:40:30.006Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Nginx - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yuyang0.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Nginx">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2015-02-12 11:54" pubdate>
+        2015年2月12日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      11k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      88 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Nginx</h1>
+            
+            <div class="markdown-body">
+              <h1 id="nginx的安装"><a href="#nginx的安装" class="headerlink" title="nginx的安装"></a>nginx的安装</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>可以直接使用ubuntu仓库中的nginx,不过版本有点陈旧,下面说一说编译安装, 编译安 装是非常典型的configure, make,<br>make install模式, 我只说一说configure的常用选 项.</p>
+<ol>
+<li>–prefix: nginx的安装目录</li>
+<li>–with-XXX_XXX: 需要开启的模块</li>
+</ol>
+<p>添加第三方模块,使用如下命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs example">./configure --add-module=/path/to/your-module<br></code></pre></td></tr></table></figure>
+
+<h2 id="重新编译安装"><a href="#重新编译安装" class="headerlink" title="重新编译安装"></a>重新编译安装</h2><p>有时候我们发现nginx缺少模块,需要重新编译安装, 那么使用如下步骤:</p>
+<ol>
+<li>使用configure, make编译, 不要运行make install, 因为这是重新安装会覆盖掉我 们的配置文件</li>
+<li>将得到的nginx二进制程序直接覆盖旧版本的nginx程序,该程序一般在sbin目录,为 了保险,你可以先备旧版的nginx程序.</li>
+<li>使用 <code>nginx -t</code> 测试nginx程序是否正确</li>
+<li>使用 <code>nginx -s reload</code> 来重载nginx.</li>
+</ol>
+<h2 id="nginx的配置目录布局"><a href="#nginx的配置目录布局" class="headerlink" title="nginx的配置目录布局"></a>nginx的配置目录布局</h2><p>使用ubuntu的apt安装的nginx的配置一般有如下的目录格式</p>
+<ol>
+<li><p>nginx.conf包含了基本的http配置，同时会有如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs example">http &#123;<br><br>    .....<br><br>    include /etc/nginx/conf.d/*.conf;<br>    include /etc/nginx/sites-enabled/*;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到它会包含conf.d 目录的配置，以及sites_enabled目录的所有配置</p>
+</li>
+<li><p>conf.d： 该目录的所有conf文件都会被包含</p>
+</li>
+<li><p>sites-available: 这个目录的每一个文件应该配置一个server, 也就是一个虚拟机,<br>其中有一个默认的配置default.</p>
+</li>
+<li><p>sites-enabled: 都是符号链接，指向sites-availabe目录的配置，通过这些符号链<br>接你可以有选择的开启sites-availabe中的server。</p>
+</li>
+</ol>
+<h1 id="nginx的基础知识"><a href="#nginx的基础知识" class="headerlink" title="nginx的基础知识"></a>nginx的基础知识</h1><h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><ol>
+<li>upstream（上游）: 是指nginx后端的服务, 比如tornado, redis等等</li>
+<li>downstream(下游): 指浏览器, 或者其它向nginx请求服务的程序.</li>
+<li>主请求(main request): 由 HTTP 客户端从 Nginx 外部发起的请求.</li>
+<li>子请求(subrequest): 由 Nginx 正在处理的请求在 Nginx 内部发起的一种级联请 求, 子请求的变量是独立的,<br>和父请求互不干扰.</li>
+<li>内部跳转: 使用rewrite,echo_exec等指令执行的跳转, 它的作用原理是直接修改 url, 然后跳回find config<br>phase, 所以它就会使用修改后的url去匹配location, 然后接着执行rewrite等一系列phase.</li>
+</ol>
+<h2 id="phase"><a href="#phase" class="headerlink" title="phase"></a>phase</h2><p>一个http请求会依次经过如下11个phase:</p>
+<ol>
+<li>post read: 接收完请求头之后的第一个阶段,它位于uri重写之前, 实际上很少有 模块会注册在该阶段,默认的情况下,<br>该阶段被跳过.</li>
+<li>server rewrite: server级别的uri重写阶段, 如果set, rewrite等ngx_rewrite模<br>块的指令放在server内,但在location外,那么就运行于该阶段.</li>
+<li>find config: 寻找location配置阶段,该阶段使用重写之后的uri来查找对应的<br>location,值得注意的是该阶段可能会被执行多次,因为也可能有location级别的重<br>写指令, <strong>该阶段不允许模块注册</strong>.</li>
+<li>rewrite: location级别的uri重写阶段,该阶段执行location基本的重写指令,也 可能会被执行多次. set,<br>rewrite等指令如果放在location内部,那么就运行于该阶 段.</li>
+<li>post rewrite: location级别重写的后一阶段, 用来检查上阶段是否有使用rewrite 指令来i进行uri重写,<br>如果有那么就跳回find configphase, 这就是一个内部跳转, <strong>该阶段不允许模块注册</strong>.</li>
+<li>preaccess: 访问权限控制的前一阶段，该阶段在权限控制阶段之前，一般也用于访 问控制，比如限制访问频率，链接数等；</li>
+<li>access: 访问权限控制阶段, 比如基于ip黑白名单的权限控制, 基于用户名密码的 权限控制等.</li>
+<li>post access: 访问权限控制的后一阶段,该阶段根据权限控制阶段的执行结果进行 相应处理. <strong>该阶段不允许模块注册</strong>.</li>
+<li>try files: try_files指令的处理阶段，如果没有配置try_files 指令，则该阶段被跳过,<br><strong>该阶段不允许模块注册</strong>.</li>
+<li>content: 内容生成阶段, 该阶段产生响应, 并发送到客户端. 如果location中没有<br>任何像echo,content_by_lua这样运行于content phase的指令,那么nginx会把当前 请求的<br>URI 映射到文件系统的静态资源服务模块, 如果文件系统没有对应的文件那 么返回404</li>
+<li>log: 日志记录阶段, 该阶段记录访问日志.</li>
+</ol>
+<p>还有一个特殊的phase: <strong>body filter</strong>, 严格的说它不是一个phase, 任何时候输出响应 体时都会运行该阶段的指令.<br>该phase可能执行多次,因为输出时是分多次写的,一次一 个chunk.</p>
+<h2 id="phases与指令的关系"><a href="#phases与指令的关系" class="headerlink" title="phases与指令的关系"></a>phases与指令的关系</h2><p>几乎所有的指令都与某一个phase相关联, 指令的实际执行顺序是这样决定的:</p>
+<ol>
+<li>如果两条指令在不同的phase, 那么指令的执行顺序与phase的先后顺序相同, 比如 set运行于rewrite phase,<br>而echo运行于content phase, 所以不论配置中set, echo的顺序如何, set必定在echo的前面执行.<br><strong>建议书写配置时按照指令实际执行 顺序来书写</strong>.</li>
+<li>如果两条指令运行于相同的phase, 那么它们的执行顺序就比较混乱了. 有几种情 况:<ol>
+<li>有些指令是按照书写顺序来执行的, 比如set, set_unescape_uri, set_by_lua 等</li>
+<li>绝大多数第三方模块只能运行于所属phase的结尾,所以内置模块的指令必定早于 第三方模块指令的执行,<br>因此rewrite必定在rewrite_by_lua前面执行.<br>set_by_lua之所以能和内置的set指令交叉执行,是因为使用了一些特殊技巧</li>
+<li>content phase只能注册一个处理器,所以不要同时使用不同模块的content指令,<br>比如echo指令就不能与content_by_lua指令共存,而且同一模块的content指令能<br>不能多次使用也是依模块而定, echo指令可以多次使用, content_by_lua就不行。</li>
+</ol>
+</li>
+</ol>
+<h2 id="nginx如何匹配请求"><a href="#nginx如何匹配请求" class="headerlink" title="nginx如何匹配请求"></a>nginx如何匹配请求</h2><p>实际先匹配server块, 接着匹配该server块中的location.</p>
+<h3 id="匹配server块"><a href="#匹配server块" class="headerlink" title="匹配server块"></a>匹配server块</h3><ol>
+<li>匹配listen指令<ul>
+<li>每个server块的listen指令如果不完整, 比如缺少ip或者缺少port, 那么用默认 值补充完整,<br>ip的默认值是0:0:0:0, port的默认值是80.</li>
+<li>使用请求的ip与port来匹配server块的listen指令, 如果最后只有一个server匹<br>配那么就使用该server处理请求,<br>如果有多个server那么就检查server_name指令.</li>
+</ul>
+</li>
+<li>匹配server_name指令（前提是有多个server的listen指令成功匹配请求的ip与 port）<ul>
+<li>获取请求的Host请求头</li>
+<li>先精确匹配, 如果匹配成功那么选择该server, 如果有多个那么选第一个</li>
+<li>匹配有*通配符 <strong>前缀</strong> 的server_name, 比如 <code>*.example.com</code>, 通配符必须 在前面</li>
+<li>匹配有*通配符 <strong>后缀</strong> 的server_name, 比如 <code>www.example.*</code>, 通配符必须 在后面</li>
+<li>正则匹配</li>
+<li>使用默认的server</li>
+</ul>
+</li>
+</ol>
+<h3 id="匹配location"><a href="#匹配location" class="headerlink" title="匹配location"></a>匹配location</h3><p>实际上是根据location后面的url来匹配, 该rul会有一些前缀来标示url的类型(正则 或者非正则,<br>非正则会区分是精确匹配或者前缀匹配, 正则规则又会区分大小写),<br>具体的规则如下:</p>
+<ol>
+<li>无前缀: 匹配前缀(非正则)</li>
+<li>^~ : 匹配前缀, 如果有一个 正则规则也匹配这个uri,优先采用该规则(非正则)</li>
+<li>= : 精确匹配, 也就是说要一模一样(优先级最高, 非正则)</li>
+<li>~ : 正则,区分大小写</li>
+<li>~* : 正则, 不区分大小写</li>
+<li>!~ : 和 ~ 作用相反</li>
+<li>!~* : 和 ~* 作用相反</li>
+</ol>
+<p>匹配规则的优先级:</p>
+<ol>
+<li>先进行非正则匹配<ul>
+<li>如果有 &#x3D;前缀 规则匹配, 那么使用该规则, 如果没有那么看下一条</li>
+<li>如果最长前缀匹配的规则含有 ^~ 前缀, 那么使用该规则, 如果没有看下一条</li>
+<li>将最长前缀匹配的规则保存起来, 然后使用正则表达式来匹配</li>
+</ul>
+</li>
+<li>正则匹配, 直接根据位置的从上到下来匹配,第一条匹配的规则会被使用, 如果没有<br>匹配,那么就使用上面保存的最长匹配的非正则规则,如果该规则也不存在那么404.</li>
+</ol>
+<p>大体上你可以认为优先级是: &#x3D;规则 &gt; ^~规则 &gt; 正则规则 &gt; 无前缀规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">location = / &#123;&#125;                 <span class="hljs-comment"># 只匹配/, 不会匹配/xxx</span><br>location / &#123;&#125;<br>location ^~ /images/ &#123;&#125;<br>location ~* \.(gif|jpg|jpeg)$ &#123;&#125; <span class="hljs-comment"># 匹配所有图像文件</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h1><p>nginx配置的基本结构是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs example">......<br>events &#123;<br>......<br>&#125;<br><br>http &#123;<br>......<br>   server &#123;<br>   ......<br>      location ... &#123;<br>      ......<br>      &#125;<br>      location ... &#123;<br>      ......<br>      &#125;<br>    &#125;<br><br>   server &#123;<br>   ......<br>   &#125;<br>......<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="最外层"><a href="#最外层" class="headerlink" title="最外层"></a>最外层</h2><ol>
+<li>user: 指定worker进程的用户名以及用户组</li>
+<li>worker_processes: woker进程的数量,一般和CPU的核数一样</li>
+<li>worker_rlimit_nofile: worker进程能打开的文件描述符数量.</li>
+</ol>
+<h2 id="events"><a href="#events" class="headerlink" title="events"></a>events</h2><p>主要是配置事件相关</p>
+<ol>
+<li>worker_connections: 允许的连接数</li>
+<li>use epoll : 事件循环,linux一般是epoll.</li>
+</ol>
+<h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><p>一些http相关的配置</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><p>配置虚拟机, 最重要的是它的listen,server_name指令, 很多主机商就是用这种配置来<br>用一台机器服务多个网站的,配置多个server块,<br>每一个块的server_name改为对应的域 名, 那么就可以支持多个网站.</p>
+<h2 id="location"><a href="#location" class="headerlink" title="location"></a>location</h2><p>这个块主要是指定对特定url的操作, location后面有一个url参数, 该参数就是用来匹<br>配http请求的url的,如果匹配成功,那么就执行对应的块中的指令.</p>
+<h1 id="nginx的变量"><a href="#nginx的变量" class="headerlink" title="nginx的变量"></a>nginx的变量</h1><p>nginx变量是在nginx启动时创建, 而在请求中赋值的,变量在每一次请求中都有一个单独 的副本(<strong>子请求也会有单独的副本</strong>),<br>同时变量的生命周期与请求绑定,与location块无 关,不要想当然的认为它和程序语言的静态作用域相同.请看如下例子:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">server &#123;<br>    listen 8080;<br>    location /foo &#123;<br>         <span class="hljs-built_in">set</span> <span class="hljs-variable">$a</span> hello;<br>         echo_exec /bar;<br>    &#125;<br>    location /bar &#123;<br>         <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;a = [<span class="hljs-variable">$a</span>]&quot;</span>;<br>     &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>在nginx启动时,它发现了set指令,所以它会创建$a这个变量, 可是这时变量是空的,同时 该变量全局可见,每一个请求都会有一个该变量的副本,<br>所以你访问&#x2F;bar会得到空值, 而 访问&#x2F;foo会得到hello, 因为你在&#x2F;foo中对$a进行了赋值.</p>
+<h2 id="nginx的内置变量"><a href="#nginx的内置变量" class="headerlink" title="nginx的内置变量"></a>nginx的内置变量</h2><ol>
+<li>$request_uri: 未解码的uri,包含query string</li>
+<li>$uri: 已解码的uri, 不包含query string</li>
+<li>$arg_XXX: 用来获得get传递的参数, 将XXX替换未参数名. 比如访问<br><code>http://localhost:8080/test?name=Tom&amp;class=3</code>, 那么$arg_name的值就是<br>Tom.注意返回的值是未解码形式.</li>
+<li>$args:　请求中问号后面的部分, 也就是query string</li>
+</ol>
+<h2 id="常见的指令"><a href="#常见的指令" class="headerlink" title="常见的指令"></a>常见的指令</h2><ol>
+<li>set: 创建nginx变量并且赋值(rewrite phase)</li>
+<li>set_unescape_uri: 创建nginx变量,但是会将值解码后赋给该变量(rewrite phase)</li>
+<li>set_escape_uri: 创建nginx变量,但是会将值编码后赋给该变量(rewrite phase)</li>
+</ol>
+<h1 id="nginx常用模块"><a href="#nginx常用模块" class="headerlink" title="nginx常用模块"></a>nginx常用模块</h1><h2 id="map-ngx-http-map-module"><a href="#map-ngx-http-map-module" class="headerlink" title="map(ngx_http_map_module)"></a>map(ngx_http_map_module)</h2><ol>
+<li><p>map: <code>map string $variable &#123; ... &#125;</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">map <span class="hljs-variable">$http_user_agent</span> <span class="hljs-variable">$bad_client</span> &#123;<br>    default            0;<br>    <span class="hljs-string">&quot;~*Baiduspider&quot;</span>    1;<br>    <span class="hljs-string">&quot;~*360Spider&quot;</span>      1;<br>    <span class="hljs-string">&quot;~*Yandex&quot;</span>         1;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果请求user_agent匹配baidu, 360, yandex特征,那么将bad_client变量设为1,默 认为值0,<br>这样你可以在配置中使用 <code>if ($bad_client) &#123; return 403; &#125;</code> 来拦截 这些机器人的访问.</p>
+</li>
+</ol>
+<h2 id="GEO-ngx-http-geo-module"><a href="#GEO-ngx-http-geo-module" class="headerlink" title="GEO(ngx_http_geo_module)"></a>GEO(ngx_http_geo_module)</h2><p>可以根据客户端的ip来设置变量的值, 只能放在http块中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">geo <span class="hljs-variable">$geo</span> &#123;<br>    default        0;<br><br>    127.0.0.1      2;<br>    192.168.1.0/24 1;<br>    10.1.0.0/16    1;<br><br>    ::1            2;<br>    2001:0db8::/32 1;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>根据客户端的ip会对geo变量赋值. 这在拦截一些ip地址是有用. 和map配合可以拦截ip 与user-agent,<br>可以看这个<a target="_blank" rel="noopener" href="https://github.com/oohnoitz/nginx-blacklist">nginx-blacklist</a><br>项目.</p>
+<h2 id="Access-ngx-http-access-module"><a href="#Access-ngx-http-access-module" class="headerlink" title="Access(ngx_http_access_module)"></a>Access(ngx_http_access_module)</h2><p>用来对请求进行权限检查</p>
+<ol>
+<li>allow</li>
+<li>deny</li>
+</ol>
+<p>会书写顺序检查allow,deny指令，直到第一个匹配。如果有不同的模块也加入了检查比 如access_by_lua, 那么<br><code>satisfy</code> 指令可以规定这些access模块如何协作， 该指令 的值只能为all或者any。</p>
+<ul>
+<li>all： 必须通过所有access模块的检查（默认）</li>
+<li>any： 只要通过任何一个access模块的检查就好</li>
+</ul>
+<h2 id="Rewrite-ngx-http-rewrite-module"><a href="#Rewrite-ngx-http-rewrite-module" class="headerlink" title="Rewrite(ngx_http_rewrite_module)"></a>Rewrite(ngx_http_rewrite_module)</h2><p>该模块的指令如果放在server中,那么运行在server rewrite阶段, 如果放在location 中,那么就运行在rewrite阶段</p>
+<ol>
+<li><p>set: 创建变量</p>
+</li>
+<li><p>if: <code>if (condition) &#123; ... &#125;</code>, if是非常诡异的指令,能不用就尽量不用,一般来说<br>if只有在location中,并且在以下两种情况才100%正确:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span>(condition)&#123;<br>    <span class="hljs-built_in">return</span> status_code<br>&#125;<br><br><span class="hljs-keyword">if</span>(condition) &#123;<br>    <span class="hljs-comment"># other things</span><br>    rewrite xxx xxx             <span class="hljs-comment"># must stay last in if block</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>return: 原型如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs example">return code [text];<br>return code URL;<br>return URL;<br></code></pre></td></tr></table></figure>
+
+<p>直接终止请求, 返回相应的code,或者重定向到url(30X)</p>
+</li>
+<li><p>rewrite: 用来重写url</p>
+</li>
+<li><p>break: 如果在if中,那么跳出if, 如果在location,那么忽略后面的Rewrite模块的 指令,直接进入下一phase.</p>
+</li>
+</ol>
+<h2 id="Echo-ngx-http-echo-module"><a href="#Echo-ngx-http-echo-module" class="headerlink" title="Echo(ngx_http_echo_module)"></a>Echo(ngx_http_echo_module)</h2><p>这是第三方模块,提供了一些类似于shell的命令, 该模块的大部分指令运行于content phase. 常用的指令:</p>
+<ol>
+<li><p>echo: 输出内容到客户端(content phase)</p>
+</li>
+<li><p>echo_exec: 执行内部跳转(类似于rewrite,不过运行于content phase)</p>
+</li>
+<li><p>echo_location: 执行一个子请求(HTTP GET), 将子请求的结果发送到client,有点类<br>似于ngx_lua模块中的指令ngx.location.capture.<br>只是ngx.location.capture更灵 活,因为它可以做后续处理,而不是直接将结果发送到client.</p>
+</li>
+<li><p>echo_location_async: 和echo_location不过是异步的(HTTP GET), 也就是说主请<br>求很有可能在子请求之前结束. 但是nginx会保证输出指令的执行顺序:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">location /main &#123;<br>        echo_reset_timer;<br>        echo_location_async /sub1;<br>        echo_location_async /sub2;<br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;took <span class="hljs-variable">$echo_timer_elapsed</span> sec for total.&quot;</span>;<br>    &#125;<br>    location /sub1 &#123;<br>        echo_sleep 2; <span class="hljs-comment"># sleeps 2 sec</span><br>        <span class="hljs-built_in">echo</span> hello;<br>    &#125;<br>    location /sub2 &#123;<br>        echo_sleep 1; <span class="hljs-comment"># sleeps 1 sec</span><br>        <span class="hljs-built_in">echo</span> world;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>main虽然可能在子请求的前面结束,但是sub1, sub2,main的输出顺序nginx会保证, 因此输出会是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs example">hello<br>world<br>took 0.000 sec for total.<br></code></pre></td></tr></table></figure>
+
+<p>该指令有点类似于ngx_lua模块的ngx.location.capture_multi指令.</p>
+</li>
+</ol>
+<h1 id="nginx与lua"><a href="#nginx与lua" class="headerlink" title="nginx与lua"></a>nginx与lua</h1><p>将lua解释器嵌入到nginx, 使用lua可以比较轻松的实现一些业务逻辑, 这样就可以将<br>nginx从一个单纯的http服务器变成一个web应用服务器,在配合nginx高效的IO模型,性能<br>十分强大. 对于逻辑不复杂的业务直接使用lua在nginx这层实现是个不错的选择.</p>
+<h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><p>依赖于luajit,也可以使用lua, 不过luajit性能更好, ubuntu上可以使用如下命令安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install libluajit-5.1-dev<br></code></pre></td></tr></table></figure>
+
+<p>同时也依赖 <code>ngx_devel_kit</code> 这个模块, 这个模块即便是tengine也需要静态编译,因 为它不是http模块, 这个模块会被<br><code>set_by_lua</code> 指令用到.</p>
+<ol>
+<li><p>nginx安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">./configure  --add-module=/path/to/ngx_lua \<br>             --add-module=/path/to/ngx_devel_kit<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>tengine上安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">./configure  --with-http_lua_module \<br>             --add-module=/path/to/ngx_devel_kit<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="常用指令-nginx配置中使用"><a href="#常用指令-nginx配置中使用" class="headerlink" title="常用指令(nginx配置中使用)"></a>常用指令(nginx配置中使用)</h2><ol>
+<li>set_by_lua: 作用于rewrite phase, 和set指令类似, 只是值是由lua脚本产生的,<br>该指令可以和set交叉运行</li>
+<li>rewrite_by_lua: 作用于nginx的rewrite phase. 运行于rewrite phase的最后,<br>ngx_rewrite模块的指令总是先于该指令.</li>
+<li>access_by_lua: 作用于nginx的access phase, 一般来说如果需要在请求开始之前<br>做一些处理,比如检查请求合法性,可以使用这条命令</li>
+<li>content_by_lua: 作用于content phase, 是用来生成发送给客户端的内容的</li>
+<li>log_by_lua: 作用于log phase, 一般用来对请求做一些善后处理,记住在该指令之<br>前nginx已经将内容发送到客户端.</li>
+</ol>
+<h2 id="lua中能使用的API"><a href="#lua中能使用的API" class="headerlink" title="lua中能使用的API"></a>lua中能使用的API</h2><p>ngx_lua暴露给lua的api都被放在ngx这个全局变量中,这是官方<a target="_blank" rel="noopener" href="http://wiki.nginx.org/HttpLuaModule">文档</a><br>其中比较常用的有 这些,(<strong>特别要注意这些api所在phase,这是使用任何nginx模块都需要特别注意的</strong>)</p>
+<ol>
+<li><p>ngx.var.XXX: 所有nginx的变量都可以通过这种方式访问</p>
+</li>
+<li><p>ngx.ctx: 这是一个表, 它的生命周期和请求绑定, 请求结束了,其中记录的数据也<br>就无效了,经常用来在运行于不同的phase的lua脚本间传递数据.</p>
+</li>
+<li><p>ngx.location.capture: 发起一个子请求, 一些场景很有用,比如说你对<br>redis,mysql等服务进行了rest包装,而在一个请求中你想从多个服务中获得数据,就<br>可以用这个api发送子请求</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs example">location = /memc &#123;<br>    internal;<br>    memc_pass ...;<br>&#125;<br>location = /api &#123;<br>    content_by_lua &#x27;<br>        local resp = ngx.location.capture(&quot;/memc&quot;)<br>        if resp.status ~= 200 then<br>            ngx.exit(500)<br>        end<br>        ngx.say(resp.body)<br>    &#x27;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在 <code>/api</code> 中你可以获得 <code>/mem</code> 的结果, 当然你可以接着获得其它服务的结果.</p>
+</li>
+<li><p>ngx.location.capture_multi: 和capture类似,只是可以并发的发起多个子请求</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs example">location = /api &#123;<br>    content_by_lua &#x27;<br>        local res1, res2, res3 =<br>            ngx.location.capture_multi&#123;<br>                &#123;&quot;/memc&quot;&#125;, &#123;&quot;/mysql&quot;&#125;, &#123;&quot;/postgres&quot;&#125;<br>            &#125;<br>        ngx.say(res1.body, res2.body, res3.body)<br>    &#x27;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>并发的发起三个子请求.</p>
+</li>
+<li><p>ngx.status: 当前请求的response的HTTP状态码, 你可以修改状态码,但是前提是你<br>必须在nginx将response发送给client之前修改</p>
+</li>
+<li><p>ngx.req.XXX: 用来操作request的一系列api</p>
+</li>
+<li><p>ngx.say: 每一条命令都有一个换行符</p>
+</li>
+<li><p>ngx.print: 和say类似,没有换行符.</p>
+</li>
+<li><p>ngx.log: 记录日志</p>
+</li>
+<li><p>ngx.exec: 发起一个内部跳转(浏览器的url不改变), 类似于nginx的rewrite指令</p>
+</li>
+<li><p>ngx.redirect: 发起一个浏览器跳转(30X, 浏览器的url会改变)</p>
+</li>
+<li><p>ngx.exit(status_code): 直接退出请求</p>
+</li>
+<li><p>ngx.re.XXX: 正则相关,标准lua本身是不支持正则的.</p>
+</li>
+</ol>
+<h2 id="lua数据共享"><a href="#lua数据共享" class="headerlink" title="lua数据共享"></a>lua数据共享</h2><ol>
+<li>请求级别: 使用ngx.ctx, 它是一个table, 你可以使用它来在同一请求的不同的 phase间传递数据</li>
+<li>worker进程级别: 可以创建一个lua模块,在模块内部创建一个表,因为lua解释器在 worker进程启动后就常驻内存,<br>所以这个表在进程内部一直有效. 因此你可以使用 这种方法在该进程处理的不同请求间共享数据.</li>
+<li>nginx级别: 因为nginx是多进程架构, 为了在多个worker进程间共享数据必须用到 IPC机制,<br>ngx_lua使用share memory实现了一个ngx.shared.DICT, 内部是使用自旋<br>锁来避免竞争条件,该结构有get,set,incr,delete等api,<br>使用比较简单, 为了高效 的利用此api, 数据的大小应该尽量一致,特别不同的数据应该用不同的dict存放,主要<br>是为了减少碎片</li>
+</ol>
+<h2 id="lua-socket"><a href="#lua-socket" class="headerlink" title="lua socket"></a>lua socket</h2><p>ngx_lua实现了一个socket库,它能以非阻塞的形式进行网络操作. 利用这个库我们可以 直接访问upstream的服务,比如redis,<br>memcache等, 也可以访问tornado这样的上游服 务,只不过tornado需要使用http协议而已,<br><strong>注意该库的api基本都只能运行于 rewrite_by_lua,<br>access_by_lua, content_by_lua,ngx.timer中</strong>, 该库的api分为两 类tcp和udp.</p>
+<h3 id="TCP-SOCKET"><a href="#TCP-SOCKET" class="headerlink" title="TCP SOCKET"></a>TCP SOCKET</h3><ol>
+<li><p>创建tcp socket对象, 使用ngx.socket.tcp来创建, <code>local sock = ngx.socket.tcp()</code></p>
+</li>
+<li><p>connect: 可以使用hostname&#x2F;ip, port, 也可以使用unix socket文件</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-keyword">local</span> ok, err = sock:connect(<span class="hljs-string">&quot;www.google.com&quot;</span>, <span class="hljs-number">80</span>)<br><span class="hljs-keyword">local</span> ok, err = sock:connect(<span class="hljs-string">&quot;220.181.57.216&quot;</span>, <span class="hljs-number">80</span>)<br><span class="hljs-keyword">local</span> ok, err = sock:connect(<span class="hljs-string">&quot;unix:/tmp/memcached.sock&quot;</span>)<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ok <span class="hljs-keyword">then</span><br>   check_error()<br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<p>如果使用域名,那么必须在nginx.conf中配置dns, 加入这一行: <code>resolver     8.8.8.8;</code>, dns常见的有这几个:</p>
+<ul>
+<li>google: 8.8.8.8</li>
+<li>alibaba: 223.5.5.5 或者 223.6.6.6</li>
+<li>114DNS: 114.114.114.114</li>
+</ul>
+</li>
+<li><p>send: 发送数据, 一定要先设置超时, 如果成功那么返回发送的数据量,如果失败 那么返回nil,以及一个错误消息字符串,<br>出错时socket会自动关闭,无需手动清理</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">sock:settimeout(<span class="hljs-number">1000</span>)  <span class="hljs-comment">-- one second timeout</span><br><span class="hljs-keyword">local</span> bytes, err = sock:send(request)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>receive</p>
+</li>
+</ol>
+<p>很常规的client编程模式,上述调用都是非阻塞的,它对使用者来说是透明的, 下面是 示例代码:</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lua">sock:settimeout(<span class="hljs-number">1000</span>)  <span class="hljs-comment">-- one second timeout</span><br><span class="hljs-keyword">local</span> line, err, partial = sock:receive()<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> line <span class="hljs-keyword">then</span><br>   ngx.say(<span class="hljs-string">&quot;failed to read a line: &quot;</span>, err)<br>   <span class="hljs-keyword">return</span><br><span class="hljs-keyword">end</span><br>ngx.say(<span class="hljs-string">&quot;successfully read a line: &quot;</span>, line)<br></code></pre></td></tr></table></figure>
+
+<h3 id="UDP-SOCKET"><a href="#UDP-SOCKET" class="headerlink" title="UDP SOCKET"></a>UDP SOCKET</h3>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/nginx/">nginx</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/articles/continuation/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Continuation</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/articles/linux-c-messy-code/">
+                        <span class="hidden-mobile">Linux平台C语言乱码</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://yuyang0.github.io/notes/nginx/';
+          this.page.identifier = '/notes/nginx/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

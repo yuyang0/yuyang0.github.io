@@ -19,7 +19,7 @@
     <meta name="description" content="stay young, stay simple.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="yuyang&#39;s blog">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="https://yuyang0.github.io/index.html">
 <meta property="og:site_name" content="yuyang&#39;s blog">
 <meta property="og:description" content="stay young, stay simple.">
 <meta property="og:locale" content="zh_CN">
@@ -49,7 +49,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"yuyang0.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -193,13 +193,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/05/08/notes/database/" target="_self">
+        <a href="/notes/database/" target="_self">
           database
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/05/08/notes/database/" target="_self">
+        <a href="/notes/database/" target="_self">
           
           事务事务有四个特性(ACID): 一致性也就是说不能破坏数据库的某种约定，比如经典的银行转账问题中，从账户A转100元到账户B，那么一致性要求两个账户的金额的和要是相同的，数据库不应该让用户看到事务执行的中间状态, 也就是说不能让用户看到A账户减了100元，但是B账户还没有增加100元这样的中间状态，一致性有些需要数据库保证，有些则需要应用保证。 原子性只是用来保证事务中的操作完全成功或者全部失败
         </a>
@@ -246,13 +246,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2018/03/11/articles/mxnet-engine/" target="_self">
+        <a href="/articles/mxnet-engine/" target="_self">
           MXNET Dependency Engine
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2018/03/11/articles/mxnet-engine/" target="_self">
+        <a href="/articles/mxnet-engine/" target="_self">
           
           基本背景知识MXNET中有一个依赖引擎，这个引擎是用来分析计算过程的依赖关系，把不依赖的计算并行化，以达到提高性能的目的。它的基本原理可以看官方的文档。简单的说就是给每一个对 象打上一个tag，这个tag叫做Var，每一个计算(op)都会依赖一个或者多个Var，依赖有两种类型：写依赖和读依赖。依赖引擎为每一个Var都维护一个队列，然后根据op的依赖关系向队列中添加ReadDependency和Wr
         </a>
@@ -293,13 +293,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2018/02/11/articles/gevent/" target="_self">
+        <a href="/articles/gevent/" target="_self">
           gevent笔记与源码分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2018/02/11/articles/gevent/" target="_self">
+        <a href="/articles/gevent/" target="_self">
           
           基本概念coroutineCoroutine 也就是 corporate routine，中文名就是协程，从它的英文可以看出是协同 的例程的意思,实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的轻量级进程,所以我们来比较一下进程与协程的异同:  相同点:二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行,这实际上都可以看做是continu
         </a>
@@ -340,13 +340,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2017/02/10/articles/defects-of-python/" target="_self">
+        <a href="/articles/defects-of-python/" target="_self">
           python的“缺点”
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2017/02/10/articles/defects-of-python/" target="_self">
+        <a href="/articles/defects-of-python/" target="_self">
           
           类型系统python是一个动态类型的语言，它只能进行动态类型检查，所谓动态类型检查，实际就是说，python只有在运行时会进行类型检查,比如说这样的代码： 12345def add1(x):    return x + 1a &#x3D; &quot;hello&quot;add1(a)  运行时python会报错，因为integer类型与string类型是不能相加的，但是这种类型错误只能在运行到这条代码时
         </a>
@@ -387,13 +387,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2015/03/15/articles/concurrency/" target="_self">
+        <a href="/articles/concurrency/" target="_self">
           Concurrency
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2015/03/15/articles/concurrency/" target="_self">
+        <a href="/articles/concurrency/" target="_self">
           
           CSPCSP的执行实体是一个一个的process，这些process之间通过channel通信，代表语言是go，go语言中的goroutine就是执行实体，goroutine之间通过channel通信，注意go语言中channel是可以有缓冲区. CSP模型有这几个特点:  process之间通过channel来通信, 注意channel是匿名的，任何process都可以向channel中 读或者
         </a>
@@ -436,13 +436,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2015/03/11/articles/continuation/" target="_self">
+        <a href="/articles/continuation/" target="_self">
           Continuation
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2015/03/11/articles/continuation/" target="_self">
+        <a href="/articles/continuation/" target="_self">
           
           continuation这是一份关于continuation的文档,将continuation讲的非常清楚,我简要的总结下我的理解: 先说几个概念与符号:  escape procedure: 它和普通的procedure是一样的,而且也有相同的行为,会返回相同的值,唯一的不同的是这个函数它返回后就会替换调用栈,也就是说它会返回解释器的最顶层或者解释器的REPL循环, 一个普通的procedure
         </a>
@@ -485,13 +485,60 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2015/02/11/articles/linux-c-messy-code/" target="_self">
+        <a href="/notes/nginx/" target="_self">
+          Nginx
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/notes/nginx/" target="_self">
+          
+          nginx的安装安装可以直接使用ubuntu仓库中的nginx,不过版本有点陈旧,下面说一说编译安装, 编译安 装是非常典型的configure, make,make install模式, 我只说一说configure的常用选 项.  –prefix: nginx的安装目录 –with-XXX_XXX: 需要开启的模块  添加第三方模块,使用如下命令: 1.&#x2F;configure --add-mod
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2015-02-12 11:54" pubdate>
+              2015-02-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/notes/">notes</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/nginx/">nginx</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/linux-c-messy-code/" target="_self">
           Linux平台C语言乱码
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2015/02/11/articles/linux-c-messy-code/" target="_self">
+        <a href="/articles/linux-c-messy-code/" target="_self">
           
           文件加载到显示的过程只要是用过linux的人都应该遇到过乱码的问题，众所周知，乱码的产生的主要原因是编码的问题，以B编码方式去读取以A编码方式编码的文件时就会产生乱码，文件读取到显示的过程可以简单的用下图表表示：   第一步是将文件读入内存，这一步可以看作是直接将文件的二进制形式的表示直接复制 进内存，就是将你用十六进制工具看到的那些东西复制进内存， 第二步是显示终端将内存中的数据以某种编码方式解
         </a>
@@ -532,13 +579,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2014/02/18/notes/javascript/" target="_self">
+        <a href="/notes/javascript/" target="_self">
           js笔记
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2014/02/18/notes/javascript/" target="_self">
+        <a href="/notes/javascript/" target="_self">
           
           javascript文档几份不错的文档：JavaScriptGarden ,火狐开发者社区的jstutorial 基本类型type的基本常识 数字, 字符串, boolean, null, undefined是js的基本类型，它们不是object, 其它所有的值都是object, 数字, 字符串, bookean这三种类型有对应的包装对象 （wrapperobject），当你访问字符串的方法时，实
         </a>
@@ -581,13 +628,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2014/02/18/notes/scheme/" target="_self">
+        <a href="/notes/scheme/" target="_self">
           Scheme笔记
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2014/02/18/notes/scheme/" target="_self">
+        <a href="/notes/scheme/" target="_self">
           
           scheme笔记几个概念 conceptidentifier标识符,可以看作是一个唯一的名字,可以用来引用变量,函数等等 variable变量 atom a string of characters a string of digits    1234(define atom?  (lambda (s)    (and (not (pair? s))         (not (null? s))
         </a>
@@ -626,62 +673,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2014/02/18/notes/clojure/" target="_self">
-          Clojure笔记
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2014/02/18/notes/clojure/" target="_self">
-          
-          Clojure FormsBoolean typical value: true, false useful function: not and or    Nil typical value: nil 只有false与nil会被计算为false,其它的都为true  Character typical value:  .̧̱..  Number typical value: 1 2 useful
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2014-02-18 11:14" pubdate>
-              2014-02-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/notes/">notes</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/lisp/">lisp</a>
-            
-              <a href="/tags/clojure/">clojure</a>
-            
-              <a href="/tags/lang/">lang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
