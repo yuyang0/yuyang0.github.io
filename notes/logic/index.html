@@ -24,7 +24,7 @@
 <meta property="og:description" content="形式系统conceptsConsistency形式系统的一致性就是说系统没有矛盾,从语法上说, P 与 ¬ P 不能在系统中都可证, 从语义上说存在一种解释满足所有的定理,也就是说使定理为真(也就是真陈述), 如果至少有一个经解释后的定理是假陈述,那么形式系统就出现了不一致性. 上述的一致性实际是形式系统(带上解释)同外部世界的一致性, 但是还有一种内部一致性说的是 系统中的定理解释之后应该是相容">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2013-02-12T04:54:17.000Z">
-<meta property="article:modified_time" content="2022-05-09T12:58:18.242Z">
+<meta property="article:modified_time" content="2022-05-09T15:13:06.677Z">
 <meta property="article:author" content="Yu Yang">
 <meta property="article:tag" content="math">
 <meta name="twitter:card" content="summary_large_image">
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      149 分钟
+      148 分钟
     </span>
   
 
@@ -621,7 +621,8 @@
 </li>
 <li><p>对 → 逻辑符号而言:<br>$$<br>      \begin{align}<br>\vDash_\mathfrak{A} (\varphi \rightarrow \psi)[s] \quad \textrm{iff} \quad \vDash_\mathfrak{A} \varphi[s] \ \rightarrow \ \vDash_\mathfrak{A}\psi[s]<br>  \end{align}<br>$$<br>也就是说, $\nvDash_\mathfrak{A} \varphi[s]$ 或者<br>$\vDash_\mathfrak{A}<br>  \varphi[s] \ \land \ \vDash_\mathfrak{A} \psi[s]$</p>
 </li>
-<li><p>对 ∀ 量词符号而言:<br>$$<br>  \begin{align}<br>\vDash_\mathfrak{A} \forall x \varphi[s] \quad \textrm{iff} \quad \forall d \in |\mathfrak{A}|(\vDash_\mathfrak{A} \varphi[s(x|d)])<br>  \end{align}<br>$$<br>s(x|d) 是一个函数, 它在x点取值d, 在其它地方取值与s相同,其定义如下:<br>$$<br>  \begin{align}<br>s (x|d)(y) &#x3D; \left{ \begin{array}{ll}<br>    d    &amp; \textrm{if $y&#x3D;x$} \<br>    s(y) &amp; \textrm{if $y \ne x$}<br>    \end{array} \right.<br>  \end{align}<br>$$</p>
+<li><p>对 ∀ 量词符号而言:<br>$$<br>  \begin{align}<br>\vDash_\mathfrak{A} \forall x \varphi[s] \quad \textrm{iff} \quad \forall d \in |\mathfrak{A}|(\vDash_\mathfrak{A} \varphi[s(x|d)])<br>  \end{align}<br>$$<br>s(x|d) 是一个函数, 它在x点取值d, 在其它地方取值与s相同,其定义如下:</p>
+<p>$$<br>  \begin{align}<br>s (x|d)(y) &#x3D; \left{<br>    \begin{array}{ll}<br>    d    &amp; \textrm{if y&#x3D;x} \<br>    s(y) &amp; \textrm{if y \ne x}<br>    \end{array}<br>\right.<br>  \end{align}<br>$$</p>
 </li>
 </ol>
 </li>
@@ -638,11 +639,7 @@
 <h3 id="一阶语言的例子"><a href="#一阶语言的例子" class="headerlink" title="一阶语言的例子"></a>一阶语言的例子</h3><ul>
 <li><p>某个类中每个对象都有某种属性:<br>$$<br>   \begin{align}<br> \forall v(_ \rightarrow _)<br>   \end{align}<br>$$</p>
 </li>
-<li><p>某个类中某些对象有某个属性:<br>$$</p>
-<div class="code-wrapper"><pre><code class="hljs">   \begin&#123;align&#125;
- \exists v(\_ \land \_)
-</code></pre></div>
-<p>   \end{align}<br>$$<br>假设A代表是”是苹果”, B代表”是烂的”, 那么:</p>
+<li><p>某个类中某些对象有某个属性:<br>$$<br>   \begin{align}<br> \exists v(_ \land _)<br>   \end{align}<br>$$<br>假设A代表是”是苹果”, B代表”是烂的”, 那么:</p>
 </li>
 <li><p>$\forall x(Ax \rightarrow Bx)$: 所有的苹果都是烂的</p>
 </li>
@@ -655,17 +652,7 @@
 <h3 id="examples-1"><a href="#examples-1" class="headerlink" title="examples"></a>examples</h3><p>$$<br>      \begin{align}<br>        \forall v_1 Q v_1 \vDash Q v_2  \<br>        Qv_1 \nvDash \forall v_2 Q v_2   \<br>        \forall v_1 Q v_1 \vDash \exists v_2 Q v_2  \<br>        \exists x \forall y Pxy \vDash \forall y \exists x Pxy   \<br>        \forall y \exists x Pxy \nvDash \exists x \forall y Pxy<br>      \end{align}<br>$$</p>
 <h3 id="几个结论"><a href="#几个结论" class="headerlink" title="几个结论"></a>几个结论</h3><p>逻辑蕴含($\Gamma \vDash \varphi$)实际上还是可以看做这种直觉: <em>Γ</em> 中的公 式是前提, 而<br>$\varphi$ 是结果, 只有满足了所有的前提条件, 结果才是可满足的</p>
 <ol>
-<li><p>一个重要的结论:<br>$$</p>
-<div class="code-wrapper"><pre><code class="hljs">     \begin&#123;align&#125;
- \Gamma;\alpha \vDash \varphi \quad \textrm&#123;iff&#125; \quad \Gamma \vDash (\alpha \rightarrow \varphi)
- \end&#123;align&#125;
-</code></pre></div>
-<p>$$<br>这个结论也有这样的形式:<br>$$</p>
-<div class="code-wrapper"><pre><code class="hljs">     \begin&#123;align&#125;
-   \&#123;a_1, a_2, ..., a_n\&#125; \vDash \varphi \quad \textrm&#123;iff&#125; \quad \vDash (a_1 \rightarrow a_2 \rightarrow ... \rightarrow a_n)
- \end&#123;align&#125;
-</code></pre></div>
-<p>$$<br>上述转换从直观角度不言而喻.</p>
+<li><p>一个重要的结论:<br>$$<br>\begin{align}<br> \Gamma;\alpha \vDash \varphi \quad \textrm{iff} \quad \Gamma \vDash (\alpha \rightarrow \varphi)<br>\end{align}<br>$$<br>这个结论也有这样的形式:<br>$$<br> \begin{align}<br>   {a_1, a_2, …, a_n} \vDash \varphi \quad \textrm{iff} \quad \vDash (a_1 \rightarrow a_2 \rightarrow … \rightarrow a_n)<br> \end{align}<br>$$<br>上述转换从直观角度不言而喻.</p>
 </li>
 <li><p>根据紧致性定理, 必存在<br>$$<br>\begin{align}<br>   {\gamma_1, \gamma_2, …, \gamma_n} \subseteq \Gamma<br> \end{align}<br>$$<br>使得如果 $\Gamma \vDash \varphi$, 那么:<br>$$<br> \begin{align}<br>   \vDash \gamma_1 \rightarrow \gamma_2 \rightarrow … \rightarrow \gamma_n \rightarrow \varphi<br> \end{align}<br>$$</p>
 <h2 id="同态-homomorphism"><a href="#同态-homomorphism" class="headerlink" title="同态(homomorphism)"></a>同态(homomorphism)</h2></li>
