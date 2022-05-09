@@ -1,8 +1,9 @@
 ---
 title: 计算机网络
-date: 2012-02-15 11:54:17
+date: 2011-01-13 11:54:17
 tags:
 - network
+- theory
 categories:
 - notes
 ---

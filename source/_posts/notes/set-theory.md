@@ -55,7 +55,11 @@ naive set theory（Cantor）=\> 罗素悖论(Russell's paradox) =\>公理化集�
 collection definable is a set)
 
 **数学表述**: P表示所有不包含自身的集合的集合（也就是所有不自吞的集合所组成的集合），那么P是否属于自己呢（也就是P是否自吞呢）。这是一个悖论，因为如果P属于P，那么P是自吞的，而根据P的性质，P只包含不自吞的集合，所以最后 $P \rightarrow \lnot P, \lnot P \rightarrow P$.
-
+$$
+     \begin{equation}
+       P = \{x| x \notin x \}
+     \end{equation}
+$$
 # 公理化集合论
 
 不定义什么是集合，而是通过这些公理来推导确定某些集合是存在的,某些集合是不存在 的，这些公理都是小心设计，所以避开了罗素悖论。
@@ -63,11 +67,19 @@ collection definable is a set)
 ## Extensionality Axiom(外延公理)
 
 判断2个集合是否相等
-
+$$
+      \begin{equation}
+        \forall A \forall B[\forall x(x \in A \iff x \in B) \Rightarrow A=B]
+      \end{equation}
+$$
 ## Empty Set Axiom(空集公理)
 
 存在一个唯一的空集
-
+$$
+     \begin{equation}
+       \exists B \forall x \ x \notin B
+     \end{equation}
+$$
 identical form:
 
 ## Pairing Axiom(偶集公理)
