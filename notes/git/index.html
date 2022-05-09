@@ -1,0 +1,589 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基本使用git的基本命令 安装：sudo apt-get install git git-uid init: git init（工作目录运行，会生成一个.git目录，里面会存放索引数据） add: 将文件添加到暂存区 git add: 添加文件 git add .: 添加所有   commit: 提交到版本库，一般调用add后只是在暂存区，只有调用commit才会提交到git版本库 git com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git笔记">
+<meta property="og:url" content="https://yuyang0.github.io/notes/git/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="基本使用git的基本命令 安装：sudo apt-get install git git-uid init: git init（工作目录运行，会生成一个.git目录，里面会存放索引数据） add: 将文件添加到暂存区 git add: 添加文件 git add .: 添加所有   commit: 提交到版本库，一般调用add后只是在暂存区，只有调用commit才会提交到git版本库 git com">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2010-02-14T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-09T12:58:18.242Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>git笔记 - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yuyang0.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="git笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2010-02-14 11:54" pubdate>
+        2010年2月14日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      34 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">git笔记</h1>
+            
+            <div class="markdown-body">
+              <h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><h2 id="git的基本命令"><a href="#git的基本命令" class="headerlink" title="git的基本命令"></a>git的基本命令</h2><ul>
+<li>安装：sudo apt-get install git git-uid</li>
+<li><code>init</code>: git init（工作目录运行，会生成一个.git目录，里面会存放索引数据）</li>
+<li><code>add</code>: 将文件添加到暂存区<ol>
+<li><code>git add</code>: 添加文件</li>
+<li><code>git add .</code>: 添加所有</li>
+</ol>
+</li>
+<li><code>commit</code>: 提交到版本库，一般调用add后只是在暂存区，只有调用commit才会提交到git版本库<ol>
+<li><code>git commit -m &quot;comment&quot;</code>:</li>
+<li><code>git commit -a</code>: 提交所有</li>
+<li><code>git commit --amend</code>: 可以重新提交上一次commit,这在上一次提交遗漏了某些文件 时非常有用.</li>
+</ol>
+</li>
+<li>clone: git clone 只要有.git目录，那么就可以调用该命令来得到git管理的 所有文件 eg: git clone<br>test.git dest\_dir&#x2F; git—-&gt;dest\_dir git clone 账户@IP:工作树路径 你的目录<br>远程github</li>
+<li>pull: git pull（将远程分支拉到本地，然后和本地分支合并）</li>
+<li>push： git push（将本地分支推送远程仓库）</li>
+<li><code>branch</code>: 创建分支或者查看有哪些分支<ol>
+<li><code>git branch</code>: 查看有哪些分支</li>
+<li><code>git branch &lt;branch&gt;</code> 创建分支</li>
+<li><code>git branch -d &lt;branch&gt;</code> 删除分支,如果有commit没有合并,那么会拒绝删除</li>
+<li><code>git branch -D &lt;branch&gt;</code>: 和上一个类似,但是会强制删除</li>
+</ol>
+</li>
+<li><code>merge</code>:将制定分支与当前分支合并(git merge TmpBranch 将TmpBranch与当前分支合并）</li>
+<li><code>checkout</code>:切换到分支, tag或者撤销工作目录的修改<ol>
+<li><code>git checkout &lt;branch/tag&gt;</code>: 切换到分支或者tag</li>
+<li><code>git checkout -- &lt;file&gt;</code>: 撤销工作目录&lt;file&gt;的修改,实际上就是用暂存区的文件 替换工作目录</li>
+</ol>
+</li>
+<li><code>diff</code>: 比较工作区与暂存区或者暂存区与版本库的差异<ol>
+<li><code>git diff</code>:工作区与暂存区的diff</li>
+<li><code>git diff --staged</code>: 暂存区与版本库的diff</li>
+</ol>
+</li>
+<li><code>reset</code>:重置, <code>&lt;commit&gt;</code> 如果不指定那么就为 <code>HEAD</code>,可以使用 <code>HEAD^/HEAD~1</code> (父 提交),<br><code>HEAD^^/HEAD~2</code> (父父提交)等类似的语法指定相对于HEAD的偏移.<ol>
+<li><code>git reset &lt;commit&gt; &lt;file&gt;</code>: 不修改引用,但是撤销对文件的暂存,也就是用版本库<br>中的文件替换暂存区中的文件, 工作目录的文件不会变动</li>
+<li><code>git reset --hard &lt;commit&gt;</code>: 将引用设置为commit, 同时用commit的文件替换暂存<br>区和工作目录. <strong>慎用</strong>.</li>
+<li><code>git reset --soft &lt;commit&gt;</code>: 只将引用设置为commit, 不修改暂存区和工作目录</li>
+<li><code>git reset --mixed &lt;commit&gt;</code>: 将引用设置为commit,同时替换暂存区,但是不替换 工作目录</li>
+</ol>
+</li>
+<li><code>blame</code>: 用来确定文件的每一行都是谁修改的</li>
+</ul>
+<h2 id="git一般的工作过程是："><a href="#git一般的工作过程是：" class="headerlink" title="git一般的工作过程是："></a>git一般的工作过程是：</h2><ol>
+<li>git pull(将远程分支与本地分支合并)</li>
+<li>git log（查看其他成员的更改）</li>
+<li>git branch (建一个本地分支）</li>
+<li>git checkout（进入本地分支）</li>
+<li>在该本地分支上进行修改</li>
+<li>git checkout（回到主分支）</li>
+<li>git merge （将分支上所做的工作合并到主分支）</li>
+<li>git branch -d （删除今天创建的分支）</li>
+<li>git pull（将远程仓库合并到本地仓库,很重要，因为今天可能别人修改了远程仓库）</li>
+<li>git push （将本地仓库合并到远程仓库）</li>
+</ol>
+<h1 id="git的原理"><a href="#git的原理" class="headerlink" title="git的原理"></a>git的原理</h1><h2 id="工作区-work-tree"><a href="#工作区-work-tree" class="headerlink" title="工作区(work tree)"></a>工作区(work tree)</h2><p>就是你本地的工作目录树</p>
+<ul>
+<li>git add :将工作区的文件提交到暂存区,暂存区的目录树会更新</li>
+</ul>
+<h2 id="git的暂存区-index"><a href="#git的暂存区-index" class="headerlink" title="git的暂存区(index)"></a>git的暂存区(index)</h2><p>暂存区可以看作一个目录树，暂存区的目录树和版本库的目录树是不同的，.git目录有一个index文件，这个文件包含了<br>git所管理的目录中所有文件的大小以及修改时间，每一次你调用git status或者git<br>diff这类命令时，git都会比较工作<br>区的文件与该index文件中记录的文件的差异，如果发现文件的大小已经改变，那么工作区的文件肯定已经改变，如果发<br>现文件的修改时间已改变，那么git会读取工作区中的文件与暂存区的文件的内容进行比较，如果内容相同，那么git会修<br>改index文件的相应条目的文件时间(因为虽然时间改变了，但文件内容没有改变)，这就是基本的工作流程了</p>
+<ul>
+<li>git commit: 将暂存区的文件提交到版本库</li>
+<li>git reset HEAD : 暂存区的目录树会被当前分支的版本库目录树替换,所以任何未提交的更新都会丢弃,但工作区不受 影响</li>
+<li>git checkout 或者 git checkout – &lt;file&gt;<br>:用暂存区的全部或者部分文件来替换工作区的文件,所以这个操作会清<br>除没有添加到暂存区的工作区改动, <strong>危险操作</strong></li>
+<li>git checkout HEAD 或者 git checkout HEAD &lt;file&gt; :<br>用HEAD指向的版本库分支的全部或者部分文件来替换暂存区与<br>工作区的文件,所以这个操作会清除所有未提交的暂存区与工作区改动. <strong>危险操作</strong></li>
+<li>git rm –cached &lt;file&gt; : 直接删除暂存区中的文件,工作区不受影响</li>
+<li>git rm &lt;file&gt; : 会删除工作区与暂存区的指定文件</li>
+</ul>
+<h2 id="版本库"><a href="#版本库" class="headerlink" title="版本库"></a>版本库</h2><p>由git管理的分支代码的目录树，比如master分支，以及其它你自己创建的分支,当然操作时一般都只是当前分支的目录树</p>
+<h2 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h2><ul>
+<li>git diff : 工作区与暂存区比较</li>
+<li>git diff HEAD : 工作区与HEAD比较</li>
+<li>git diff –cached : 暂存区与HEAD比较</li>
+</ul>
+<h2 id="HEAD-master"><a href="#HEAD-master" class="headerlink" title="HEAD, master"></a>HEAD, master</h2><p>HEAD(.git&#x2F;HEAD)实际是一个指针,指向的是.git&#x2F;refs&#x2F;heads&#x2F;branch-name文件,<br>branch-name可以是master或者你自己创 建的分支名,该文件实际指向的是该分支的最新的一次commit,<br>如果当前是master分支,那么这几个文件的内容应该是这 样:</p>
+<ul>
+<li>.git&#x2F;HEAD : “.git&#x2F;refs&#x2F;heads&#x2F;master” 如果用git<br>checkout改变分支,那么master会变成相应的分支名,所以HEAD可<br>以认为一直指向当前分支</li>
+<li>.git&#x2F;refs&#x2F;heads&#x2F;master: 235fd887b9f85d44ce94e8d733b8814509c1d4e8<br>(master分支最新一次提交的id),通过 git reset<br>–[hard|soft|mixed]可以重置该文件到指定的commit<br>id,那么在你指定的commit id之后的提交就都会丢失.</li>
+</ul>
+<h1 id="git-github"><a href="#git-github" class="headerlink" title="git github"></a>git github</h1><ol>
+<li>git remote add remoteName remoteUrl eg: git remote add origin<br><a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;</a>:youName&#x2F;github-example.git<br>只第一次新建了仓库时才需要运行，实际上是将本地的仓库与远程的仓库关联起来<br>如果出错可以使用命令 git remote rm origin</li>
+<li>git push origin master(将本地的仓库推送到远端）<br>如果报错那么极有可能是远端仓库被别人提交过了，所以要先pull，与本地合并然后在提交<br>git pull origin master</li>
+<li>git pull -u origin master origin是远程分支的名字，master是本地分支的名字</li>
+<li>子模块<ul>
+<li>添加子模块: <code>git submodule add repo-url local-path</code></li>
+<li>clone子模块: <code>git clone --recursive repo-url</code>,<br>如果不指定recursive，那么clone后需要初始化 <code>git submodule update --init --recursive</code></li>
+<li>更新： <code>git submodule update</code></li>
+<li>删除： ubmodule的删除稍微麻烦点：首先，要在“.gitmodules”文件中删除相应配置信息。然后，执行“git rm<br>–cached ”命令将子模块所在的文件从git中删除。</li>
+</ul>
+</li>
+<li>fork后合并原仓库的改变 情景如下：我在github<br>fork一个仓库（<a target="_blank" rel="noopener" href="https://github.com/purcell/emacs.d.git">https://github.com/purcell/emacs.d.git</a> ）到我的的账户<br>（<a target="_blank" rel="noopener" href="https://github.com/yuyang0/emacs.d.git">https://github.com/yuyang0/emacs.d.git</a> ）然后我将这个fork仓库clone到本地，现在<br>我要合并原仓库的改变。。 first: git remote add purcell<br><a target="_blank" rel="noopener" href="https://github.com/purcell/emacs.d.git">https://github.com/purcell/emacs.d.git</a> next: git pull purcell<br>master (git fetch purcell, git merge purcell&#x2F;master) next: git push<br>origin master</li>
+</ol>
+<h1 id="gitignore-syntax"><a href="#gitignore-syntax" class="headerlink" title="gitignore syntax"></a>gitignore syntax</h1><ul>
+<li><p>“#“ ： 注释</p>
+</li>
+<li><p>！ : 取反，即匹配模式的文件不忽略</p>
+</li>
+<li><p>&#x2F; ： &#x2F;结尾被当作目录，该目录的所有文件忽略</p>
+</li>
+<li><p>&#x2F; ： &#x2F;开头则只忽略工作树根目录开始匹配eg：core&#x2F;TODO与&#x2F;core&#x2F;TODO不<br>同，前者只要文件路径包含core&#x2F;TODO（如doc&#x2F;core&#x2F;TODO）即匹配，<br>而后者则只匹配工作树根目录下的core文件夹的TODO文件</p>
+</li>
+<li><p>glob模式：glob模式不同于正则表达式，等同于shell模式下的方式</p>
+<p>*：匹配任意字符<br>?: 匹配任意单个字符<br>[abcd]: 匹配a b c d中的一个<br>[a-z]: 匹配a-z之间的一个字符</p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/git/">git</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/unp/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">UNP笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/emacs-lisp/">
+                        <span class="hidden-mobile">elisp</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://yuyang0.github.io/notes/git/';
+          this.page.identifier = '/notes/git/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

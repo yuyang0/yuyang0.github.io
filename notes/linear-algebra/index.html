@@ -24,7 +24,7 @@
 <meta property="og:description" content="Symbols V : Vector space F : stands for either R or C. R : Real numbers C : Complex numbers  Concepts 线性关系(linear relation): 源于一个很朴素的想法,如果x,y是线性关系,那么x增大或者缩小n倍,那么y也应该增大或缩小n倍, 如果x1对应于y1, x2对应于y2, 那么x1+x">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2013-02-11T03:54:17.000Z">
-<meta property="article:modified_time" content="2022-05-08T15:49:14.421Z">
+<meta property="article:modified_time" content="2022-05-09T12:58:18.242Z">
 <meta property="article:author" content="Yu Yang">
 <meta property="article:tag" content="math">
 <meta name="twitter:card" content="summary_large_image">
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.8k 字
+      4.7k 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      24 分钟
+      40 分钟
     </span>
   
 
@@ -254,14 +254,13 @@
 </li>
 <li><p>线性操作(linear operation): 对 y&#x3D;F(x) 而言, 我们可以这样看,x是输入, F是操 作, 将 F 作用与输入<br>x 上得到输出y, 如果F是线性操作,那么y与x就成线性关系. 很显然F应该是一个乘以常数的操作, 因为只有y&#x3D;ax时,<br>y与x才是线性关系.实际上我 们可以推广到多维的情况y&#x3D;a1x1+a2x2+a3x3, 那么y与(x1, x2,<br>x3)^T 是线性关系, 那 么(a1, a2, a3) 就是线性操作</p>
 </li>
-<li><p>相似矩阵</p>
-<p>相似矩阵描述的实际是同一个线性变换在不同的基下面的表示</p>
+<li><p>相似矩阵<br>$$<br> \begin{equation*}<br>   T_1 &#x3D; P^{-1}T_2P<br> \end{equation*}<br>$$<br>相似矩阵描述的实际是同一个线性变换在不同的基下面的表示</p>
 <p>T1是坐标系 I下的变换，而T2是坐标系P下面的变换, 依次将 $P,T2,P^{-1}$ 应用到A就会得到B。</p>
 </li>
 </ol>
-<h1 id="线性方程组"><a href="#线性方程组" class="headerlink" title="线性方程组"></a>线性方程组</h1><h2 id="高斯-若尔当消元法"><a href="#高斯-若尔当消元法" class="headerlink" title="高斯-若尔当消元法"></a>高斯-若尔当消元法</h2><p>通过高斯消元法来将A变换为I，这样就得到了A的逆。</p>
+<h1 id="线性方程组"><a href="#线性方程组" class="headerlink" title="线性方程组"></a>线性方程组</h1><h2 id="高斯-若尔当消元法"><a href="#高斯-若尔当消元法" class="headerlink" title="高斯-若尔当消元法"></a>高斯-若尔当消元法</h2><p>$$<br>    \begin{equation*}<br>    \begin{bmatrix} A I \end{bmatrix}<br>    \rightarrow<br>    \begin{bmatrix}I A^{-1} \end{bmatrix}<br>    \end{equation*}<br>$$<br>通过高斯消元法来将A变换为I，这样就得到了A的逆。</p>
 <h2 id="置换矩阵"><a href="#置换矩阵" class="headerlink" title="置换矩阵"></a>置换矩阵</h2><p>这些矩阵可以用来交换矩阵的行, 重要性质： $AA^T&#x3D;I$</p>
-<h2 id="Ax-x3D-b-的解"><a href="#Ax-x3D-b-的解" class="headerlink" title="Ax&#x3D;b 的解"></a>Ax&#x3D;b 的解</h2><h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>变换为梯形矩阵，接着将所有的自由变量设为0，找到特解，接着再求 Ax&#x3D;0 的解，这 样就可以通过向量形式把所有的解都表示出来。</p>
+<h2 id="Ax-x3D-b-的解"><a href="#Ax-x3D-b-的解" class="headerlink" title="Ax&#x3D;b 的解"></a>Ax&#x3D;b 的解</h2><h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>$$<br>     \begin{equation*}<br>       x &#x3D; x_p + c_1x_1 + … + c_nx_n<br>     \end{equation*}<br>$$<br>变换为梯形矩阵，接着将所有的自由变量设为0，找到特解，接着再求 Ax&#x3D;0 的解，这 样就可以通过向量形式把所有的解都表示出来。</p>
 <p>$x_p$ 是特解， $c_n$ 是任意实数， $x_n$ 是 $Ax&#x3D;0$ 的解</p>
 <h3 id="解的个数"><a href="#解的个数" class="headerlink" title="解的个数"></a>解的个数</h3><p>A 是 m×n 的矩阵，且 A 的轶是 r，那么：</p>
 <ol>
@@ -270,10 +269,13 @@
 <li>r &#x3D; m &lt; n 则有无穷多个解, 高斯消元之后下面肯定没有0行,实际上是未知数比方程多。</li>
 <li>r &lt; n 且 r &lt; m 则 0 个解或者无穷多个解</li>
 </ol>
-<h1 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h1><h2 id="矩阵的乘法"><a href="#矩阵的乘法" class="headerlink" title="矩阵的乘法"></a>矩阵的乘法</h2><h3 id="单元素"><a href="#单元素" class="headerlink" title="单元素"></a>单元素</h3><p>乘积的第i行第j个元素是A的第i行乘以B的第j行。</p>
-<h3 id="行的线性组合"><a href="#行的线性组合" class="headerlink" title="行的线性组合"></a>行的线性组合</h3><p>所以对于 AB&#x3D;C 可以这样理解： C的每一行都是A的对应行乘以B，所以A的第一行作为<br>系数对B的每一行做线性组合的得到C的第一行，其他的行依次类推</p>
-<h3 id="列的线性组合"><a href="#列的线性组合" class="headerlink" title="列的线性组合"></a>列的线性组合</h3><p>所以对于 AB&#x3D;C 可以这样理解： C的每一列都是A乘以B的对应列，所以B的第一列作为<br>系数对A的每一列做线性组合的得到C的第一列，其他的列依次类推</p>
+<h1 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h1><h2 id="矩阵的乘法"><a href="#矩阵的乘法" class="headerlink" title="矩阵的乘法"></a>矩阵的乘法</h2><h3 id="单元素"><a href="#单元素" class="headerlink" title="单元素"></a>单元素</h3><p>乘积的第i行第j个元素是A的第i行乘以B的第j行。<br>$$<br>    \begin{equation*}<br>    c_{ij} &#x3D; \sum_{k&#x3D;1}^k a_{ik}b_{kj}<br>    \end{equation*}<br>$$</p>
+<h3 id="行的线性组合"><a href="#行的线性组合" class="headerlink" title="行的线性组合"></a>行的线性组合</h3><p>$$<br>      \begin{equation*}<br>        \begin{bmatrix} a_1 a_2 \dots a_n \end{bmatrix}<br>        \begin{bmatrix}<br>          R_1     \newline<br>          R_2     \newline<br>          \vdots  \newline<br>          R_n<br>        \end{bmatrix}<br>        &#x3D;<br>        \begin{bmatrix}<br>          a_1R_1 \newline<br>          +      \newline<br>          a_2R_2 \newline<br>          +      \newline<br>          \vdots \newline<br>          a_nR_n<br>        \end{bmatrix}<br>      \end{equation*}<br>$$</p>
+<p>所以对于 AB&#x3D;C 可以这样理解： C的每一行都是A的对应行乘以B，所以A的第一行作为<br>系数对B的每一行做线性组合的得到C的第一行，其他的行依次类推</p>
+<h3 id="列的线性组合"><a href="#列的线性组合" class="headerlink" title="列的线性组合"></a>列的线性组合</h3><p>$$<br>      \begin{equation*}<br>        \begin{bmatrix} C_1 C_2 \dots C_n \end{bmatrix}<br>        \begin{bmatrix}<br>          a_1    \newline<br>          a_2    \newline<br>          \vdots \newline<br>          a_n<br>        \end{bmatrix}<br>        &#x3D;<br>        \begin{bmatrix}a_1C_1 + a_2C_2 + \dots + a_nC_n \end{bmatrix}<br>      \end{equation*}<br>$$</p>
+<p>所以对于 AB&#x3D;C 可以这样理解： C的每一列都是A乘以B的对应列，所以B的第一列作为<br>系数对A的每一列做线性组合的得到C的第一列，其他的列依次类推</p>
 <h3 id="分块矩阵"><a href="#分块矩阵" class="headerlink" title="分块矩阵"></a>分块矩阵</h3><p>可以从分块矩阵的角度理解矩阵乘法, 规则和单元素时很类似，也是行乘以列</p>
+<p>$$<br>      \begin{equation*}<br>        \begin{bmatrix} A_{11} A_{12} \ A_{21} A_{22} \end{bmatrix}<br>        \begin{bmatrix} B_{11} \ B_{21} \end{bmatrix}<br>        &#x3D;<br>        \begin{bmatrix}A_{11}B_{11} + A_{12}B_{21} \ A_{21}B_{11} + A_{22}B_{21} \end{bmatrix}<br>      \end{equation*}<br>$$</p>
 <h2 id="逆矩阵-非奇异矩阵"><a href="#逆矩阵-非奇异矩阵" class="headerlink" title="逆矩阵(非奇异矩阵)"></a>逆矩阵(非奇异矩阵)</h2><p>只有方阵才有逆矩阵，矩阵A可逆意味着矩阵的列向量是线性无关的</p>
 <h1 id="向量空间"><a href="#向量空间" class="headerlink" title="向量空间"></a>向量空间</h1><p>向量空间($V$): 一个在 <strong>加法</strong> 以及 <strong>标量乘法</strong> 上 <strong>闭合</strong> 的集合。</p>
 <h2 id="property"><a href="#property" class="headerlink" title="property"></a>property</h2><p>向量空间满足以下性质:</p>
@@ -298,10 +300,8 @@
 <li>零空间的维数时 n-r</li>
 <li>左零空间的维数时 m-r</li>
 </ol>
-<h1 id="正交"><a href="#正交" class="headerlink" title="正交"></a>正交</h1><h2 id="投影与最小二乘"><a href="#投影与最小二乘" class="headerlink" title="投影与最小二乘"></a>投影与最小二乘</h2><p>投影矩阵是下面的公式</p>
-<p>因为A很多时候是不可逆的比如A不是方阵，所以 $(A^TA)^{-1}$ 是不能进一步化简的， 如果A可逆，那么最终的结果就是<br>I,也就是说投影是它自身，这是符合几何上的直觉的.同 时上面的公式有一个前提就是 $A^TA$<br>必须是可逆的，可以证明只要A的列向量是线性无 关的，那么就是可逆的,证明如下：</p>
-<p>证明的思路就是：一个矩阵可逆也就意味它的线性齐次方程组只有零解，最重要的一步是方程两边乘以 $x^T$</p>
-<p>如果A的列向量是标准正交的,也就是说 $A^TA &#x3D; I$ ，那么</p>
+<h1 id="正交"><a href="#正交" class="headerlink" title="正交"></a>正交</h1><h2 id="投影与最小二乘"><a href="#投影与最小二乘" class="headerlink" title="投影与最小二乘"></a>投影与最小二乘</h2><p>投影矩阵是下面的公式<br>$$<br>     \begin{equation*}<br>       P &#x3D; A(A^TA)^{-1}A^T<br>     \end{equation*}<br>$$<br>因为A很多时候是不可逆的比如A不是方阵，所以 $(A^TA)^{-1}$ 是不能进一步化简的， 如果A可逆，那么最终的结果就是<br>I,也就是说投影是它自身，这是符合几何上的直觉的.同 时上面的公式有一个前提就是 $A^TA$<br>必须是可逆的，可以证明只要A的列向量是线性无 关的，那么就是可逆的,证明如下：<br>$$<br>     \begin{align}<br>       (A^TA)x &#x3D; 0     \newline<br>       x^T(A^TA)x &#x3D; 0  \newline<br>       (Ax)^TAx &#x3D; 0    \newline<br>       Ax &#x3D; 0<br>     \end{align}<br>$$<br>证明的思路就是：一个矩阵可逆也就意味它的线性齐次方程组只有零解，最重要的一步是方程两边乘以 $x^T$</p>
+<p>如果A的列向量是标准正交的,也就是说 $A^TA &#x3D; I$ ，那么<br>$$<br>     \begin{equation*}<br>       P &#x3D; AA^T<br>     \end{equation*}<br>$$</p>
 <h1 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h1><h2 id="几何性质"><a href="#几何性质" class="headerlink" title="几何性质"></a>几何性质</h2><ol>
 <li>二维时是2个矩阵列向量组成的平行四边形的面积</li>
 <li>三维时是3个矩阵列向量组成的立方体的体积</li>
@@ -313,7 +313,8 @@
 </li>
 <li><p>交换两行，那么行列式的值变号</p>
 </li>
-<li></li>
+<li><p>$$<br>  \begin{align}<br>\begin{vmatrix}<br>  ta &amp; tb  \newline<br>  c  &amp; d<br>\end{vmatrix}<br>&amp; &#x3D; &amp;<br>t<br>\begin{vmatrix}<br>  a &amp; b \newline<br>  c &amp; d<br>\end{vmatrix} \newline<br><br>\begin{vmatrix}<br>  a + a’ &amp; b+b’  \newline<br>  c &amp; d<br>\end{vmatrix}<br>&amp; &#x3D; &amp;<br>\begin{vmatrix}<br>  a &amp; b  \newline<br>  c &amp; d<br>\end{vmatrix}<br>+<br>\begin{vmatrix}<br>  a’ &amp; b’  \newline<br>  c &amp; d<br>\end{vmatrix}<br>  \end{align}<br>$$</p>
+</li>
 <li><p>三角矩阵行列式等于对角线上元素的乘积.</p>
 </li>
 <li><p>$det(AB)&#x3D;det(A)det(B)$</p>
@@ -330,17 +331,10 @@
 </ul>
 </li>
 </ol>
-<h2 id="克拉默法则"><a href="#克拉默法则" class="headerlink" title="克拉默法则"></a>克拉默法则</h2><ol>
-<li><p>逆矩阵： $A^{-1} &#x3D; \frac{1}{det(A)} C^T$ , 其中C是代数余子式组成的矩阵。</p>
-</li>
-<li><p>克拉默法则： 求解 $Ax&#x3D;b$.</p>
-<p>其中 $B_n$ 是A的第n列替换为b后得到的。</p>
-</li>
-</ol>
+<h2 id="克拉默法则"><a href="#克拉默法则" class="headerlink" title="克拉默法则"></a>克拉默法则</h2><p>1.逆矩阵： $A^{-1} &#x3D; \frac{1}{det(A)} C^T$ , 其中C是代数余子式组成的矩阵。</p>
+<p>2.克拉默法则： 求解 $Ax&#x3D;b$.<br>   $$<br>     \begin{equation*}<br>       \begin{bmatrix}<br>         x_1    \newline<br>         x_2    \newline<br>         \vdots \newline<br>         x_n<br>       \end{bmatrix}<br>       &#x3D;<br>       \frac{1}{det(A)}<br>         \begin{bmatrix}<br>           det(B_1) \newline<br>           det(B_2) \newline<br>           \vdots   \newline<br>           det(B_n)<br>         \end{bmatrix}<br>     \end{equation*}<br>    $$<br>其中 $B_n$ 是A的第n列替换为b后得到的。</p>
 <h1 id="特征值与特征向量"><a href="#特征值与特征向量" class="headerlink" title="特征值与特征向量"></a>特征值与特征向量</h1><p>特征值和特征向量只对方阵有意义，主要是用来简化计算的，通过将任意的向量向特征向量 的方向做分解可以大大的简化计算</p>
-<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>x就是特征向量,$\lambda$ 就是特征值, 他们可以使用下式来计算</p>
-<p>这个式子就是特征方程, 也就是说 $A-\lambda I$ 的列必须时线性相关的，那么如果A是一<br>个三角矩阵那么特征值就是A对角线上的元素。</p>
-<p>$S$ 是A的特征向量组成的矩阵， $\Lambda$ 是特征值组成的对角矩阵。</p>
+<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>$$<br>  \begin{equation*}<br>    Ax &#x3D; \lambda x<br>  \end{equation*}<br>$$<br>x就是特征向量,$\lambda$ 就是特征值, 他们可以使用下式来计算<br>$$<br>  \begin{equation*}<br>    det(A-\lambda I) &#x3D; 0<br>  \end{equation*}<br>$$<br>这个式子就是特征方程, 也就是说 $A-\lambda I$ 的列必须时线性相关的，那么如果A是一<br>个三角矩阵那么特征值就是A对角线上的元素。<br>$$<br>  \begin{align}<br>    AS &amp;&#x3D; S \Lambda           \newline<br>    A  &amp;&#x3D; S \Lambda S^{-1}     \newline<br>    A^n &amp;&#x3D; S \Lambda^n S^{-1}<br>  \end{align}<br>$$<br>$S$ 是$A$的特征向量组成的矩阵， $\Lambda$ 是特征值组成的对角矩阵。</p>
 
             </div>
             <hr>
@@ -385,8 +379,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/notes/computer-network/">
-                        <span class="hidden-mobile">计算机网络</span>
+                      <a href="/notes/css/">
+                        <span class="hidden-mobile">css笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

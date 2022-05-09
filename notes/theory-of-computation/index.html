@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="自动机理论正则语言Concepts DFA: 确定型有穷自动机 NFA: 非确定有穷自动机 正则语言：能被一个有穷自动机接受的语言就是正则语言 语言: 如果 A 是机器 M 所接受的所有字符串组成的集合,那么我们就说 A 是 机器 M 的语言.也可以写作L(M)&#x3D;A 或者 M 识别 A.  DFA Definition 有穷自动机是一个五元组 $(Q, \Sigma, \delta, q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算理论">
+<meta property="og:url" content="https://yuyang0.github.io/notes/theory-of-computation/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="自动机理论正则语言Concepts DFA: 确定型有穷自动机 NFA: 非确定有穷自动机 正则语言：能被一个有穷自动机接受的语言就是正则语言 语言: 如果 A 是机器 M 所接受的所有字符串组成的集合,那么我们就说 A 是 机器 M 的语言.也可以写作L(M)&#x3D;A 或者 M 识别 A.  DFA Definition 有穷自动机是一个五元组 $(Q, \Sigma, \delta, q">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yuyang0.github.io/notes/theory-of-computation/static/img/m1-finite-automaton.png">
+<meta property="og:image" content="https://yuyang0.github.io/notes/theory-of-computation/static/img/n1-NFA.png">
+<meta property="og:image" content="https://yuyang0.github.io/notes/theory-of-computation/static/img/nfa-tree.png">
+<meta property="og:image" content="https://yuyang0.github.io/notes/theory-of-computation/static/img/nfa-union.png">
+<meta property="og:image" content="https://yuyang0.github.io/notes/theory-of-computation/static/img/nfa-concatenate.png">
+<meta property="og:image" content="https://yuyang0.github.io/notes/theory-of-computation/static/img/nfa-star.png">
+<meta property="article:published_time" content="2012-01-12T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-09T12:58:18.242Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="theory">
+<meta property="article:tag" content="comoutation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yuyang0.github.io/notes/theory-of-computation/static/img/m1-finite-automaton.png">
+  
+  
+  <title>计算理论 - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yuyang0.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="计算理论">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2012-01-12 11:54" pubdate>
+        2012年1月12日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算理论</h1>
+            
+            <div class="markdown-body">
+              <h1 id="自动机理论"><a href="#自动机理论" class="headerlink" title="自动机理论"></a>自动机理论</h1><h2 id="正则语言"><a href="#正则语言" class="headerlink" title="正则语言"></a>正则语言</h2><h3 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h3><ul>
+<li>DFA: 确定型有穷自动机</li>
+<li>NFA: 非确定有穷自动机</li>
+<li>正则语言：能被一个有穷自动机接受的语言就是正则语言</li>
+<li>语言: 如果 <code>A</code> 是机器 <code>M</code> 所接受的所有字符串组成的集合,那么我们就说 <code>A</code> 是 机器 <code>M</code> 的语言.也可以写作<br>L(M)&#x3D;A 或者 M 识别 A.</li>
+</ul>
+<h3 id="DFA"><a href="#DFA" class="headerlink" title="DFA"></a>DFA</h3><ol>
+<li><p>Definition</p>
+<p>有穷自动机是一个五元组 $(Q, \Sigma, \delta, q_0, F)$:</p>
+<ol>
+<li>Q 是一个有穷集合,叫 <strong>状态集</strong>.</li>
+<li>$\Sigma$ 是一个有穷集合,叫 <strong>字母表</strong>.</li>
+<li>$\delta: Q \times \Sigma \rightarrow Q$ 是 <strong>转移函数</strong>.</li>
+<li>$q_0 \in Q$ 是 <strong>起始状态</strong>.</li>
+<li>$F \subseteq Q$ 是 <strong>接受状态</strong>.</li>
+</ol>
+</li>
+<li><p>example</p>
+<p>下面是一个叫 M<sub>1</sub> 的有穷自动机</p>
+<p><img src="/notes/theory-of-computation/static/img/m1-finite-automaton.png" srcset="/img/loading.gif" lazyload></p>
+<p>形式定义如下:</p>
+<ol>
+<li><p>Q 是 {q<sub>1</sub>, q<sub>2</sub>, q<sub>3</sub>}</p>
+</li>
+<li><p>$\Sigma$ 是 {0, 1}</p>
+</li>
+<li><p>转移函数 $\delta$ 由下表给出:</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">0</th>
+<th align="center">1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">q<sub>1</sub></td>
+<td align="center">q<sub>1</sub></td>
+<td align="center">q<sub>2</sub></td>
+</tr>
+<tr>
+<td align="center">q<sub>2</sub></td>
+<td align="center">q<sub>3</sub></td>
+<td align="center">q<sub>2</sub></td>
+</tr>
+<tr>
+<td align="center">q<sub>3</sub></td>
+<td align="center">q<sub>2</sub></td>
+<td align="center">q<sub>2</sub></td>
+</tr>
+</tbody></table>
+<p>transformation rules</p>
+</li>
+<li><p>q<sub>1</sub> 是起始状态</p>
+</li>
+<li><p>F &#x3D; |q<sub>2</sub>|</p>
+</li>
+</ol>
+<p>下面是一个M1的程序:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">define</span></span> (<span class="hljs-name">m1</span> ss)<br>  (<span class="hljs-name"><span class="hljs-built_in">define</span></span> tbl                     <span class="hljs-comment">;transformation rules</span><br>    &#x27;(((q1 . <span class="hljs-literal">#\0</span>) . q1) ((q1 . <span class="hljs-literal">#\1</span>) . q2)<br>      ((q2 . <span class="hljs-literal">#\0</span>) . q3) ((q2 . <span class="hljs-literal">#\1</span>) . q2)<br>      ((q3 . <span class="hljs-literal">#\0</span>) . q2) ((q3 . <span class="hljs-literal">#\1</span>) . q2)))<br>  (<span class="hljs-name"><span class="hljs-built_in">define</span></span> accepted-states<br>    &#x27;(q2))<br><br>  (<span class="hljs-name"><span class="hljs-built_in">define</span></span> m1-inner<br>    (<span class="hljs-name"><span class="hljs-built_in">let</span></span> ([<span class="hljs-name">state</span> <span class="hljs-symbol">&#x27;q1</span>])<br>      (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (input)<br>        (<span class="hljs-name"><span class="hljs-built_in">cond</span></span> [(<span class="hljs-name"><span class="hljs-built_in">assoc</span></span> `(,state . ,input) tbl) =&gt;<br>               (<span class="hljs-name"><span class="hljs-built_in">lambda</span></span> (entry)<br>                 (<span class="hljs-name"><span class="hljs-built_in">set!</span></span> state (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> entry))<br>                 (<span class="hljs-name"><span class="hljs-built_in">cdr</span></span> entry))]<br>              [<span class="hljs-name"><span class="hljs-built_in">else</span></span> (<span class="hljs-name">error</span> <span class="hljs-symbol">&#x27;Error</span> <span class="hljs-string">&quot;unkown state input pair ~a&quot;</span><br>                           `(,state ,input))]))))<br><br>  (<span class="hljs-name"><span class="hljs-built_in">let*</span></span> ([<span class="hljs-name">char-lst</span> (<span class="hljs-name"><span class="hljs-built_in">string-&gt;list</span></span> ss)]<br>         [<span class="hljs-name">ret</span> (<span class="hljs-name">last</span> (<span class="hljs-name"><span class="hljs-built_in">map</span></span> m1-inner char-lst))])<br>    (<span class="hljs-name"><span class="hljs-built_in">if</span></span> (<span class="hljs-name"><span class="hljs-built_in">memv</span></span> ret accepted-states)<br>        <span class="hljs-symbol">&#x27;accept</span><br>        <span class="hljs-symbol">&#x27;reject</span>)))<br></code></pre></td></tr></table></figure>
+
+<p>设M &#x3D; $(Q, \Sigma, \delta, q_0, F)$ 是一台有穷自动机, $\omega&#x3D;\omega_1<br>  \omega_2 … \omega_n$ 是字母表 $\Sigma$ 上的字符串,如果存在 Q 中的状态序列:<br>r<sub>0</sub>, r<sub>1</sub>, …, r<sub>n</sub> 满足下述条件:</p>
+<ol>
+<li>r<sub>0</sub> &#x3D; q<sub>0</sub></li>
+<li>$\delta(r_i, \omega_{i+1})&#x3D;r_{i+1}, i&#x3D;0,1,2,…,n-1$</li>
+<li>$r_n \in F$</li>
+</ol>
+<p>则 M 接受 $\omega$.</p>
+</li>
+<li><p>正则运算</p>
+<p>设 A 与 B 是两个语言, 定义正则运算 <strong>并</strong> <strong>连接</strong> <strong>星号</strong>:</p>
+<ul>
+<li>union(并) : $A \cup B &#x3D; {x| x \in A  \ or \  x \in B }$</li>
+<li>concatenation(连接):<br>$A \centerdot B &#x3D; {xy| x \in A \ and \ y \in B }$</li>
+<li>star 星号:<br>$A^* &#x3D; {x_1 x_2 x_3 … x_k| k \geq 0 \ and \ \forall x_i \in A}$</li>
+</ul>
+</li>
+<li><p>property</p>
+<p>正则语言类是所有正则语言组成的集合</p>
+<ol>
+<li>正则语言类在 <strong>并</strong> 运算下封闭 (closure under union)</li>
+<li>正则语言类在 <strong>连接</strong> 运算下封闭(closure under concatenation)</li>
+</ol>
+</li>
+</ol>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><ol>
+<li>$(r)|(s)$ is a regular expression denoting the language $L(r) U L(s)$</li>
+<li>(r)(S) is a regular expression denoting the language $L(r)L(s)$</li>
+<li>$(r)<em>$ is a regular expression denoting the language $L(r)^</em>$</li>
+<li>$(r)$ is a regular expression denoting the language $L(r)$</li>
+</ol>
+<p>some extensions:</p>
+<ol>
+<li>$(r)+$ is a regular expression denoting the language $L(r)+, r+ &#x3D; rr*$.</li>
+<li>$(r)?$ (zero or one)</li>
+<li>$[abcd]$ is shorthand of $a|b|c|d$</li>
+</ol>
+<h3 id="NFA"><a href="#NFA" class="headerlink" title="NFA"></a>NFA</h3><ol>
+<li><p>DFA VS NFA</p>
+<ul>
+<li>DFA的每一个状态对于字母表中的每一个符号总是恰好有一个转移箭头射出,而NFA对<br>于每一个状态对于字母表字母表的每一个符号可能有0,1<br>或者多个箭头射出.</li>
+<li>NFA中箭头的标号可以是 $\varepsilon$, 而DFA不允许.</li>
+</ul>
+<p><img src="/notes/theory-of-computation/static/img/n1-NFA.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>definition</p>
+<p>非确定型有穷自动机是一个五元组 $(Q, \Sigma, \delta, q_0, F)$:</p>
+<ol>
+<li>Q 是一个有穷集合,叫 <strong>状态集</strong>.</li>
+<li>$\Sigma$ 是一个有穷集合,叫 <strong>字母表</strong>.</li>
+<li>$\delta: Q \times \Sigma_\varepsilon \rightarrow \mathcal{P}(Q)$<br>是 <strong>转移函数</strong>.</li>
+<li>$q_0 \in Q$ 是 <strong>起始状态</strong>.</li>
+<li>$F \subseteq Q$ 是 <strong>接受状态</strong>.</li>
+</ol>
+</li>
+<li><p>DFN的直观理解</p>
+<ol>
+<li><p>非确定性可以看做若干”过程”能同时运行的一类并行计算.当NFA分头跟踪若干选择<br>时,这对应于一个过程分叉成若干个子过程,各子过程分别进行.如果这些子过程中<br>至少有一个接受,那么整个计算接受</p>
+</li>
+<li><p>把非确定性计算看作一颗可能性的树,树根对应计算的开始,树中的每一个分支点对<br>应计算中机器有多种选择的点.如果计算分支中至少有一个结束在接受状态,则机器<br>接受.</p>
+<p>该理解是这样操作的: 当读入字符串时,如果发现该字符串可以到达n个下一状态 那么该节点就会有 n个子节点.如果发现有<br>$\varepsilon$ 箭头,那么就直接分裂 出一个子节点.下图描述了 N1 对 010110的 计算</p>
+<p><img src="/notes/theory-of-computation/static/img/nfa-tree.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+</li>
+<li><p>property</p>
+<ol>
+<li><p>每一台 NFA 都有一台等价的 DFA与之对应</p>
+</li>
+<li><p>正则语言类在并运算下封闭</p>
+<p>Proof: 假设有正则语言 A1 A2, 它们对应的 NFA为 N1 N2, 现在构造出一台NFA, 它能够识别出 A1 U<br>A2, 构造的方法就是使用一个新的初始状态q<sub>0</sub>, 而从 q<sub>0</sub> 上 分别连一个<br>$\varepsilon$ 箭头到N<sub>1</sub> 与 N<sub>2</sub> 的初始状态,见下图:<br><img src="/notes/theory-of-computation/static/img/nfa-union.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>正则语言在连接运算下封闭</p>
+<p>Proof: 假设有正则语言 A1 A2, 它们对应的 NFA为 N1 N2, 现在构造出一台NFA, 它能够识别出 A1<br>A2, 构造的方法就是从N1的每一个接受状态都连一个 $\varepsilon$ 箭头到N<sub>2</sub><br>的初始状态,见下图: <img src="/notes/theory-of-computation/static/img/nfa-concatenate.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>正则语言类在星号运算下封闭 <img src="/notes/theory-of-computation/static/img/nfa-star.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="非正则语言"><a href="#非正则语言" class="headerlink" title="非正则语言"></a>非正则语言</h3><p>泵引理: 设A是一个正则语言,则存在一个数 p(泵长度)使得, 如果s是A中任一长度不小 于p的字符串, 那么s可以被分为3段,<br>s&#x3D;xyz,满足下述条件:</p>
+<ol>
+<li>对每一个 $i \geqslant 0, xy^iz \in A$</li>
+<li>|y| &gt; 0</li>
+<li>|xy| &lt;&#x3D; p</li>
+</ol>
+<h2 id="上下文无关语言"><a href="#上下文无关语言" class="headerlink" title="上下文无关语言"></a>上下文无关语言</h2><h3 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h3><p>上下文无关文法是一个四元组 $(V, \Sigma, R, S)$, 这里:</p>
+<ol>
+<li>V 是一个有穷集合,称作 <strong>变元集</strong>.(箭头左边的部分)</li>
+<li>$\Sigma$ 是一个与 V 不想交的有穷集合,称作 <strong>终结符集</strong>.</li>
+<li>R 是一个有穷的规则集,每一条规则是一个变元和一个由变元与终结符组成的字符 串</li>
+<li>$S \in V$ 是 <strong>起始变元</strong>.</li>
+</ol>
+<h3 id="乔姆斯基范式"><a href="#乔姆斯基范式" class="headerlink" title="乔姆斯基范式"></a>乔姆斯基范式</h3><p>一个上下文无关文法为乔姆斯基范式,如果它的每一条规则具有如下的形式:</p>
+<p>$A \rightarrow BC$ $A \rightarrow a$ a是任意的终结符,<br>A,B,c使任意的变元,但是B,C不能是起始变元.</p>
+<h1 id="可计算理论"><a href="#可计算理论" class="headerlink" title="可计算理论"></a>可计算理论</h1><h1 id="计算复杂度理论"><a href="#计算复杂度理论" class="headerlink" title="计算复杂度理论"></a>计算复杂度理论</h1>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/theory/">theory</a>
+                    
+                      <a class="hover-with-bg" href="/tags/comoutation/">comoutation</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/css/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">css笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/computer-network/">
+                        <span class="hidden-mobile">计算机网络</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://yuyang0.github.io/notes/theory-of-computation/';
+          this.page.identifier = '/notes/theory-of-computation/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

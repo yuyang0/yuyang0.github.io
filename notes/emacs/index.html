@@ -1,0 +1,1041 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="emacs大杂烩这是我的emacs配置：https:&#x2F;&#x2F;github.com&#x2F;yuyang0&#x2F;emacs.d,我在purcell 的配置的基础上添加了一些我自己的设置. 编译emacs24去官方下载emacs24.4的包。 1234567sudo apt-get install libxml2-dev libxslt-dev python-dev libncurses-devsudo apt-ge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="emacs">
+<meta property="og:url" content="https://yuyang0.github.io/notes/emacs/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="emacs大杂烩这是我的emacs配置：https:&#x2F;&#x2F;github.com&#x2F;yuyang0&#x2F;emacs.d,我在purcell 的配置的基础上添加了一些我自己的设置. 编译emacs24去官方下载emacs24.4的包。 1234567sudo apt-get install libxml2-dev libxslt-dev python-dev libncurses-devsudo apt-ge">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yuyang0.github.io/static/img/org-table-formula.gif">
+<meta property="article:published_time" content="2010-01-13T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-09T12:58:18.242Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="emacs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yuyang0.github.io/static/img/org-table-formula.gif">
+  
+  
+  <title>emacs - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yuyang0.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="emacs">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2010-01-13 11:54" pubdate>
+        2010年1月13日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      16k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      133 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">emacs</h1>
+            
+            <div class="markdown-body">
+              <h1 id="emacs大杂烩"><a href="#emacs大杂烩" class="headerlink" title="emacs大杂烩"></a>emacs大杂烩</h1><p>这是我的emacs配置：<a target="_blank" rel="noopener" href="https://github.com/yuyang0/emacs.d">https://github.com/yuyang0/emacs.d</a><br>,我在<a target="_blank" rel="noopener" href="https://github.com/purcell/emacs.d">purcell</a> 的配置的基础<br>上添加了一些我自己的设置.</p>
+<h2 id="编译emacs24"><a href="#编译emacs24" class="headerlink" title="编译emacs24"></a>编译emacs24</h2><p>去官方下载emacs24.4的包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">sudo apt-get install libxml2-dev libxslt-dev python-dev libncurses-dev<br>sudo apt-get install build-essential texinfo libx11-dev libxpm-dev<br>sudo apt-get install libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev<br><br>./configure<br>make<br>sudo make install<br></code></pre></td></tr></table></figure>
+
+<p>要特别注意libxml2-dev， 这个包部安装，那么eww无法使用。</p>
+<h2 id="emacs各种设置与注意事项"><a href="#emacs各种设置与注意事项" class="headerlink" title="emacs各种设置与注意事项"></a>emacs各种设置与注意事项</h2><h3 id="emacs在英文系统的输入法问题"><a href="#emacs在英文系统的输入法问题" class="headerlink" title="emacs在英文系统的输入法问题"></a>emacs在英文系统的输入法问题</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">mv /usr/bin/emacs /usr/bin/emacs.raw<br>gedit /usr/bin/emacs<br></code></pre></td></tr></table></figure>
+
+<p>在文件中输入以下代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-built_in">export</span> LC_CTYPE=zh_CN.utf-8<br>/usr/bin/emacs.raw <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="交换ControlL与Capslocks"><a href="#交换ControlL与Capslocks" class="headerlink" title="交换ControlL与Capslocks"></a>交换Control<sub>L与Capslocks</sub></h3><p>通过 xev | grep ‘keycode’得到键码，然后输入以下文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs example">remove Lock = Caps_Lock<br>remove Control = Control_R<br>keycode  66 = Control_R NoSymbol Control_R<br>keycode  105 = Caps_Lock NoSymbol Caps_Lock<br>add Lock = Caps_Lock<br>add Control = Control_R<br></code></pre></td></tr></table></figure>
+
+<p>保存为.xmodmap，然后运行xmodmap .xmodmap</p>
+<h2 id="auto-complete-complete"><a href="#auto-complete-complete" class="headerlink" title="auto-complete complete"></a>auto-complete <span class="tag" data-tag-name="complete"><span class="smallcaps">complete</span></span></h2><p>一个补全的包,实际可以看作是一个补全选项的展示界面,支持很多后端,这是<a target="_blank" rel="noopener" href="http://cx4a.org/software/auto-complete/manual.html">文档</a></p>
+<ol>
+<li>ac-trigger-commands: 一个变量用来指定启动自动补全的命令,默认是self-insert-command</li>
+<li>TAB(ac-expand):有几种行为:如果只有一个候选项,那么直接补全,如果有多个候选<br>项而且候选项有相同的部分,那么补全相同的部分,如果不是以上两种情况,那么就<br>在各个候选项上循环</li>
+<li>RET(ac-complete) : 会补全当前的候选项,如果该候选项有action(如yas),那么执 行该action</li>
+<li>M-n(ac-next)</li>
+<li>M-p(ac-previous)</li>
+</ol>
+<p>有用的变量:</p>
+<ol>
+<li>ac-auto-start: 如果设置为nil, 那么当运行ac-trigger-command中指定的命令时,不<br>会启动自动补全,如果为正数值,那么只有但你输入的字符大于该值时才自动补全,比 如 <code>(setq ac-auto-start 4)</code>,那么只有你输入了4个字符时才会启动自动补全</li>
+<li>ac-auto-show-menu: 自动弹出显示补全菜单,可以设为nil,或者一个数值(延迟妙 数)</li>
+<li>ac-completing-map: 显示了补全菜单后的map,可以设置快捷键</li>
+<li>ac-dwim: dwim ⟶ do what I mean:一般设为nil -After selecting candidates,<br>TAB will behave as RET -TAB will behave as RET only on candidate<br>remains</li>
+</ol>
+<h2 id="grep-grep"><a href="#grep-grep" class="headerlink" title="grep grep"></a>grep <span class="tag" data-tag-name="grep"><span class="smallcaps">grep</span></span></h2><p>如果是想搜索当前buffer，那么你可以是occur，如果你想搜索多个文件，那么可以使 用grep，推荐两个命令</p>
+<ul>
+<li>lgrep：只会搜索当前目录(不搜索子目录)</li>
+<li>rgrep：它会递归搜索子目录</li>
+</ul>
+<p>wgrep包可以是emacs在grep buffer中直接修改文件内容</p>
+<ul>
+<li>C-c C-p: 在grep buffer中只要按该快捷键，就可以在grep buffer直接编辑文件</li>
+<li>C-c C-k: 放弃所有修改</li>
+<li>M-x wgrep-save-all-buffers</li>
+</ul>
+<h2 id="isearch-isearch"><a href="#isearch-isearch" class="headerlink" title="isearch isearch"></a>isearch <span class="tag" data-tag-name="isearch"><span class="smallcaps">isearch</span></span></h2><p>Increment Search.当你搜索时,你每输入一个字符,它会实时的向你展示基于目前的输<br>入所得到的所有匹配项,并自动将光标跳到第一个匹配项<br>C-x C-x:可以在isearch之后回到原来的位置</p>
+<h2 id="dired-dired"><a href="#dired-dired" class="headerlink" title="dired dired"></a>dired <span class="tag" data-tag-name="dired"><span class="smallcaps">dired</span></span></h2><p>dired是一个强大的文件管理器,dired的标记方式有很多种，如标记删除（D标记，用于 删除），<br>如标记为*（m所做的标记就是*标记），默认如果有被*标记的文件，那么所<br>有的文件操作就是在这些标记的文件上进行的，否则就在当前行代表的文件上进行操作，<br>当然还可以有其他类型的标记如t标记，k标记，只是这些标记没有快捷键，一般D标记<br>和*标记用的多，其他标记一般用于临时的转换一下。*c命令可以修改标记，eg：*c D t将D标记修改为t标记，*c t<br>*将t标记修改为*标记</p>
+<ul>
+<li><p>“#“: 标记所有自动保存的文件（D标记）</p>
+</li>
+<li><p>～：标记所有的备份文件（D标记）</p>
+</li>
+<li><p>&amp;： 标记所有的垃圾文件(D标记)</p>
+</li>
+<li><p>d: mark D标记</p>
+</li>
+<li><p>x：执行删除</p>
+</li>
+<li><p>m: mark *标记</p>
+</li>
+<li><p>t: 将所有*标记的文件变为未标记，所有未标记的变为*标记</p>
+</li>
+<li><p>**：标记所有可执行文件</p>
+</li>
+<li><p>*@：标记所有符号链接</p>
+</li>
+<li><p>*s: 标记所有文件</p>
+</li>
+<li><p>*&#x2F;：标记所有目录（不包括. ..)</p>
+</li>
+<li><p>%m or *%: 正则匹配文件名</p>
+</li>
+<li><p>%g：正则匹配所有文件的内容</p>
+</li>
+<li><p>u: unmark</p>
+</li>
+<li><p>常用的文件操作：</p>
+</li>
+<li><p>U: unmark all</p>
+</li>
+<li><p>D: 立即删除</p>
+</li>
+<li><p>R：rename</p>
+</li>
+<li><p>C：copy</p>
+</li>
+<li><p>A: 正则搜索</p>
+</li>
+<li><p>Q：正则替换</p>
+</li>
+<li><p>Z：解压文件</p>
+</li>
+<li><p>L：把lisp文件加载进emacs</p>
+</li>
+<li><p>B：byte compile</p>
+</li>
+<li><p>O：chown</p>
+</li>
+<li><p>G：chgrp</p>
+</li>
+<li><p>M：chmod</p>
+</li>
+<li><p>+：create a directory</p>
+</li>
+<li><p>!: 可以显示打开文件的命令（对pdf等文件不要RET）</p>
+</li>
+</ul>
+<h3 id="wdired-批量改名"><a href="#wdired-批量改名" class="headerlink" title="wdired(批量改名)"></a>wdired(批量改名)</h3><p>C-x C-q : (wdired-change-to-wdired-mode) 进入wdired mode, 进入后就可以像普<br>通的buffer一样编辑文件名(用multiple cursor来编辑多个文件名), 完成后C-c C-c 或者C-x C-s</p>
+<h2 id="ibuffer的快捷键-ibuffer"><a href="#ibuffer的快捷键-ibuffer" class="headerlink" title="ibuffer的快捷键 ibuffer"></a>ibuffer的快捷键 <span class="tag" data-tag-name="ibuffer"><span class="smallcaps">ibuffer</span></span></h2><ul>
+<li>p：prev</li>
+<li>n: next</li>
+<li>m：mark</li>
+<li>u: unmark</li>
+<li>t: mark all</li>
+<li>**: unmark all</li>
+<li>x: kill the marked buffer or current buffer if no buffer marked</li>
+<li>S: save the marked buffer or current buffer if no buffer marked</li>
+<li>D: same as ‘x’</li>
+<li>O: 在所有mark的buffer中正则搜索</li>
+<li>U: 在所有mark的buffer中替换</li>
+<li>Q: 在所有mark的buffer中query，replace</li>
+<li>&#x2F;m: 按主模式过滤</li>
+<li>&#x2F;n: 按名字过滤，可以只输入一部分</li>
+<li>&#x2F;&#x2F;: 撤销过滤，全部显示</li>
+<li>&#x2F;p: 多重过滤时撤销上一层过滤</li>
+<li>&#x2F;f: 过滤filename，与&#x2F;n类似</li>
+</ul>
+<h2 id="cua-mode以及矩形操作的快捷键-cua"><a href="#cua-mode以及矩形操作的快捷键-cua" class="headerlink" title="cua-mode以及矩形操作的快捷键 cua"></a>cua-mode以及矩形操作的快捷键 <span class="tag" data-tag-name="cua"><span class="smallcaps">cua</span></span></h2><ul>
+<li>M-x cua-mode : enable cua-mode</li>
+<li>C-RET: 激活矩形操作，然后就可以常规移动光标来进行列编辑</li>
+<li>C-v : past rectangle</li>
+</ul>
+<h2 id="mutiple-cursors多光标-multiple-cursor"><a href="#mutiple-cursors多光标-multiple-cursor" class="headerlink" title="mutiple cursors多光标 multiple cursor"></a>mutiple cursors多光标 <span class="tag" data-tag-name="multiple"><span class="smallcaps">multiple</span></span> <span class="tag" data-tag-name="cursor"><span class="smallcaps">cursor</span></span></h2><ol>
+<li><p>C-&lt;: mc&#x2F;mark-previous-like-this</p>
+</li>
+<li><p>C-&gt;: mc&#x2F;mark-next-like-this</p>
+</li>
+<li><p>C-c &lt;: mc&#x2F;mark-all-like-this (上面三项功能以word为单位，必须先mark-word)</p>
+</li>
+<li><p>C-c c a:在所有行的开头加入光标</p>
+</li>
+<li><p>C-c c e:在所有行的结尾加入光标</p>
+</li>
+<li><p>C-c c c:在所有的行加入一个光标(上面的三项功能以行为单位，必须先mark数行)</p>
+</li>
+</ol>
+<p>在multiple cursors中isearch是失效的,为了实现C-s, C-r增量搜索,有以下两种方法:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(defvar jc/mc-search--last-term nil)<br><br>(defun jc/mc-search (search-command)<br>  ;; Read new search term when not repeated command or applying to fake cursors<br>  (when (and (not mc--executing-command-for-fake-cursor)<br>             (not (eq last-command &#x27;jc/mc-search-forward))<br>             (not (eq last-command &#x27;jc/mc-search-backward)))<br>    (setq jc/mc-search--last-term (read-from-minibuffer &quot;Search(regex): &quot;)))<br>  (funcall search-command jc/mc-search--last-term))<br><br>(defun jc/mc-search-forward ()<br>  &quot;Simplified version of forward search that supports multiple cursors&quot;<br>  (interactive)<br>  (jc/mc-search &#x27;search-forward-regexp))<br><br>(defun jc/mc-search-backward ()<br>  &quot;Simplified version of backward search that supports multiple cursors&quot;<br>  (interactive)<br>  (jc/mc-search &#x27;search-backward-regexp))<br><br>(add-hook &#x27;multiple-cursors-mode-enabled-hook<br>          (lambda()<br>            (local-set-key (kbd &quot;C-s&quot;) &#x27;jc/mc-search-forward)<br>            (local-set-key (kbd &quot;C-r&quot;) &#x27;jc/mc-search-backward)))<br><br></code></pre></td></tr></table></figure>
+
+<p>上述代码放入配置中,就可以开启增量搜索, 还有一种方法是使用phi-search</p>
+<h2 id="ace-jump-mode-ace"><a href="#ace-jump-mode-ace" class="headerlink" title="ace-jump-mode ace"></a>ace-jump-mode <span class="tag" data-tag-name="ace"><span class="smallcaps">ace</span></span></h2><p>类似于火狐的vim插件，输入一个head char，就会在所有匹配的地方放入一个字母</p>
+<ol>
+<li>C-; ：ace-jump-char-mode</li>
+<li>C-: : ace-jump-word-mode</li>
+</ol>
+<h2 id="expand-region-expand-region"><a href="#expand-region-expand-region" class="headerlink" title="expand region expand region"></a>expand region <span class="tag" data-tag-name="expand"><span class="smallcaps">expand</span></span> <span class="tag" data-tag-name="region"><span class="smallcaps">region</span></span></h2><p>这个包可以根据程序的语法结构来选定区域</p>
+<ul>
+<li>C-&#x3D; : 不断的按该快捷键,会使选定的区域不断的扩展,而且只扩展到语法层面的父 结构中,</li>
+</ul>
+<h2 id="paredit-paredit"><a href="#paredit-paredit" class="headerlink" title="paredit paredit"></a>paredit <span class="tag" data-tag-name="paredit"><span class="smallcaps">paredit</span></span></h2><p>该模式下你不能直接编辑括号,而只能通过命令来调整程序结构,主要用于lisp编程</p>
+<ul>
+<li>M-r: 这个命令可以将紧跟着光标后的sexp( <strong>不是当前的sexp, 所以建议将光标放在<br>要操作sexp的左括号的前面</strong>)在树中的位置向上提一层,比如对 <code>let</code><br>中的sexp应用 该命令,那么就可以直接删除 <code>(let ([] ...))</code> 因此该sexp在语法树中的位置就上<br>升了一层,默认该命令会删除该sexp平级的兄弟sexp. 可以通过C-u来指定要将跟着的<br>几个sexp提一层,默认是一个</li>
+<li>M-( : 会用新建() 将跟着光标的sexp包起来</li>
+<li>C-) C-&lt;right&gt; : 会将光标所在的当前表达式的紧挨着的兄弟表达式吞进来</li>
+<li>C-} C-&lt;left&gt; : 将当前sexp包含的最后一个sexp移出去, 可以看作是C-)的逆命令</li>
+<li>M-S : 将一个sexp分成两个sexp,效果就是在光标处添加 “)(“</li>
+<li>M-J : 将两个sexp合并成一个sexp, 比如 <code>(a b) (c d)</code> 变成 <code>(a b c d)</code> 注意<br>光标要放在两个sexp之间,上例中要放在 <code>(a b)</code> 与 <code>(c d)</code> 之间</li>
+</ul>
+<h2 id="ido-Interactively-Do-Things-ido"><a href="#ido-Interactively-Do-Things-ido" class="headerlink" title="ido(Interactively Do Things) ido"></a>ido(Interactively Do Things) <span class="tag" data-tag-name="ido"><span class="smallcaps">ido</span></span></h2><p>使用 <code>C-x b</code> 来切换 <code>buffer</code>,或者使用 <code>C-x C-f</code> 来打开文件时,会自动在 <code>minibuffer</code><br>展示可能的补全项,下面是几个快捷键:</p>
+<ul>
+<li>C-s:后退</li>
+<li>C-r: 前进</li>
+</ul>
+<p>当打开文件时(C-x C-f)时,有以下几个特殊的快捷键</p>
+<ul>
+<li>C-f: 进入emacs内置的find-file</li>
+<li>C-p: 会启动部分匹配，而前面是严格的前缀匹配</li>
+<li>C-t: 正则表达式匹配 eg:*.py$匹配所有python源文件</li>
+<li>C-d: 会使用 <code>dired</code> 打开当前目录</li>
+<li>C-j: 创建新文件(因为当前输入的字符有匹配项时,默认是打开匹配项)</li>
+<li>&#x2F;&#x2F;: 进入根目录</li>
+<li>~&#x2F;: 当前用户的家目录</li>
+<li>M-p: history中的前一条目录</li>
+<li>M-n: history中的后一条目录</li>
+</ul>
+<h3 id="用于编程的命令"><a href="#用于编程的命令" class="headerlink" title="用于编程的命令"></a>用于编程的命令</h3><ul>
+<li>ido-read-file-name: 可以用来读取一个文件名</li>
+<li>ido-read-directory-name: 可以用于获得一个目录名</li>
+<li>idio-read-buffer: 可以用来获得一个buffer name</li>
+<li>ido-completion-read: 这是一个通用的补全命令,需要提供一个列表</li>
+</ul>
+<h3 id="smex-smex"><a href="#smex-smex" class="headerlink" title="smex smex"></a>smex <span class="tag" data-tag-name="smex"><span class="smallcaps">smex</span></span></h3><p>构建于 <code>ido</code> 之上, 在你使用 M-x 运行命令时会提供自动补全</p>
+<h2 id="helm-a-good-alternative-to-ido-helm"><a href="#helm-a-good-alternative-to-ido-helm" class="headerlink" title="helm(a good alternative to ido) helm"></a>helm(a good alternative to ido) <span class="tag" data-tag-name="helm"><span class="smallcaps">helm</span></span></h2><p>一个比较好的可以替换ido,smex的包,功能非常强大, 基本上emacs中出现选择的地方,<br>他都可以用,比如打开文件,切换buffer,kill buffer,<br>M-x等等,下面来说说它的的几 个重点功能</p>
+<h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><ul>
+<li>TAB :打开Action buffer, 对每一个文件可以有许多动作, 比如copy, 比如用外部<br>程序打开,那么这些操作都在这个action buffer中</li>
+<li>C-z: 扩展当前的候选项, 比如你的当前候选项是一个目录, 那么C-z就会进入该目 录,不要按 <code>Enter</code>, 因为那会以<br><code>dired</code> 打开这个目录</li>
+<li>M-&lt;space&gt; : mark 当前的文件</li>
+<li>C-&lt;backspace&gt;: 会禁止自动补全,这在创建新文件与新目录时特别有用(因为如果<br>新的文件名与现在存在的文件名很相似的话,那么helm会自动补全为已存在的文件<br>或目录,因此你也就无法创建新目录)</li>
+<li>新建目录: 在 <code>minibuffer</code> 中正常输入,只是最后要以 &#x2F; 结尾, helm会提示创建 新目录</li>
+<li>复制文件: 先mark文件,然后TAB 选择copy file, 选择目的地就好</li>
+<li>移动文件: 和复制文件类似</li>
+</ul>
+<h3 id="ediff-ediff"><a href="#ediff-ediff" class="headerlink" title="ediff ediff"></a>ediff <span class="tag" data-tag-name="ediff"><span class="smallcaps">ediff</span></span></h3><p>第一个文件TAB上选择ediff action,自动弹出第二个helm-find-files选择第二个文 件, <strong>强力推荐</strong></p>
+<h3 id="grep-increment-grep-grep"><a href="#grep-increment-grep-grep" class="headerlink" title="grep(increment grep) grep"></a>grep(increment grep) <span class="tag" data-tag-name="grep"><span class="smallcaps">grep</span></span></h3><p><strong>helm-do-grep</strong> : helm中执行grep的命令,你也可以使用 helm-find-files然后TAB 选择grep,<br>如果使用 C-u M-x helm-do-grep, 那么就会递归的在目录中搜索</p>
+<h3 id="locate-locate"><a href="#locate-locate" class="headerlink" title="locate locate"></a>locate <span class="tag" data-tag-name="locate"><span class="smallcaps">locate</span></span></h3><p>M-x helm-locate: 使用操作系统的locate所产生的数据库文件来搜索文件</p>
+<h2 id="w3m-w3m-w3c"><a href="#w3m-w3m-w3c" class="headerlink" title="w3m w3m w3c"></a>w3m <span class="tag" data-tag-name="w3m"><span class="smallcaps">w3m</span></span> <span class="tag" data-tag-name="w3c"><span class="smallcaps">w3c</span></span></h2><p>w3m 是一个文本浏览器，它不支持CSS与js，非常适合浏览文本很多的页面，以及避免 在emacs与firefox切换带来的烦恼。。</p>
+<p><strong>links</strong></p>
+<ul>
+<li>g: Prompt for a url in minibuffer (w3m-browse-url)</li>
+<li>G: same as <strong>g</strong> excepte it open a new session(a new tab)</li>
+<li>R: reload the page</li>
+<li>S: search engion</li>
+<li>H: goto home page</li>
+<li>B: go back(history)</li>
+<li>N: go next(hostory)</li>
+<li>u: display the under the point in the echo area</li>
+<li>RET: Display the page pointed by the link under point<br>(w3m-view-this-url)</li>
+<li>\[: move point to previous form</li>
+<li>\]: move point to next form</li>
+<li>TAB: move point to next link</li>
+<li>M-TAB, S-TAB: move point to previous link</li>
+<li>d: download thee url under the point</li>
+<li>M-d: Download the url</li>
+</ul>
+<p><strong>scroll</strong></p>
+<ul>
+<li>SPC: scroll downwards</li>
+<li>&gt;: scroll to the right</li>
+<li>&lt;: scroll to the left</li>
+<li>DEL: scroll upwards</li>
+</ul>
+<p><strong>bookmarks</strong></p>
+<ul>
+<li>v: show all bookmarks</li>
+<li>a: add current url to bookmarks</li>
+<li>M-a: Add the url under point to the bookmark.</li>
+<li>C-k: kill a bookmark</li>
+<li>E: edit bookmark</li>
+</ul>
+<p><strong>move in page</strong></p>
+<ul>
+<li>hjkl: like vim</li>
+</ul>
+<p><strong>switch tabs</strong></p>
+<ul>
+<li>C-c C-n: next tab</li>
+<li>C-c C-p: previous tab</li>
+<li>C-c C-t: new tab</li>
+</ul>
+<p><strong>images</strong></p>
+<ul>
+<li>I: Display the image under point in the external viewer.</li>
+<li>M-i: Save the image under point to a file.</li>
+<li>t: Toggle the visibility of an image under point</li>
+<li>T: Toggle the visibility of all images</li>
+<li>M-T: turn off to display all images</li>
+<li>M-[: zoom in an image on the point</li>
+<li>M-]: zoom out an image on the point</li>
+</ul>
+<h2 id="ansi-term-shell-term"><a href="#ansi-term-shell-term" class="headerlink" title="ansi-term shell term"></a>ansi-term <span class="tag" data-tag-name="shell"><span class="smallcaps">shell</span></span> <span class="tag" data-tag-name="term"><span class="smallcaps">term</span></span></h2><p>终端模拟器,基本上terminal的所有功能.</p>
+<ul>
+<li>C-c C-j: 进入line mode， 可以复制</li>
+<li>C-c C-k: 回到character mod</li>
+</ul>
+<h2 id="magit-magit"><a href="#magit-magit" class="headerlink" title="magit magit"></a>magit <span class="tag" data-tag-name="magit"><span class="smallcaps">magit</span></span></h2><p>一个git扩展,功能强大.这是一篇介绍<a target="_blank" rel="noopener" href="http://www.masteringemacs.org/articles/2013/12/06/introduction-magit-emacs-mode-git/">文章</a>,<br>这是一份命令<a target="_blank" rel="noopener" href="http://daemianmack.com/magit-cheatsheet.html">列表</a></p>
+<ul>
+<li>M-x magit-status(我的快捷键 M-f12): 进入magit的buffer</li>
+<li>M-[1-4]: 其中我用 M-2 与 M-4,前者只显示文件,后者会显示diff</li>
+<li>1 2 3 4: 和上面类似,只是前面带M则会应用到所有的entry, 而单独按数字只会应用 到当前的entry</li>
+<li>s : stage</li>
+<li>c : commit</li>
+<li>i : 将文件添加到.gitignore</li>
+<li>C-u i : 提示你输入要加入.gitignore的文件或者目录</li>
+<li>b : 切换到一个已存在的分支</li>
+<li>B : 创建并切换到新分支</li>
+</ul>
+<h2 id="我设置的快捷键以及我常用的快捷键，函数-shortcut"><a href="#我设置的快捷键以及我常用的快捷键，函数-shortcut" class="headerlink" title="我设置的快捷键以及我常用的快捷键，函数 shortcut"></a>我设置的快捷键以及我常用的快捷键，函数 <span class="tag" data-tag-name="shortcut"><span class="smallcaps">shortcut</span></span></h2><ul>
+<li><p>M-x browse-url: 通过浏览器打开当前url</p>
+</li>
+<li><p>C-g C-&#x2F;: redo</p>
+</li>
+<li><p>C-x C-v: find-alternate-file(fresh buffer)</p>
+</li>
+<li><p>C-x C-m: 替代M-x,按M很别扭</p>
+</li>
+<li><p>M-c : capticalize-word</p>
+</li>
+<li><p>M-u : upcase-word</p>
+</li>
+<li><p>C-x C-u : upcase-region</p>
+</li>
+<li><p>M-l : downcase-word</p>
+</li>
+<li><p>C-x C-l: downcase-region</p>
+</li>
+<li><p>C-c p: 复制粘贴一行或者选中的region</p>
+</li>
+<li><p>C-c j: 将当前行与上一行合并成一行</p>
+</li>
+<li><p>M-up: Shift lines up</p>
+</li>
+<li><p>M-down: Shift lines down</p>
+</li>
+<li><p>M-x occur: 创建一个新的buffer，然后将当前buffer，所有匹配regex的内容显示其<br>中,进入该buffer，enter就可以跳转</p>
+</li>
+<li><p>M-x imenu：可以根据类型跳转（变量，函数,include等等）</p>
+</li>
+<li><p>C-k: kill the current line</p>
+</li>
+<li><p>C-o: new line and indent,like the ‘o’ in vim</p>
+</li>
+<li><p>M-;: comment or uncomment the region</p>
+</li>
+<li><p>M-j: 这个在多行注释时,可以换行,换行时会在行首自动添加comment-prefix字符(C 语言是*),<br>如果使用C-j或者RET就不会添加该字符</p>
+</li>
+<li><p>C-&#x2F;: undo (same as C-x u and C-_)</p>
+</li>
+<li><p>C-c d: translate the word using sdcv</p>
+</li>
+<li><p>C-c f: 迭代的搜索字符，eg：C-c f g会移到第一个g，在按g移到 第二个g</p>
+</li>
+<li><p>% : jump to the matched parenthesis</p>
+</li>
+<li><p>C-c -: fold the code</p>
+</li>
+<li><p>C-c &#x3D;: unfold the code</p>
+</li>
+<li><p>C-M-f: 表达式的首部</p>
+</li>
+<li><p>C-M-b:</p>
+</li>
+<li><p>C-M-a: 函数的首部</p>
+</li>
+<li><p>C-M-e：</p>
+</li>
+<li><p>C-x backspace: 删除到行首</p>
+</li>
+<li><p>C-M-h: 标记一个函数</p>
+</li>
+<li><p>M-u: 一个字改为大写</p>
+</li>
+<li><p>M-l：一个字改为小写</p>
+</li>
+<li><p>C-x C-u：region to uppercase</p>
+</li>
+<li><p>C-x C-l：区域小写</p>
+</li>
+<li><p>C-t：将光标前后的字符交换</p>
+</li>
+<li><p>C-x C-t: 光标所在行与上一行交换</p>
+</li>
+</ul>
+<h2 id="emacs导出pdf的中文支持-pdf-chinese"><a href="#emacs导出pdf的中文支持-pdf-chinese" class="headerlink" title="emacs导出pdf的中文支持 pdf chinese"></a>emacs导出pdf的中文支持 <span class="tag" data-tag-name="pdf"><span class="smallcaps">pdf</span></span> <span class="tag" data-tag-name="chinese"><span class="smallcaps">chinese</span></span></h2><p>org-mode默认的导出系统对中文支持不好,我参考这篇<a target="_blank" rel="noopener" href="http://yzprofile.me/2013/01/14/emacs-org-mode-xelatex.html">文章</a>,<br>将导出中文pdf的方法总结如下:</p>
+<ol>
+<li><p>安装textlive,如果是ubuntu,运行以下命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install texlive texlive-xetex textlive-latex-extra<br></code></pre></td></tr></table></figure>
+
+<p>textlive-latex-extra一定要装,不装会有File `wrapfig.sty’ not found.的错误</p>
+</li>
+<li><p>在emacs配置文件中添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">;; org-mode &lt; 8.0<br>(setq org-latex-to-pdf-process &#x27;(&quot;xelatex -interaction nonstopmode %f&quot;<br>                                 &quot;xelatex -interaction nonstopmode %f&quot;))<br>;;  org-mode 8.0<br>(setq org-latex-pdf-process &#x27;(&quot;xelatex -interaction nonstopmode %f&quot;<br>                              &quot;xelatex -interaction nonstopmode %f&quot;))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在org文档的开头部分添加:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">#+LATEX_HEADER: \usepackage&#123;xeCJK&#125;<br>#+LATEX_HEADER: \setCJKmainfont&#123;SimSun&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>找不到<br>【SMIKAI.TTF】字体的错误，参考这篇<a target="_blank" rel="noopener" href="https://huxuan.org/2012/07/14/chinese-font-problem-of-ctex-in-texlive-under-linux/">文章</a></p>
+</li>
+</ol>
+<h2 id="emacs的奇淫技巧-face"><a href="#emacs的奇淫技巧-face" class="headerlink" title="emacs的奇淫技巧 face"></a>emacs的奇淫技巧 <span class="tag" data-tag-name="face"><span class="smallcaps">face</span></span></h2><ul>
+<li>M-x flush-lines RET ^$ RET :删除所有的空行（正则匹配）</li>
+<li>M-x list-faces-display: 显示faces，在很多需要颜色，字体样式的命令中需要face参数</li>
+<li>绑定快捷键时用C-h k查询得到的内容可以直接放在kbd后</li>
+<li>indent-region可以格式化所有的代码</li>
+</ul>
+<h2 id="我写的一些命令"><a href="#我写的一些命令" class="headerlink" title="我写的一些命令"></a>我写的一些命令</h2><h3 id="短网址-dwz-tinyurl"><a href="#短网址-dwz-tinyurl" class="headerlink" title="短网址 dwz tinyurl"></a>短网址 <span class="tag" data-tag-name="dwz"><span class="smallcaps">dwz</span></span> <span class="tag" data-tag-name="tinyurl"><span class="smallcaps">tinyurl</span></span></h3><p>使用百度的dwz.cn(之所以不用t.cn, 是因为它的api要求app key,比较麻烦)来缩短网 址,<br>会自动将得到的短网址插入当前buffer, 依赖request, emacs24可以通过<br>M-x package-install request安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(require &#x27;request)<br>(require &#x27;json)<br>(defun dwz-url-shorten (long-url)<br>  &quot;shorten url with dwz.cn&quot;<br>  (interactive (list<br>                (read-string (format &quot;long url (%s): &quot; (thing-at-point &#x27;url))<br>                             nil nil (thing-at-point &#x27;url))))<br>  (request<br>   &quot;http://dwz.cn/create.php&quot;<br>   :type &quot;POST&quot;<br>   ;; :data &#x27;((&quot;url&quot; . long-url))<br>   :data (format &quot;url=%s&quot; long-url)<br>   ;; :data &quot;key=value&amp;key2=value2&quot;  ; this is equivalent<br>   :parser &#x27;json-read<br>   :success (function*<br>             (lambda (&amp;key data &amp;allow-other-keys)<br>               (let ((tinyurl (assoc-default &#x27;tinyurl data))<br>                     (url-boundaries (bounds-of-thing-at-point &#x27;url)))<br>                 (progn<br>                   (message &quot;%S&quot; tinyurl)<br>                   (if url-boundaries<br>                       (goto-char (cdr url-boundaries)))<br>                   (insert &quot; &quot; tinyurl &quot; &quot;)))))))<br><br></code></pre></td></tr></table></figure>
+
+<p>我写了一个包<a target="_blank" rel="noopener" href="https://github.com/yuyang0/url-shortener">url-shortener</a> ,你可以通过<br>elpa 安装,这个包支持 dwz.cn,126.am,bit.ly,goo.gl.</p>
+<h2 id="elpa-elpa"><a href="#elpa-elpa" class="headerlink" title="elpa elpa"></a>elpa <span class="tag" data-tag-name="elpa"><span class="smallcaps">elpa</span></span></h2><h3 id="proxy-goagent代理-proxy"><a href="#proxy-goagent代理-proxy" class="headerlink" title="proxy(goagent代理) proxy"></a>proxy(goagent代理) <span class="tag" data-tag-name="proxy"><span class="smallcaps">proxy</span></span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(setq url-proxy-services &#x27;((&quot;no_proxy&quot; . &quot;work\\.com&quot;)<br>                           (&quot;http&quot; . &quot;localhost:8087&quot;)))<br></code></pre></td></tr></table></figure>
+
+<h2 id="emacsclient-emacsclient-server"><a href="#emacsclient-emacsclient-server" class="headerlink" title="emacsclient emacsclient server"></a>emacsclient <span class="tag" data-tag-name="emacsclient"><span class="smallcaps">emacsclient</span></span> <span class="tag" data-tag-name="server"><span class="smallcaps">server</span></span></h2><p>使用emacs server配合emacsclient可以很大程度上解决emacs启动慢的烦恼,启动 emaca server的方法有两种:</p>
+<ol>
+<li>shell 中运行 emacs –daemon</li>
+<li>启动的emacs中运行 <code>(server-start)</code> 命令</li>
+</ol>
+<p>我个人在桌面环境中喜欢第二种方法,也就是先打开一个emacs窗口作为server端,以后<br>在打开文件时都使用emacsclient,在emacsclient使用过程中有几个注意事项(server<br>创建的frame称为 Server Frame,emacsclient创建的Frame称为 Client Frame):</p>
+<ol>
+<li>emacsclient创建frame来打开文件时,它创建一个server buffer,如果你在 Client<br>Frame中编辑完成,使用C-x C-c来退出该 Client frame,那么该server<br>buffer就会 从server端删除,但server不会退出</li>
+<li>如果你直接在server端的 Server Frame中编辑server buffer,如果编辑完成那么 你可以按C-x #<br>来kill掉该buffer,同时也会让对应的emacsclient创建的 Client Frame退出</li>
+</ol>
+<h2 id="org-mode-org"><a href="#org-mode-org" class="headerlink" title="org-mode org"></a>org-mode <span class="tag" data-tag-name="org"><span class="smallcaps">org</span></span></h2><p>org-mode是一个神器,有许多强大的功能</p>
+<h3 id="org-mode的快捷键与命令"><a href="#org-mode的快捷键与命令" class="headerlink" title="org-mode的快捷键与命令"></a>org-mode的快捷键与命令</h3><ul>
+<li>org-w3m-copy-for-org-mode: 在w3m中可以带链接，图片拷贝到org中（先选中region）</li>
+<li>tab，S-tab</li>
+<li>C-c C-n: next tiltle</li>
+<li>C-c C-p: prev tilte</li>
+<li>C-c C-f: 平级的上一个标题</li>
+<li>C-c C-b：平级的下一个标题</li>
+<li>C-c C-u：上一级标题：next</li>
+<li>M-RET : 插入同级标题</li>
+<li>M-S RET：插入一个同级的TODO标题</li>
+<li>M-LEFT&#x2F;RIGHT: 标题升&#x2F;降级</li>
+<li>M-S-LEFT&#x2F;RIGHT：子树升&#x2F;降级</li>
+<li>C-c*：将本行设置为标题</li>
+<li>C-c C-l: insert a link</li>
+<li>C-c C-o: open a link</li>
+<li>C-c C-c : 当在标题上时,可以用来插入标签</li>
+<li>C-c C-q : 为当前标题插入标签</li>
+<li>C-c \ : org-match-sparse-tree</li>
+</ul>
+<p><strong>内容元数据及其快捷键：</strong></p>
+<ul>
+<li>&lt;v tab: begin\<sub>verse</sub> 区域内换行</li>
+<li>&lt;s tab: begin\<sub>src</sub> 区域内为代码 按 <strong>C-c C-‘</strong> 进入主模式编辑，在按退出</li>
+<li>&lt;e tab: begin\<sub>example</sub> 例子，每行以：开始</li>
+<li>&lt;q tab: begin\<sub>quote</sub> 区域左右都会留出缩进，用于引用</li>
+<li>&lt;c tab: begin\<sub>center</sub> 居中区域</li>
+<li>&lt;l tab: begin\<sub>latex</sub></li>
+<li>&lt;h tab: begin\<sub>html</sub> 嵌入html</li>
+<li>&lt;a tab: begin\<sub>ascii</sub></li>
+</ul>
+<h3 id="org-mode的一些格式化语法"><a href="#org-mode的一些格式化语法" class="headerlink" title="org-mode的一些格式化语法"></a>org-mode的一些格式化语法</h3><ul>
+<li>链接: “【【link】【descripter】】”（用英文的方括号）</li>
+<li>org-mode能自动识别链接，如http，file等</li>
+<li>有序列表；1. 2. 3.</li>
+<li>无序列表：*，+，-开头都可以</li>
+<li>注解的格式：方括号+数字，或者方括号+fn+数字 C-c C-c可以在注解与正文之间跳转</li>
+</ul>
+<p>(下面的格式，开头结尾必须都是空格或标点)</p>
+<ul>
+<li>粗体(*): <strong>粗体</strong></li>
+<li>斜体(&#x2F;): <em>斜体</em></li>
+<li>删除线(\+): <del>删除线</del></li>
+<li>下划线(\_): <span class="underline">下划线</span></li>
+<li>下标：H<sub>2</sub> O(会将\<sub>后的字符串加上下标</sub>，空格为截止符)</li>
+<li>上标：E&#x3D;mc<sup>2</sup> (同上)</li>
+<li>等宽字: <code>pair?</code> 或者 <code>pair?</code> 在文章中插入一小段代码或者变量时很有用(可以 突出重点)</li>
+</ul>
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><ol>
+<li><p>基本使用</p>
+<p>在某一行的顶格输入‘|’，然后输入第一行第一列，在输入‘|’，接着第一行第二<br>列，依次类推，完成后tab，会将当前行对齐并为你创造表格的下一行，tab和<br>S-tab可以在表格中正向或者反向的移动，在表格的空白项中输入数字eg:&lt;6&gt;则 限定为6个字符长，多余的部分会隐藏，用C-c<br>C-c可以展开</p>
+</li>
+<li><p>技巧</p>
+<ol>
+<li><p>在表格的两行之间之间插入 |- 然后TAB, 可以在表格中插入一个|—<del>—</del>–|类 似的行,可以用于区分表头行与数据行</p>
+</li>
+<li><p>表格内的公式运算</p>
+<table>
+<thead>
+<tr>
+<th align="center">单价</th>
+<th align="center">数量</th>
+<th align="center">总价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">2</td>
+<td align="center">2.5</td>
+<td align="center">5.</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">3.5</td>
+<td align="center">10.5</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">4.5</td>
+<td align="center">18.</td>
+</tr>
+</tbody></table>
+<p><img src="/static/img/org-table-formula.gif" srcset="/img/loading.gif" lazyload> 注意$1 代表第一列, $2代表第二列,<br>一般表格会自动计算,如果要强制自动计算 可以使用C-u C-c C-c或者M-x<br>org-table-recalculate-buffer-tables</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="org-mode-TODO-list"><a href="#org-mode-TODO-list" class="headerlink" title="org-mode TODO list"></a>org-mode TODO list</h3><p>在一个标题上按shift+left&#x2F;right，C-c C-t可以设置todo list的状态</p>
+<h3 id="org-mode-中的latex代码"><a href="#org-mode-中的latex代码" class="headerlink" title="org-mode 中的latex代码"></a>org-mode 中的latex代码</h3><p>为了在org-mode中高亮latex代码,同时使latex能在html以及pdf中都能生效,不要使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs example">#+BEGIN_LaTeX<br><br>#+END_LaTeX<br></code></pre></td></tr></table></figure>
+
+<p>上面的代码不能高亮latex代码,同时它只在导出pdf时有效,所以你应该使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs example">#+BEGIN_SRC latex :exports results :results value raw<br>  \begin&#123;equation&#125;<br>    P(X=i) = \frac&#123;e^&#123;-\lambda&#125;\lambda^i&#125; &#123;i!&#125;<br>  \end&#123;equation&#125;<br>#+END_SRC<br></code></pre></td></tr></table></figure>
+
+<p>注意后面的results选项,它会将裸的latex代码直接放入导出的html或者tex文件,org-mode可以自动处理这种裸的latex<br>代码,这种裸的latex代码,可以有以下这几种形式:</p>
+<p>行内latex代码有下面两种界定符(如果你的latex代码有,org-mode会自动识别):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">$\lambda = np$     ==&gt; $与代码之间不要有空格,第二个$后要跟空格,标点符号或破折号<br>\(\lambda=np\)<br></code></pre></td></tr></table></figure>
+
+<p>多行latex代码时</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs example">\begin&#123;environment&#125;<br>  latex code<br>\end&#123;environment&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注意begin, end必须位于忽略空格后的行首</p>
+<h3 id="org-mode中的latex代码的预览"><a href="#org-mode中的latex代码的预览" class="headerlink" title="org-mode中的latex代码的预览"></a>org-mode中的latex代码的预览</h3><p>org-mode中的latex代码可以预览,这是官方<a target="_blank" rel="noopener" href="http://orgmode.org/worg/org-tutorials/org-latex-preview.html">文档</a>,<br>有以下几个快捷键与命令:</p>
+<ol>
+<li>C-c C-x C-l, 命令是org-preview-latex-fragment.</li>
+<li>C-u C-c C-x C-l: 预览该子树的所有latex代码</li>
+<li>C-u C-u C-c C-x C-l 预览当前buffer中的所有latex代码</li>
+</ol>
+<p>latex代码预览的原理是先创建一个临时的tex文件, 然后调用latex程序来处理该tex文件生成dvi文件,然后根据dvipng或<br>者imagemagick(convert)来生成png图片, 有几点注意事项:</p>
+<ol>
+<li><p>LATEX<sub>HEADER指定的内容会包含进临时的tex文件</sub>, 而<br>LATEX<sub>HEADEREXTRA指定的内容则不会包含进临时tex文件</sub></p>
+</li>
+<li><p>有两种方法来预览latex代码: dvipng(默认) 和 imagemagick,可以通过如下代码设置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(setq org-latex-create-formula-image-program &#x27;dvipng)<br>;;; or<br>(setq org-latex-create-formula-image-program &#x27;imagemagick)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>dvipng会调用标准latex程序(比如latexpdf)来处理tex文件, 这情况下,建议加入额外的不能被标准latex处理的宏包<br>(比如中文的xeCJK)时使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">#+LATEX_HEADER_EXTRA: \usepackage&#123;xeCJK&#125;<br>#+LATEX_HEADER_EXTRA: \setCJKmainfont&#123;SimSun&#125;<br></code></pre></td></tr></table></figure>
+
+<p>而不是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">#+LATEX_HEADER: \usepackage&#123;xeCJK&#125;<br>#+LATEX_HEADER: \setCJKmainfont&#123;SimSun&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因为后者会将xeCJK包含在临时的tex文件中,而这个tex文件需要xetex来处理,所以在预览时会报错</p>
+</li>
+<li><p>会调用org-latex-pdf-process 指定的程序来处理,这种情况不会出现3中的问题,可是据我测试,生成图片的速度比3慢,而<br>且显示图片过大,所以推荐第三种方式</p>
+</li>
+</ol>
+<h3 id="org-mode中latex导出html时的设置"><a href="#org-mode中latex导出html时的设置" class="headerlink" title="org-mode中latex导出html时的设置"></a>org-mode中latex导出html时的设置</h3><ol>
+<li><p>使用MaxJax.js (推荐,默认)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs example">#+HTML_MATHJAX: align:&quot;left&quot; mathml:t path:&quot;/MathJax/MathJax.js&quot;<br></code></pre></td></tr></table></figure>
+
+<p>上述代码不是必须的,因为org-mode会自动添加一个org-mode官方的MathJax.js的链接到html,但是为了减轻org-mode<br>服务器的压力,还是建议你加入上述代码并使用MathJax官方的cdn:<br><a target="_blank" rel="noopener" href="http://cdn.mathjax.org/mathjax/latest/MathJax.js">http://cdn.mathjax.org/mathjax/latest/MathJax.js</a><br>,更好的做法是在配置文件中加入如下代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(setq org-html-mathjax-options &#x27;((path &quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;)<br>                                 (scale &quot;100&quot;)<br>                                 (align &quot;center&quot;)<br>                                 (indent &quot;2em&quot;)<br>                                 (mathml t)))<br></code></pre></td></tr></table></figure>
+
+<p>这是全局的,如果要单个buffer那么就使用 HTML<sub>MATHJAX文件头</sub></p>
+</li>
+<li><p>将latex代码的处理结果导出成图片</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs example"> #+OPTIONS: tex:dvipng<br>or<br> #+OPTIONS: tex:imagemagick<br></code></pre></td></tr></table></figure>
+
+<p>注意系统中必须要安装dvipng, imagemagik</p>
+</li>
+</ol>
+<h3 id="org-mode导出project以及html的注意事项"><a href="#org-mode导出project以及html的注意事项" class="headerlink" title="org-mode导出project以及html的注意事项"></a>org-mode导出project以及html的注意事项</h3><ol>
+<li>在文件中指定的 <code>#+HTML_HEAD #+HTML_HEAD_EXTRA</code> 会覆盖在<br><code>org-publish-project-alist</code> 中指定的 <code>:html-head :html-head-extra</code>.在配 置中<br>:html-head只能出现一次, 多次出现则只有最后一次生效,因为实际是一个 property list</li>
+<li><code>org-publish-project-alist</code> 的option<br><a target="_blank" rel="noopener" href="http://orgmode.org/manual/Publishing-options.html#Publishing-options">文档</a></li>
+<li>html 导出的<a target="_blank" rel="noopener" href="http://orgmode.org/manual/HTML-export.html#HTML-export">文档</a></li>
+</ol>
+<h3 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h3><p>通过Babel,你可以直接在org-mode中运行各种编程语言的代码,每一个代码片段都组织为一个block,<br>可以向这个代码片段传递参数,同时每一个代码片段都可以产生输出,而这个输出又可以作为输入传递<br>给另一个代码片段,关于Babel的详细介绍可以看这篇官方的<a target="_blank" rel="noopener" href="http://orgmode.org/worg/org-contrib/babel/intro.html">Instruction</a><br>与这篇<a href="static/doc/babel.pdf">pdf</a> ,特别是后者, 建议认真看看,只有26页,Babel的基本结构分为数据块和代码块<br>数据块:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs example"><br>#+name: &lt;name&gt;<br>&lt;data block body&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>使用该数据时,直接引用&lt;name&gt;就好 代码块:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs example"><br>#+name: &lt;name&gt;<br>#+headers: &lt;header arguments&gt;<br>#+begin_src &lt;language&gt; &lt;header arguments&gt;<br> &lt;body&gt;<br>#+end_src<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>name: 如果指定,那么最后得到结果就会赋给该变量,可以通过该变量将代码块的执行结果作为参数传递给其他代码块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs example"><br>#+name: ret1<br>#+BEGIN_SRC python :results output<br>print &#x27;hello world&#x27;<br>#+END_SRC<br><br>#+RESULTS: ret1<br>: hello world<br><br>#+BEGIN_SRC sh :var arg=ret1<br>echo $arg<br>#+END_SRC<br><br>#+RESULTS:<br>: hello world<br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>language: 代码的类型,eg: C, cpp, python, ruby</p>
+</li>
+<li><p>header-arguments: 头部参数,头部参数可以放在两个地方:代码块的上方以及&lt;language&gt;后,常用的头部参数:</p>
+<ol>
+<li><p>:results output(捕捉输出), :results value<br>(default,捕捉最后一个表达式的结果,代码块当做一个函数)</p>
+</li>
+<li><p>:file aa.png (将输出存入文件,下面会加入链接,这对于输出是图片(eg:gunplot)时非常方便)</p>
+</li>
+<li><p>:dir ~&#x2F;Documents (将~&#x2F;Documents 作为运行代码的进程的当前目录)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs example"><br>#+headers: :dir ~/Documents/blog<br>#+BEGIN_SRC sh<br>echo $PWD<br>#+END_SRC<br><br>#+RESULTS:<br>: /home/yangyu/Documents/blog<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>:var n&#x3D;5 (传递一个变量n给code block,并且其值为5)</p>
+</li>
+<li><p>:exports both (输出code与results), :exports code(默认), :exports<br>results, :exports none</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>现在我放入几个例子:</p>
+<h3 id="dot"><a href="#dot" class="headerlink" title="dot"></a>dot</h3><p>dot语言可以用来画流程图，和Babel结合起来非常方便，这是一份dot语言的<a href="static/doc/dotguide.pdf">guide</a></p>
+<h1 id="emacs让人困惑的问题"><a href="#emacs让人困惑的问题" class="headerlink" title="emacs让人困惑的问题"></a>emacs让人困惑的问题</h1><h2 id="overwrite-mode"><a href="#overwrite-mode" class="headerlink" title="overwrite mode"></a>overwrite mode</h2><p>该mode打开的话，会替换光标后面的字符，而不是插入，非常令人不爽</p>
+<h2 id="whitespace-mode"><a href="#whitespace-mode" class="headerlink" title="whitespace-mode"></a>whitespace-mode</h2><p>该mode打开后,默认会在所有的空格位置显示一个 . ,并且在行尾显示一个$, 可以使 用这个mode来高亮一行中超过80的部分</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/emacs/">emacs</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/emacs-lisp/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">elisp</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://yuyang0.github.io/notes/emacs/';
+          this.page.identifier = '/notes/emacs/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

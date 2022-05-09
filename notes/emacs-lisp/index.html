@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yu Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="elisp基本语法help M-x apropos (find symbol) C-h k(descripte key) C-h f (function) C-h v (variable)  control flow if 1234(if testab);;test is the condition  when 123(when condition a b c);;; equivalent(if">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elisp">
+<meta property="og:url" content="https://yuyang0.github.io/notes/emacs-lisp/index.html">
+<meta property="og:site_name" content="yuyang&#39;s blog">
+<meta property="og:description" content="elisp基本语法help M-x apropos (find symbol) C-h k(descripte key) C-h f (function) C-h v (variable)  control flow if 1234(if testab);;test is the condition  when 123(when condition a b c);;; equivalent(if">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2010-01-14T03:54:17.000Z">
+<meta property="article:modified_time" content="2022-05-09T12:58:18.242Z">
+<meta property="article:author" content="Yu Yang">
+<meta property="article:tag" content="emacs">
+<meta property="article:tag" content="elisp">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>elisp - yuyang&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"yuyang0.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0,"placement":"right"},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va","app_key":"fUOlkXhD9wcmxOTed9NdlqPH","server_url":"https://lyt8mpsi.lc-cn-e1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>yuyang&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://rmt.dogedoge.com/fetch/fluid/storage/bg/dojm2h.png?w=1920&q=100&fmt=webp') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="elisp">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2010-01-14 11:54" pubdate>
+        2010年1月14日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      10k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      84 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">elisp</h1>
+            
+            <div class="markdown-body">
+              <h1 id="elisp基本语法"><a href="#elisp基本语法" class="headerlink" title="elisp基本语法"></a>elisp基本语法</h1><h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><ul>
+<li>M-x apropos (find symbol)</li>
+<li>C-h k(descripte key)</li>
+<li>C-h f (function)</li>
+<li>C-h v (variable)</li>
+</ul>
+<h2 id="control-flow"><a href="#control-flow" class="headerlink" title="control flow"></a>control flow</h2><ol>
+<li><p><code>if</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs commonlisp">(if test<br>a<br>b)<br>;;test is the condition<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>when</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(when condition a b c)<br>;;; equivalent<br>(if condition (progn a b c) nil)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>unless</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(unless condition a b c)<br>;;;equvalent<br>(if condition nil (progn a b c))<br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>cond</code> 和scheme类似:</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scheme">(<span class="hljs-name"><span class="hljs-built_in">cond</span></span> ((<span class="hljs-name">numberp</span> x) x)<br>      ((<span class="hljs-name">stringp</span> x) x)<br>      ((<span class="hljs-name">bufferp</span> x)<br>       (<span class="hljs-name">setq</span> temporary-hack x) <span class="hljs-comment">; multiple body-forms</span><br>       (<span class="hljs-name">buffer-name</span> x))        <span class="hljs-comment">; in one clause</span><br>      ((<span class="hljs-name">symbolp</span> x) (<span class="hljs-name">symbol-value</span> x)))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>and</code> or <code>not</code> logical expression: the function <code>or</code> works like the<br>logical “or” in most languages: if all the arguments are false, it<br>return nil, otherwith it will return the value of the last argument<br>whose value is non-nil. eg: (or nil nil 3 2 1) return 3 (not t) so<br>(if a a b) is identical to (or a b)</p>
+</li>
+<li><p><code>while</code> <strong>Special Form</strong>: while condition forms…</p>
+</li>
+<li><p><code>dolist</code> <strong>Macro</strong>: dolist (var list [result]) body…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(defun reverse (list)<br>  (let (value)<br>    (dolist (elt list value)<br>      (setq value (cons elt value)))))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>dotimes</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(dotimes (i 100)<br>            (insert &quot;I will not obey absurd orders\n&quot;))<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="let-let"><a href="#let-let" class="headerlink" title="let let"></a>let <span class="tag" data-tag-name="let"><span class="smallcaps">let</span></span></h2><p><code>let</code>, <code>let*</code>, <code>letrec</code> 的作用语法与scheme类似</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(let ((val1 value1)<br>      (val2 value2))<br>  body)<br></code></pre></td></tr></table></figure>
+
+<h2 id="function"><a href="#function" class="headerlink" title="function"></a>function</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs example">(defun func-name (a b &amp;optional c d &amp;rest e) body)<br></code></pre></td></tr></table></figure>
+
+<p>optional代表参数可选, rest代表可变参数, 如果有那么会是一个列表</p>
+<ol>
+<li><p><code>apply</code>: <code>apply function &amp;rest arguments</code></p>
+<p>调用函数, <code>function</code> 的值是一个symbol(比如你要调用 <code>list</code> 函数,那么你应 该传递 ‘list<br>)最后一个参数必须是列表, 这个列表参数会被apply自动拆开,然后 传递给function</p>
+</li>
+<li><p><code>funcall</code>: 与 <code>apply</code> 不同的是,它不会拆开列表参数, 而是直接将列表参数作为一个 参数传递给function</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(setq f &#x27;list)<br>(apply f &#x27;a &#x27;b &#x27;(1 2))                  ; (a b 1 2)<br>(funcall f &#x27;a &#x27;b &#x27;(1 2))                ; (a b (1 2))<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="lists"><a href="#lists" class="headerlink" title="lists"></a>lists</h2><ul>
+<li><code>null</code>: 测试list是否为空</li>
+<li><code>listp</code>: 是否为list</li>
+<li><code>car</code></li>
+<li><code>cdr</code></li>
+<li><code>cons</code></li>
+<li><code>list</code>: (list ‘a “b” 1) &#x3D;&#x3D;&gt; (a “b” 1)</li>
+<li><code>append</code>: (append ‘(a b) ‘(c d)) &#x3D;&#x3D;&gt; (a b c d)</li>
+<li><code>reverse</code>: (reverse ‘(a b c d)) &#x3D;&#x3D;&gt; (d c b a)</li>
+<li><code>nthcdr</code>: call cdr n times</li>
+<li><code>length</code>: get the length of the list</li>
+<li><code>mapcar</code>:</li>
+<li><code>equal</code>: only test the object’s structure and content</li>
+<li><code>eq</code>: test if the two arguments is the same object(like pointer in<br>C)</li>
+</ul>
+<p><strong>以上的函数都不会原地改变list, 它会返回一个新的list作为结果, 下面的函数会 原地改变list</strong></p>
+<ul>
+<li><code>setcar</code>: change the car-element of the list</li>
+<li><code>setcdr</code>: change the cdr-element of the list</li>
+<li><code>push</code>: 和cons类似,只是会原地改变list</li>
+<li><code>pop</code>: 和car类似,只是会原地改变list(删除list的第一个元素)</li>
+<li><code>add-to-list</code>: 和push类似</li>
+</ul>
+<h3 id="Associate-List"><a href="#Associate-List" class="headerlink" title="Associate List"></a>Associate List</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs example">((key1 . value1 )<br>(key2 . value2 )<br>(keyn . valuenn ))<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>assoc</code>: 当list类似于关联数组时，用key来寻找value，用equal测试key</li>
+<li><code>assq</code>: 与assoc相似，只是用eq测试key</li>
+</ul>
+<h3 id="property-list"><a href="#property-list" class="headerlink" title="property list"></a>property list</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(setq alist &#x27;(:publish-dir &quot;~/Documents&quot; :base-dir &quot;~/Documents/note&quot;))<br>(plist-get alist :base-dir)<br></code></pre></td></tr></table></figure>
+
+<h1 id="常用的函数"><a href="#常用的函数" class="headerlink" title="常用的函数"></a>常用的函数</h1><h2 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h2><ul>
+<li><p><code>length</code>: (length “abc”) –&gt; return 3</p>
+</li>
+<li><p><code>substring</code>: (substring “hello world” 1 3) –&gt; return “ell”</p>
+</li>
+<li><p><code>replace-regexp-in-string</code>: (replace-regexp-in-string regex replace<br>str) –&gt; 正则替换</p>
+</li>
+<li><p><code>string-match</code>: (string-match regex str) –&gt; return the index first<br>match the regex in str</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(setq mystr &quot;The quick fox jumped quickly.&quot;)<br>(string-match &quot;\\(qu\\)\\(ick\\)&quot;<br>                   mystr)   ;=&gt;副作用：将匹配结果存储到match-data中<br>(match-string 0 mystr)      ;=&gt;结果为quick，也就是模式匹配的结果<br>(match-string 1 mystr)      ;=&gt;结果为qu   ，也就是第一个分组的匹配结果<br>(match-string 2 mystr)      ;=&gt;结果为ick  ，也就是第二个分组的匹配结果<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Regex"><a href="#Regex" class="headerlink" title="Regex"></a>Regex</h2><ol>
+<li>用来匹配字符串时 ^匹配字符串的开头, $匹配字符串的结尾, 用来匹配buffer中的 内容时, ^匹配一行的开头, $匹配一行的结尾.</li>
+<li>常用的字符串匹配函数是string-match, 常用的buffer 内正则匹配的函数是 <code>looking-at</code><br>它会匹配从当前光标开始的内容.</li>
+<li>在通常的语言(比如python)的正则表达式实现中, (, ), [, ], {, }, \ 等都是特 殊字符, 但是在emacs<br>lisp中都是普通的字符,所以如果你要把它们当作特殊的字符, 比如用(,)来分组, 那么你就必须对(,)转义,<br>也就是使用( 与 ), 可是由于 一个普通字符, 所以当你希望它是一个用来转义的特殊字符时, 你必须对<br>义(否则), 结果就是\(, \)这样丑陋的东西. 这是 一个设计失误.</li>
+<li>M-x re-builder: 可以实时的显示buffer中匹配regex的字符串.</li>
+</ol>
+<h2 id="buffer相关：-buffer"><a href="#buffer相关：-buffer" class="headerlink" title="buffer相关： buffer"></a>buffer相关： <span class="tag" data-tag-name="buffer"><span class="smallcaps">buffer</span></span></h2><ul>
+<li><code>buffer-name</code>: (buffer-name)</li>
+<li><code>buffer-file-name</code>: (buffer-file-name) –&gt; full name</li>
+<li><code>save-buffer</code>: (save-buffer) –&gt; 保存当前的buffer 的文件</li>
+<li><code>kill-buffer</code>: (kill-buffer BufferName)</li>
+<li><code>kill-this-buffer</code>: (kill-this-buffer)</li>
+<li><code>with-current-buffer</code>: (with-current-buffer BUFFER-OR_NAME body)<br>–&gt; 将 BUFFER-ORNAME指定的buffer设为当前buffer, body运行完后会恢复原先的buffer, *<br>常用*</li>
+</ul>
+<h3 id="buffer-content相关"><a href="#buffer-content相关" class="headerlink" title="buffer content相关"></a>buffer content相关</h3><ul>
+<li>增: <code>insert</code></li>
+<li>删: <code>delete-char</code>, <code>delete-region</code> 等等一系列的delet函数</li>
+<li>查找: <code>re-search-forward</code> 与 <code>re-search-backward</code> 最 <strong>常用</strong></li>
+<li>替换: 一般是查找后,使用 <code>replace-match</code> 来替换</li>
+<li>获取buffer的内容: <code>buffer-substring</code>, point上的字符可以用 <code>char-after</code> 与<br><code>char-before</code> 来获得, point附近的词可以用 <code>current-word</code> 得到, 其它类 型的文本可以用<br><code>thing-at-point</code>.</li>
+</ul>
+<h3 id="buffer中移动以及光标相关-point"><a href="#buffer中移动以及光标相关-point" class="headerlink" title="buffer中移动以及光标相关 point"></a>buffer中移动以及光标相关 <span class="tag" data-tag-name="point"><span class="smallcaps">point</span></span></h3><ul>
+<li><p><code>point</code> :(point)</p>
+</li>
+<li><p><code>point-max</code> :(point-max) –&gt; 一般返回buffer-end,但是如果指定了Narrowing,<br>那么结果就不同</p>
+</li>
+<li><p><code>point-min</code> :(point-min) –&gt; 一般返回1,但是如果指定了Narrowing,那么结果就 不同</p>
+</li>
+<li><p><code>buffer-end</code> :(buffer-end)</p>
+</li>
+<li><p><code>buffer-size</code> :(buffer-size)</p>
+</li>
+<li><p><code>save-excursion</code> :(save-excursion body) –&gt; 可以用来保存当前的point,不管<br>body中如何改变point,执行完成后都会回到执行save-excursion之前的point</p>
+</li>
+<li><p><code>narrow-to-region</code> :(narrow-to-region start end) –&gt;<br>Narrowing(将emacs的 文本操作限定在buffer的一个子区域中)</p>
+</li>
+<li><p><code>region-beginning</code> :(region-beginning)</p>
+</li>
+<li><p><code>region-end</code> :(region-end) –&gt; line</p>
+</li>
+<li><p><code>beginning-of-line</code> :(beginning-of-line)</p>
+</li>
+<li><p><code>end-of-line</code> :(end-of-line)</p>
+</li>
+<li><p><code>buffer-substring</code> :(buffer-substring start end)</p>
+</li>
+<li><p><code>goto-char</code> :(goto-char 293)</p>
+</li>
+<li><p><code>forward-char</code> :(forward-char n)</p>
+</li>
+<li><p><code>backward-char</code> :(backward-char n)</p>
+</li>
+<li><p><code>skip-chars-forward</code> :(skip-chars-forward “”͡)</p>
+</li>
+<li><p><code>skip-chars-backward</code> :(skip-chars-backward “”͡)</p>
+</li>
+<li><p><code>forward-line</code> :(forward-line n)</p>
+</li>
+<li><p><code>backward-line</code> :(backward-line n)</p>
+</li>
+<li><p><code>looking-at</code> :(looking-at regex) ;; return t if text after the point<br>match the REGEXP</p>
+</li>
+<li><p><code>looking-back</code> :(looking-back regex)</p>
+</li>
+<li><p><code>search-forward</code> :(search-forward my-str)</p>
+</li>
+<li><p><code>search-backward</code> :(search-backward my-str)</p>
+</li>
+<li><p><code>re-search-forward</code> :(re-search-forward my-regex)</p>
+</li>
+<li><p><code>re-search-backward</code> :(re-search-backward my-regex)</p>
+</li>
+<li><p><code>replace-match</code> :(replace-match)</p>
+</li>
+</ul>
+<h2 id="file相关-file"><a href="#file相关-file" class="headerlink" title="file相关 file"></a>file相关 <span class="tag" data-tag-name="file"><span class="smallcaps">file</span></span></h2><ul>
+<li><code>find-file</code>: (find-file path) ;;open a file</li>
+<li><code>write-file</code>: (write-file path) ;;save the file</li>
+<li><code>insert-file-contents</code>: (insert-file-contents path) –&gt;将指定文件内容插入当前位置</li>
+<li><code>append-to-file</code>: (append-to-file start-pos end-pos path)</li>
+<li><code>rename-file</code>: (rename-file old-name new-name)</li>
+<li><code>copy-file</code>: (copy-file file-name new-name)</li>
+<li><code>delete-file</code>: (delete-file file-name)</li>
+<li><code>file-name-directory</code>: (file-name-directory full-path) –&gt;路径（不包含文件名）</li>
+<li><code>file-name-nondirectory</code>: (file-name-nondirectory full-path)<br>–&gt;文件名（不包含路径）</li>
+<li><code>file-name-extension</code>: (file-name-extension file-name) –&gt;后缀,一般时扩展名</li>
+<li><code>file-name-sans-extension</code>: (file-name-sans-extension<br>“&#x2F;hello&#x2F;abc.html”) –&gt;return “&#x2F;hello&#x2F;abc”,只去掉后缀</li>
+</ul>
+<h2 id="other-useful-function"><a href="#other-useful-function" class="headerlink" title="other useful function"></a>other useful function</h2><ul>
+<li><p><code>save-excursive</code>: 保存并恢复当前point</p>
+</li>
+<li><p><code>interactive</code>:</p>
+</li>
+<li><p><code>thing-at-point</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(thing-at-point &#x27;word)<br>(thing-at-point &#x27;sexp)<br>(thing-at-point &#x27;url)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>bounds-of-thing-at-point</code>: 和 <code>thing-at-point</code> 类似,只是它会返回一个 pair –&gt;<br>(start . end) , 这个pair 的car是左边界,cdr是右边界</p>
+</li>
+<li><p><code>current-time-string</code>: (current-time-string) –&gt; 返回当前时间字符串</p>
+</li>
+<li><p><code>format-time-string</code>: (format-time-string “%1.%M %p” (current-time))</p>
+</li>
+<li><p><code>symbol-name</code>: 将symbol转换为字符串, eg: (symbol-name ‘sym) –&gt; “sym”</p>
+</li>
+<li><p><code>intern</code>: 将字符串转换为symbol, eg: (intern “sym”) –&gt; ‘sym</p>
+</li>
+</ul>
+<h2 id="useful-variable"><a href="#useful-variable" class="headerlink" title="useful variable"></a><strong>useful variable</strong></h2><ul>
+<li><code>mark-active</code>: 现在一般用 <code>region-active-p</code> 代替</li>
+<li><code>last-command</code>: 最后一条命令</li>
+</ul>
+<h2 id="useful-code-snippet"><a href="#useful-code-snippet" class="headerlink" title="useful code snippet"></a>useful code snippet</h2><ol>
+<li><p>test if a mode(major or minor) is on (flymake-mode as an example)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(if (and (boundp &#x27;flymake-mode) flymake-mode)<br>    (message &quot;flymake-mode is on&quot;)<br>  (message &quot;flymake-mode is off&quot;))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>setting keybinding for specified mode <strong>there are two way</strong>, the<br>first is <strong>eval-after-load</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(eval-after-load &quot;org&quot;<br>  &#x27;(progn<br>     (define-key org-mode-map (kbd &quot;&lt;C-M-return&gt;&quot;) &#x27;org-insert-heading-respect-content)<br>     (define-key org-mode-map (kbd &quot;&lt;M-right&gt;&quot;) nil) ; erasing a keybinding.<br>     (define-key org-mode-map (kbd &quot;&lt;M-left&gt;&quot;) nil) ; erasing a keybinding.<br>     ))<br></code></pre></td></tr></table></figure>
+
+<p>the second way is <strong>add-hook</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(defun my-org-settngs ()<br>    (flyspell-mode 1))<br>(add-hook &#x27;org-mode-hook &#x27;my-org-settngs)<br></code></pre></td></tr></table></figure>
+
+<p>对以上二者的说明:</p>
+<ol>
+<li>eval-after-load只运行一次,所以比较适合那些一次性的设置,比如给某个特定的mode设置keymap,它没有当前<br>buffer的概念,<br>而add-hook这是对每一个打开了该mode的buffer都会运行一次.所以它适合来设置一些和buffer相<br>关的设置</li>
+<li><strong>local-set-key</strong> 实际上也是调用 <strong>define-key</strong> , 其中 <strong>map</strong> 参数是<br><strong>(current-local-map)</strong> 的值. 这个值 一般是由major mode设置的. 所以在给minor<br>mode设置keymap时,使用 <strong>define-key</strong> 比较好, 因为可以直接指定 minor mode 的map</li>
+</ol>
+</li>
+</ol>
+<h1 id="interactive-interactive"><a href="#interactive-interactive" class="headerlink" title="interactive interactive"></a>interactive <span class="tag" data-tag-name="interactive"><span class="smallcaps">interactive</span></span></h1><p>emacs中交互式运行的命令都需要在函数体的最上方加上(interactive arg-descriptor),<br>arg-descriptor最后会解析成参数从递给该命令, arg-descriptor 有三种形式</p>
+<ol>
+<li><p><code>(interactive)</code> : <code>arg-descriptor</code> 为 <code>nil</code>, 该命令没有参数</p>
+</li>
+<li><p><code>(interactive &quot;p\ncZap to char: &quot;)</code> : <code>arg-descriptor</code> 以 <code>\n</code> 分割后每一<br>部分都会产生一个参数,比如上面的例子,以:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs example">&quot;p&quot;<br>&quot;cZap&quot;<br></code></pre></td></tr></table></figure>
+
+<p>其中每一部分开头的那个字母有特殊的含义:</p>
+<ul>
+<li>p: 接受C-u传入的参数,返回的是整数,默认是1,也就是numeric prefix argument.<br>后面不能跟提示字符串,因为参数来自C-u而不是minibuffer</li>
+<li>c: 从minibuffer中读入一个字符,它后面跟的Zap会作为提示显示在minibuffer 中</li>
+</ul>
+<p>除了上面的p, c外还有很多这样的特殊字符,下面是一些常用的,<br>这是官方<a target="_blank" rel="noopener" href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes">文档</a><br>, 这是一些单词的含义: <strong>Prompt</strong> (后面可以跟显示在minibuffer中提示字符串), <strong>Existing</strong><br>(file, command… 必须已存在), <strong>Completion</strong> (可以补全) :</p>
+<ul>
+<li>P(uppercase): 和小写p的最大区别是它返回的是raw prefix argument, 默认是 nil,<br>后面不能跟提示字符串,因为参数来自C-u而不是minibuffer</li>
+<li>b: 已存在的buffer name, 可以跟提示字符串, 默认是当前buffer, 可以补全</li>
+<li>B: 不存在的buffer name, 可以跟提示字符串, 默认是最近使用的buffer</li>
+<li>f: 已存在的文件名, [Existing, Completion, Default, Prompt]</li>
+<li>F: 不存在的文件名, [Completion, Default, Prompt]</li>
+<li>C(uppercase): 命令名称, [prompt, Existing, Completion]</li>
+</ul>
+</li>
+<li><p><code>(interactive (lisp-expression-return-list-argument))</code> :<br>arg-descriptor是 一个elisp表达式,这个表达式应该产生传递给命令的参数,一般会调用 <code>read-string</code><br>这样的函数从minibuffer中读入字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(interactive (list<br>              (read-string (format &quot;word (%s): &quot; (thing-at-point &#x27;word))<br>                           nil nil (thing-at-point &#x27;word))))<br><br>(interactive<br> (let ((string (read-string &quot;Foo: &quot; nil &#x27;my-history)))<br>   (list (region-beginning) (region-end) string)))<br><br></code></pre></td></tr></table></figure>
+
+<p>这是 <code>read-string</code> 的原型:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs example">read-string prompt &amp;optional initial history default inherit-input-method<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="autoload-autoload"><a href="#autoload-autoload" class="headerlink" title="autoload autoload"></a>autoload <span class="tag" data-tag-name="autoload"><span class="smallcaps">autoload</span></span></h1><p>使用autoload可以使一个函数或者命令只在调用时才加载进来,这样可以加快emacs的 启动时间,使用autoload有两种方法:</p>
+<ol>
+<li><p>autoload function filename &amp;optional docstring interactive type</p>
+<p>该函数会将function标记为autoload:</p>
+<ul>
+<li>function: 一个symbol,用来代表函数或者宏</li>
+<li>filename: 一个 <code>string</code>, 用来指定加载function的文件,不要带目录名与后缀 名</li>
+<li>docstring: 文档字符串,指定后可以在没有加载function的情况下看它的文档</li>
+<li>interactive: bool,如果为 <code>t</code> 那么就是一个command,否则就是一个函数</li>
+<li>type:</li>
+</ul>
+</li>
+<li><p>使用魔法注释</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">;;;###autoload<br>(defun doctor ()<br>  &quot;Switch to *doctor* buffer and start giving psychotherapy.&quot;<br>  (interactive)<br>  (switch-to-buffer &quot;*doctor*&quot;)<br>  (doctor-mode))<br></code></pre></td></tr></table></figure>
+
+<p>那么这个 <code>doctor</code> 就是标记为autoload的.实际上上面的注释部分会被自动转换 为 <code>autoload</code> 的形式</p>
+</li>
+<li><p>package.el 中的 <code>autoload</code>, 以yasnippet为例, package.el 会根据yasnippet<br>中魔法注释创建一个yasnippet-autoloads.el的文件,该文件就是调用 autoload函<br>数来自动加载yasnippet.el中指定要自动加载的函数,而<br>yasnippet-autoloads.el(所有的package.el管理的包的 -autoloads.el文件)都是是在<br>执行(package-initialize)时运行的.这样每一个包需要自动加载的函数就都加载 进来了</p>
+</li>
+</ol>
+<h1 id="define-mode-minor-mode-or-major-mode"><a href="#define-mode-minor-mode-or-major-mode" class="headerlink" title="define mode(minor mode or major mode)"></a>define mode(minor mode or major mode)</h1><h2 id="keymap"><a href="#keymap" class="headerlink" title="keymap"></a>keymap</h2><p>定义一个mode的时候,通常会用到keymap,keymap规定了该mode下的键映射,可以用如 下的代码来创建一个keymap:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(defvar prelude-mode-map<br>  (let ((map (make-sparse-keymap)))<br>    (define-key map (kbd &quot;C-c o&quot;) &#x27;prelude-open-with)<br>    (define-key map (kbd &quot;C-c g&quot;) &#x27;prelude-google)<br>    ;; ... more define-key sexp<br>    map)<br>  &quot;Keymap for Prelude mode.&quot;)<br></code></pre></td></tr></table></figure>
+
+<p>上面就创建了一个名为 prelude-mode-map的keymap</p>
+<h2 id="minor-mode"><a href="#minor-mode" class="headerlink" title="minor mode"></a>minor mode</h2><p>创建一个minor mode,需要经过以下几个步骤:</p>
+<ol>
+<li>定义一个变量 xxxx-mode,该变量为 mode varible,如果该 mode已打开,那么这个 变量就为t,否则为nil,<br>这个变量一般要设为buffer local varible</li>
+<li>定义一个命令 xxxx-mode, 注意命令的名字必须和第一步的变量的名字相同,该命 令的作用就是设置第一步的mode<br>varible,当然该命令中也可以添加一些初始化的 操作</li>
+<li>添加一个元素到 minor-mode-alist</li>
+</ol>
+<p>上面的步骤比较繁琐,这里有一个宏, define-minor-mode可以方便的定义一个minor mode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs commonlisp">(define-minor-mode prelude-mode<br>  &quot;Minor mode to consolidate Emacs Prelude extensions.<br><br>\\&#123;prelude-mode-map&#125;&quot;<br>  :lighter &quot; Pre&quot;<br>  :keymap prelude-mode-map<br>  (if prelude-mode<br>      ;; on start<br>      (prelude-mode-add-menu)<br>    ;; on stop<br>    (prelude-mode-remove-menu)))<br></code></pre></td></tr></table></figure>
+
+<p>“ Pre”是要在modeline上显示的字符串,prelude-mode-map是该minor-mode的keymap,<br>下面的body,实际就是 prelude-mode命令了, 可以通过<br>define-globalized-minor-mode 来把minor<br>mode设为global,可以参考这里的<a target="_blank" rel="noopener" href="https://github.com/bbatsov/prelude/blob/965e5e2fdbc0babbdb3c149e93d9e7662807d0d7/core/prelude-mode.el#L146">代码</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/notes/">notes</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/emacs/">emacs</a>
+                    
+                      <a class="hover-with-bg" href="/tags/elisp/">elisp</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/notes/git/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">git笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/notes/emacs/">
+                        <span class="hidden-mobile">emacs</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://yuyang0.github.io/notes/emacs-lisp/';
+          this.page.identifier = '/notes/emacs-lisp/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'yuyang' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/js/custom.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
