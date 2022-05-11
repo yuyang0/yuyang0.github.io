@@ -5,6 +5,7 @@ tags:
 - mxnet
 categories:
 - articles
+index_img: articles/mxnet-engine/static/img/threaded-var-queue4.png
 ---
 
 # 基本背景知识

@@ -1,13 +1,14 @@
 ---
-title: database
+title: Database
 date: 2022-05-08 11:54:17
 tags:
-- database
+- Database
 - raft
 - paxos
 - leveldb
 categories:
 - note
+index_img: https://i.ytimg.com/vi/U5aeM5dvUpA/maxresdefault.jpg
 ---
 # 事务
 

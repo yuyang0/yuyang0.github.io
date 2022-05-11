@@ -139,8 +139,8 @@ footer:
 # Index Page
 #---------------------------
 index:
-  banner_img: https://rmt.dogedoge.com/fetch/fluid/storage/bg/vdysjx.png?w=1920&fmt=webp  # 首页 Banner 头图，以下相同
-  banner_img_height: 70
+  banner_img: /img/bg/index-banner.jpg  # 首页 Banner 头图，以下相同
+  banner_img_height: 80
   # 首页副标题的独立设置
   # Independent config of home page subtitle
   slogan:
