@@ -139,8 +139,8 @@ footer:
 # Index Page
 #---------------------------
 index:
-  banner_img: https://rmt.dogedoge.com/fetch/fluid/storage/bg/vdysjx.png?w=1920&fmt=webp  # 首页 Banner 头图，以下相同
-  banner_img_height: 70
+  banner_img: /img/bg/index-banner.jpg  # 首页 Banner 头图，以下相同
+  banner_img_height: 80
   # 首页副标题的独立设置
   # Independent config of home page subtitle
   slogan:
@@ -399,7 +399,7 @@ about:
   icons:
     - { class: 'iconfont icon-github-fill', link: 'https://github.com/yuyang0', tip: 'GitHub' }
     - { class: 'iconfont icon-douban-fill', link: 'https://www.douban.com/people/yangyu00', tip: '豆瓣' }
-    - { class: 'iconfont icon-wechat-fill', qrcode: 'https://bl6pap004files.storage.live.com/y4mcw-8EXRSj0UroLKr7_8rqT1DqujISHlEWGtSmjuyijtAIO05D0npAPMrfRMOicemI34bRsbPEesC2bExTFu0OGWuslna-peP2R_Hhsj0OC3lxHwQmymsnLxM3p_zpj6c802ZsZazj5e1JfuunIpli4cCuJCk9IAtwtpMFduQlUNAME06AwX8lCxgHYprPkPp?width=256&height=256&cropmode=none', tip: 'objkst'}
+    - { class: 'iconfont icon-wechat-fill', qrcode: 'img/wechat-qrcode.jpg', tip: 'objksa'}
 
 
 #---------------------------

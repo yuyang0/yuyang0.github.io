@@ -1,38 +1,31 @@
 ---
-title: database
+title: Database
 date: 2022-05-08 11:54:17
 tags:
-- database
+- Database
 - raft
 - paxos
 - leveldb
 categories:
 - note
+index_img: https://i.ytimg.com/vi/U5aeM5dvUpA/maxresdefault.jpg
 ---
 # 事务
 
 事务有四个特性(ACID):
 
 ## 一致性
-
-也就是说不能破坏数据库的某种约定，比如经典的银行转账问题中，从账户A转100元到账户
-B，那么一致性要求两个账户的金额的和要是相同的，数据库不应该让用户看到事务执行的
-中间状态, 也就是说不能让用户看到A账户减了100元，但是B账户还没有增加100元这样的中
-间状态，一致性有些需要数据库保证，有些则需要应用保证。
+也就是说不能破坏数据库的某种约定，比如经典的银行转账问题中，从账户A转100元到账户B，那么一致性要求两个账户的金额的和要是相同的，数据库不应该让用户看到事务执行的中间状态, 也就是说不能让用户看到A账户减了100元，但是B账户还没有增加100元这样的中间状态，一致性有些需要数据库保证，有些则需要应用保证。
 
 ## 原子性
-
 只是用来保证事务中的操作完全成功或者全部失败，不可能一部分成功一部分失败
 
 ## 持久性
-
 一个事务如果已经提交成功，那么不管数据库出现什么问题，事务所做的修改都不应该丢失
 
 ## 隔离性
-
-实际上ACD就已经可以保证一个事务的正常执行，但是ACD可能使数据库非常的低效，所以就
-引入了隔离级别，隔离性和一致性是一对矛盾的指标，在最低的隔离等级下，用户是有可能
-读到脏数据的，也就是说读到事务的中间状态，这实际就是说在最低的隔离等级下，数据库 是不满足一致性的。数据库的隔离级别如下：
+隔离性是指让每一个执行的事务认为只有它自己在执行，主要通过并发控制来保证。
+实际上ACD就已经可以保证一个事务的正常执行，但是ACD可能使数据库非常的低效，所以就引入了隔离级别，隔离性和一致性是一对矛盾的指标，在最低的隔离等级下，用户是有可能读到脏数据的，也就是说读到事务的中间状态，这实际就是说在最低的隔离等级下，数据库 是不满足一致性的。数据库的隔离级别如下：
 
 | 隔离级别             | 脏读  | 不可重复读 | 幻读  |
 | ---------------- | --- | ----- | --- |
@@ -47,9 +40,9 @@ B，那么一致性要求两个账户的金额的和要是相同的，数据库�
   - 可重复读(Repeated
     Read)：可重复读。在同一个事务内的查询都是事务开始时刻一致的，InnoDB默认级别。在SQL标准中，该隔离级别消除了不可重复读，但是还存在幻象读
   - 快照隔离(Snapshot):
-    在事务开始时获得一个快照，事务中的所有read都是读该快照，通常通过MVCC实现，所以它没有脏读，不可重复读以及幻读的问题，它能够处理写写冲突，它主要的问题是写偏斜（write
-    skew），
-    也就是说两个事务读取相同的数据项，但是更新不同的数据项，比如某人有两个账户，每个账户100元，银行要求两个账户的余额之和大于等于0，那么就会有这种情况出现：
+    在事务开始时获得一个快照，事务中的所有read都是读该快照，通常通过MVCC实现，所以它没有脏读，不可重复读以及幻读的问题，它能够处理写写冲突，它主要的问题是写偏斜（write skew）
+    
+    **write skew**: 也就是说两个事务读取相同的数据项，但是更新不同的数据项，比如某人有两个账户，每个账户100元，银行要求两个账户的余额之和大于等于0，那么就会有这种情况出现：
     T1，T2两个事务同时读取两个账户余额，接着都取出200元，T1更新第一个账户，T2更新第二个账户，这样就会出问题。
   - 串行读(Serializable)：完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞
 
@@ -241,3 +234,8 @@ crash 恢复 如果某个事务T1读一行数据发现有锁，那么意味着�
 ## Merge Tree
 
 这是clickhouse中所使用的列存储引擎
+
+# 一些经验
+```example
+As expected from the common wisdom, objects smaller than 256K are best stored in a database while objects larger than 1M are best stored in the filesystem. Between 256K and 1M, the read:write ratio and rate of object overwrite or replacement are important factors. We used the notion of “storage age” or number of object overwrites as way of normalizing wall clock time. Storage age allows our results or similar such results to be applied across a number of read:write ratios and object replacement rates.
+```
