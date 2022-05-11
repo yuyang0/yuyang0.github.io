@@ -23,18 +23,13 @@
 <meta property="og:site_name" content="yuyang&#39;s blog">
 <meta property="og:description" content="基本背景知识MXNET中有一个依赖引擎，这个引擎是用来分析计算过程的依赖关系，把不依赖的计算并行化，以达到提高性能的目的。它的基本原理可以看官方的文档。简单的说就是给每一个对 象打上一个tag，这个tag叫做Var，每一个计算(op)都会依赖一个或者多个Var，依赖有两种类型：写依赖和读依赖。依赖引擎为每一个Var都维护一个队列，然后根据op的依赖关系向队列中添加ReadDependency和Wr">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/opr-class-uml.png">
-<meta property="og:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/threaded-var-class-uml.png">
-<meta property="og:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/threaded-var-queue1.png">
-<meta property="og:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/threaded-var-queue2.png">
-<meta property="og:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/threaded-var-queue3.png">
 <meta property="og:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/threaded-var-queue4.png">
 <meta property="article:published_time" content="2018-03-11T03:54:17.000Z">
-<meta property="article:modified_time" content="2022-05-09T15:13:06.657Z">
+<meta property="article:modified_time" content="2022-05-11T08:27:03.343Z">
 <meta property="article:author" content="Yu Yang">
 <meta property="article:tag" content="mxnet">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/opr-class-uml.png">
+<meta name="twitter:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/threaded-var-queue4.png">
   
   
   <title>MXNET Dependency Engine - yuyang&#39;s blog</title>
