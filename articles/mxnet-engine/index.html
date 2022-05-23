@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yuyang0.github.io/articles/mxnet-engine/static/img/threaded-var-queue4.png">
 <meta property="article:published_time" content="2018-03-11T03:54:17.000Z">
-<meta property="article:modified_time" content="2022-05-11T15:14:01.596Z">
+<meta property="article:modified_time" content="2022-05-23T12:38:28.756Z">
 <meta property="article:author" content="Yu Yang">
 <meta property="article:tag" content="mxnet">
 <meta name="twitter:card" content="summary_large_image">
@@ -77,7 +77,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head>
 
 
 <body>
@@ -250,7 +250,7 @@
 <p>上面一些比较重要的属性如下：</p>
 <ol>
 <li>fn： op实际要执行的函数</li>
-<li>const_vars, mutable_vars: 依赖的var列表（读和写）。</li>
+<li><code>const_vars</code>, <code>mutable_vars</code>: 依赖的var列表（读和写）。</li>
 <li>wait: 当前还没有就绪的var的个数，它的初始值是 <code>len(const_vars)+len(mutable_vars)</code>,<br>每一个依赖就绪那么就会调用 <code>dec_wait</code> 将<br>该值减一，如果该值为0，那么所有的依赖都已就绪，那么可以丢到执行引擎执行了。</li>
 </ol>
 <h1 id="Var"><a href="#Var" class="headerlink" title="Var"></a>Var</h1><p>var可以看做是一个tag，用来标示每一个对象的，这样Op对对象的依赖可以简化成对var的<br>依赖，这样就可以构建出一个不依赖于具体的对象的通用的依赖引擎。Var是依赖引擎的关键。</p>
@@ -258,14 +258,14 @@
 <p><strong>声明：下文说到执行时，意思是Op的当前var的依赖已经就绪，因为一个op可以依赖多个<br>var，如果其他的Var没有就绪，那么这时op可能并没有实际运行</strong></p>
 <p>Var只是一个基类，用来统一类型系统的，主要的工作在 <code>ThreadedVar</code> 中，每一个对象都 会有一个由<br><code>VersionedVarBlock</code> 所组成的链表，这个链表就是一个FIFO队列。 <code>head_</code> 指向的是队列的尾部,<br>实际是一个哨兵(空对象)， <code>head_</code> 这个命名有误导性, <code>pending_write_</code><br>指向的是最”老”的写依赖，如果没有写依赖，那么就指向 <code>nullptr</code>, 根据依赖引擎的特点，它实际上指向的是队列的头部，<br><code>ThreadedVar</code> 的那四个方法就是 来操作这个队列的。</p>
 <ol>
-<li>num_pending_reads_: 代表当前正在执行(还没有执行完)的读依赖的个数</li>
-<li>pending_write_: 代表队列中最“老”的写依赖, 它一直指向队列的头部。</li>
-<li>head_: 队列的尾部。</li>
+<li><code>num_pending_reads_</code>: 代表当前正在执行(还没有执行完)的读依赖的个数</li>
+<li><code>pending_write_</code>: 代表队列中最“老”的写依赖, 它一直指向队列的头部。</li>
+<li><code>head_</code>: 队列的尾部。</li>
 </ol>
 <p>需要注意的是，正在执行的读依赖是不在队列中的，但是正在执行的写依赖是在队列中的。</p>
 <h2 id="理解Var的队列"><a href="#理解Var的队列" class="headerlink" title="理解Var的队列"></a>理解Var的队列</h2><p>var的队列是依赖引擎的核心，下面我们来分析下各种情况下，如何修改队列的状态。</p>
 <ol>
-<li>添加读依赖: 如果前面没有写依赖，那么直接运行, 否则就插入队列的尾部(head_那一端)</li>
+<li>添加读依赖: 如果前面没有写依赖，那么直接运行, 否则就插入队列的尾部(<code>head_</code>那一端)</li>
 <li>添加写依赖： 直接将依赖插入队列的尾部，并检查是不是写就绪(既没有读依赖也没有 写依赖在运行),如果是写就绪，那么就运行该依赖。</li>
 <li>读依赖完成</li>
 <li>写依赖完成</li>
