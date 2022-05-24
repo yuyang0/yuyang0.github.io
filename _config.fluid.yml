@@ -400,6 +400,8 @@ about:
     - { class: 'iconfont icon-github-fill', link: 'https://github.com/yuyang0', tip: 'GitHub' }
     - { class: 'iconfont icon-douban-fill', link: 'https://www.douban.com/people/yangyu00', tip: '豆瓣' }
     - { class: 'iconfont icon-wechat-fill', qrcode: 'img/wechat-qrcode.jpg', tip: 'objksa'}
+    - { class: 'iconfont icon-telegram-fill', qrcode: 'img/telegram-qrcode.png', tip: 'objkst'}
+    # - { class: 'iconfont icon-mail-fill', link: '', tip: 'objkst'}
 
 
 #---------------------------
