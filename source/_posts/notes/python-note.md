@@ -241,8 +241,7 @@ def myfunc():
 
 ```
 
-myfunc = deco(myfunc) 所以myfunc就是一个deco类的实例，然后myfunc(\*args,
-\*\*kwargs),实际就是调用类实例 的\_\_call\_\_方法
+myfunc = deco(myfunc) 所以myfunc就是一个deco类的实例，然后`myfunc(*args, **kwargs)`,实际就是调用类实例 的`__call__`方法
 
 ## 使用类作为装饰器装饰类方法
 
@@ -516,14 +515,14 @@ a2 = B()
 
 上面的代码会构成一颗属性搜索树:
 
-![](static/img/attribute-search-tree.png)
+![](python-note/static/img/attribute-search-tree.png)
 
 因为类本身也是对象,所以类本身也有属性,类的属性就是类的方法,以及类的变量, 比如当调用a1.x时,那么搜索的过程就 是这样的: a1, B,
 C1, D1, D2, C2, D3注意这是深度优先搜索,python的经典类与新式类都是这种搜索模式，但是新式类 有一个diamond
 pattern，也就是钻石模式，这种模式下有一个以上的超类会通往相同的更高层次的超类，这时候会使用
 广度优先搜索(只是有相同超类的那一部分)，举个例子：
 
-![](static/img/diamond-pattern.png)
+![](python-note/static/img/diamond-pattern.png)
 
 如上图所示，如果C2有个w属性，D2也有个w属性，那么当使用a1.w进行属性搜索时，如果使用深度优先搜索，那么会得到 D2.w，
 但是C2是D2的子类，并且重载了w属性，这种情况下应该用子类的属性也就是C2的w属性，钻石继承就是为这种情
