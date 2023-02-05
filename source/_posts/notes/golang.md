@@ -269,7 +269,25 @@ channel是goroutine之间的通信方式, 它是线程安全的,但是要注意,
 
 ## struct
 
+```go
+type Person struct {
+    name string
+    age  int
+}
+p1 := Person{
+  name: "Steve",
+  age: 22
+}
+p2 := Person{"Steve", 22}
+```
+
 ## interface
+
+```go
+type Abser interface {
+	Abs() float64
+}
+```
 
 ### interface{}
 
@@ -320,7 +338,7 @@ default:
 
 # reflect
 
-这个是go语言的发射机制,它主要是用来获取interface下面值的type与value的, reflect包 有两个类型Type和Value.
+这个是go语言的反射机制,它主要是用来获取interface下面值的type与value的, reflect包 有两个类型Type和Value.
 
 1.  Type: 这个是用来代表值的类型的
 2.  Value: 这个是用来代表值的.
