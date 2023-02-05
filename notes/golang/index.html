@@ -24,7 +24,7 @@
 <meta property="og:description" content="go代码规范 使用驼峰命名法, 私有名字以小写字母开头，公有名字以大写字母开头, 也就是说 小写字母开头，那么只在本包内可见，大写字母开头才能在包外可见 大括号不要换行 包名最好文件夹名相同, 并且为小写  变量变量的声明主要有两种方法  var x type x :&#x3D; val  使用var声明引用变量是不会分配内存的，因此到底需不需要调用make来初始化则视情况而 定,map需要调用m">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2014-02-11T03:54:17.000Z">
-<meta property="article:modified_time" content="2023-02-04T14:03:15.543Z">
+<meta property="article:modified_time" content="2023-02-05T07:43:49.394Z">
 <meta property="article:author" content="Yu Yang">
 <meta property="article:tag" content="lang">
 <meta property="article:tag" content="golang">
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      86 分钟
+      87 分钟
     </span>
   
 
@@ -321,7 +321,11 @@
 <p>关闭的channel上调用任意多次 <code>&lt;-</code> 都不会阻塞，所以不要使用带buffer的channel。</p>
 </li>
 </ol>
-<h2 id="struct"><a href="#struct" class="headerlink" title="struct"></a>struct</h2><h2 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h2><h3 id="interface-1"><a href="#interface-1" class="headerlink" title="interface{}"></a>interface{}</h3><p>type assertion(类型断言)</p>
+<h2 id="struct"><a href="#struct" class="headerlink" title="struct"></a>struct</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;<br>    name <span class="hljs-type">string</span><br>    age  <span class="hljs-type">int</span><br>&#125;<br>p1 := Person&#123;<br>  name: <span class="hljs-string">&quot;Steve&quot;</span>,<br>  age: <span class="hljs-number">22</span><br>&#125;<br>p2 := Person&#123;<span class="hljs-string">&quot;Steve&quot;</span>, <span class="hljs-number">22</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Abser <span class="hljs-keyword">interface</span> &#123;<br>	Abs() <span class="hljs-type">float64</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="interface-1"><a href="#interface-1" class="headerlink" title="interface{}"></a>interface{}</h3><p>type assertion(类型断言)</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> anything <span class="hljs-keyword">interface</span>&#123;&#125; = <span class="hljs-string">&quot;hello&quot;</span><br>aString := anything.(<span class="hljs-type">string</span>)              <span class="hljs-comment">// unsafe, may panic</span><br><span class="hljs-keyword">if</span> aString, ok := anything.(<span class="hljs-type">string</span>); ok &#123; <span class="hljs-comment">// safe, check ok</span><br>  doSomething<br>&#125;<br><span class="hljs-comment">// if you are not sure, use type switch</span><br><span class="hljs-keyword">switch</span> v := anything.(<span class="hljs-keyword">type</span>) &#123;<br><span class="hljs-keyword">case</span> <span class="hljs-type">string</span>:<br>  fmt.Println(v)<br><span class="hljs-keyword">case</span> <span class="hljs-type">int32</span>, <span class="hljs-type">int64</span>:<br>  fmt.Println(v)<br><span class="hljs-keyword">case</span> SomeCustomType:<br>  fmt.Println(v)<br><span class="hljs-keyword">default</span>:<br>  fmt.Println(<span class="hljs-string">&quot;unknown&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h1 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h1><ol>
@@ -338,7 +342,7 @@
 <li>也可以直接使用go run来运行代码。后面应该接main函数所在的那个文件的文件名。</li>
 <li>go get 可以用来从github或者bitbucket上下载代码，你只需要指定代码仓库的地址就 可以了，举个例子 <code>go get github.com/yuyang0/gt-go-sdk</code> 就会将代码下载到<br><code>$GOPATH/src/github.com/yuyang0/gt-go-sdk</code> 中, 所以你就可以导入这个包了</li>
 </ol>
-<h1 id="reflect"><a href="#reflect" class="headerlink" title="reflect"></a>reflect</h1><p>这个是go语言的发射机制,它主要是用来获取interface下面值的type与value的, reflect包 有两个类型Type和Value.</p>
+<h1 id="reflect"><a href="#reflect" class="headerlink" title="reflect"></a>reflect</h1><p>这个是go语言的反射机制,它主要是用来获取interface下面值的type与value的, reflect包 有两个类型Type和Value.</p>
 <ol>
 <li>Type: 这个是用来代表值的类型的</li>
 <li>Value: 这个是用来代表值的.</li>
