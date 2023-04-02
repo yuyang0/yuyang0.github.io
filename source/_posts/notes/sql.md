@@ -58,12 +58,27 @@ select用来检索数据, 检索时至少要指定两条信息:
 
 2.  从哪里检索(database name)
     
+  ![](sql/static/img/select-grammar.png)
+
     ``` example
+    SELECT column_name(s)
+    FROM table_name
+    WHERE condition
+    GROUP BY column_name(s)
+    HAVING condition
+    ORDER BY column_name(s)
+    LIMIT N;
+
     SELECT  列1,列2  FROM  表名
     SELECT  表1.列1, 表2. 列2  FROM  表1, 表2（多张表中选取）
     SELECT  *  FROM  表名
     SELECT  DISTINCT  列2   FROM  表名       (去除重复)
     ```
+注意事项：
+1. WHERE的表达式不能有aggregate function
+2. 为了弥补WHERE的不足所以有HAVING子句，HAVING的表达式可以有aggregate function.
+3. ORDER BY的表达式也可以包含aggregate functions
+4. ORDER BY以及HAVING中的aggregate functions都不是必须出现在select的column_name中
 
 同时还可以指定一些过滤规则与排序规则, 这一般是通过子句实现的:
 

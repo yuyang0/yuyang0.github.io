@@ -589,7 +589,20 @@ C中的名称都可以使用“C”这个“包”访问到
     channel或者quit channel可以避免。quit channel是更通用的 做法
 
 # 坑
-
+## Slice
+先看代码
+```go
+s1 := []int{1, 2}
+s2 := append(s1, 3)
+// cap(s2) => 4
+s3 := append(s2, 4)
+// fmt.Printf(s3)
+// => []int{1, 2, 3, 4}
+s4 := append(s2, 5)
+// fmt.Printf(s3)
+// => []int{1, 2, 3, 5}
+```
+s4的创建会改变s3的值，原因是s2的Capacity是4，所以append并没有创建新的内存，s3, s4的append操作都是修改的s2的第四个位置的内存，所以s4的5会覆盖掉s3的4
 ## closure
 
 先看一段错误代码
