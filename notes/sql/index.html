@@ -23,13 +23,15 @@
 <meta property="og:site_name" content="yuyang&#39;s blog">
 <meta property="og:description" content="SQL基本知识与常用代码conventions SQL 不区分大小写,但是惯例是SQL的关键字要大写, 所有的列名,表名,数据库名都 用小写. 每一条SQL语句后加分号; SQL不区分空格,所以为了可读性,可以把Sql语句分成多行.  登录1mysql –h hostname -P port –u username –p password.  增加新用户 grant 权限 on 数据库.* to">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yuyang0.github.io/notes/sql/static/img/select-grammar.png">
 <meta property="article:published_time" content="2014-01-11T03:54:17.000Z">
-<meta property="article:modified_time" content="2023-02-05T07:43:49.398Z">
+<meta property="article:modified_time" content="2023-04-02T05:37:12.421Z">
 <meta property="article:author" content="Yu Yang">
 <meta property="article:tag" content="lang">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yuyang0.github.io/notes/sql/static/img/select-grammar.png">
   
   
   <title>SQL笔记 - yuyang&#39;s blog</title>
@@ -203,7 +205,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.8k 字
+      8.1k 字
     </span>
   
 
@@ -212,7 +214,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      65 分钟
+      68 分钟
     </span>
   
 
@@ -275,7 +277,17 @@
 <li><p>你要检索什么(field name)</p>
 </li>
 <li><p>从哪里检索(database name)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs example">SELECT  列1,列2  FROM  表名<br>SELECT  表1.列1, 表2. 列2  FROM  表1, 表2（多张表中选取）<br>SELECT  *  FROM  表名<br>SELECT  DISTINCT  列2   FROM  表名       (去除重复)<br></code></pre></td></tr></table></figure></li>
+</li>
+</ol>
+<p>  <img src="/notes/sql/static/img/select-grammar.png" srcset="/img/loading.gif" lazyload></p>
+<div class="code-wrapper"><pre><code class="hljs"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><pre><code class="hljs example">SELECT column_name(s)<br>FROM table_name<br>WHERE condition<br>GROUP BY column_name(s)<br>HAVING condition<br>ORDER BY column_name(s)<br>LIMIT N;<br><br>SELECT  列1,列2  FROM  表名<br>SELECT  表1.列1, 表2. 列2  FROM  表1, 表2（多张表中选取）<br>SELECT  *  FROM  表名<br>SELECT  DISTINCT  列2   FROM  表名       (去除重复)<br></code></pre></td></tr></table></figure>
+</code></pre>
+<p>注意事项：</p>
+<ol>
+<li>WHERE的表达式不能有aggregate function</li>
+<li>为了弥补WHERE的不足所以有HAVING子句，HAVING的表达式可以有aggregate function.</li>
+<li>ORDER BY的表达式也可以包含aggregate functions</li>
+<li>ORDER BY以及HAVING中的aggregate functions都不是必须出现在select的column_name中</li>
 </ol>
 <p>同时还可以指定一些过滤规则与排序规则, 这一般是通过子句实现的:</p>
 <ol>
